@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>סייר אופנהיימר 128</title>
+<style>
+:root{
+  --bg:#f7f6f2;--surface:#fff;--surface-2:#f0eee8;--ink:#1d1c1a;--ink-2:#55524c;--ink-3:#85817a;--line:#e2dfd7;
+  --accent:#2f5d8a;--accent-soft:#e3ecf5;--ok:#2e7d4f;--ok-soft:#e1f1e7;--bad:#b23b3b;--bad-soft:#f6e1e1;
+  --via:#2f6fb0;--via-soft:#dbe8f6;--dir:#b5651d;--dir-soft:#f6e3cf;--und:#9a968e;--om:#d9d4c8;
+  --g-midrash:#2e7d4f;--g-anth:#7b4fa0;--g-talmud:#a06a12;--g-minor:#5c7a8a;--opp:#b23b3b;
+  --u1:#fde9b8;--u2:#d6ecd9;--u3:#dfe3f6;--u4:#f6dbe4;--u5:#e3f0f4;
+  --r:10px;--shadow:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#161615;--surface:#1f1f1d;--surface-2:#272725;--ink:#ecebe7;--ink-2:#b9b6af;--ink-3:#8b8880;--line:#34332f;
+  --accent:#86b2dd;--accent-soft:#1f3042;--ok:#6cc394;--ok-soft:#1c3326;--bad:#e07a7a;--bad-soft:#3b2222;
+  --via:#79abe0;--via-soft:#1d2f44;--dir:#e0a060;--dir-soft:#3d2c19;--und:#7d7a73;--om:#3a3833;
+  --g-midrash:#6cc394;--g-anth:#b58ad8;--g-talmud:#e0aa55;--g-minor:#8fb3c4;--opp:#e07a7a;
+  --u1:#4a3d1c;--u2:#1f3a26;--u3:#262c4a;--u4:#47252f;--u5:#1f3a42;--shadow:none;}}
+:root[data-theme="dark"]{
+  --bg:#161615;--surface:#1f1f1d;--surface-2:#272725;--ink:#ecebe7;--ink-2:#b9b6af;--ink-3:#8b8880;--line:#34332f;
+  --accent:#86b2dd;--accent-soft:#1f3042;--ok:#6cc394;--ok-soft:#1c3326;--bad:#e07a7a;--bad-soft:#3b2222;
+  --via:#79abe0;--via-soft:#1d2f44;--dir:#e0a060;--dir-soft:#3d2c19;--und:#7d7a73;--om:#3a3833;
+  --g-midrash:#6cc394;--g-anth:#b58ad8;--g-talmud:#e0aa55;--g-minor:#8fb3c4;--opp:#e07a7a;
+  --u1:#4a3d1c;--u2:#1f3a26;--u3:#262c4a;--u4:#47252f;--u5:#1f3a42;--shadow:none;}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans Hebrew","Segoe UI","Arial Hebrew",Arial,sans-serif}
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.topin{max-width:1400px;margin:0 auto;padding:10px 16px 0;display:flex;flex-wrap:wrap;gap:4px 18px;align-items:flex-end}
+.brand{font-weight:700;font-size:17px;padding-bottom:10px}
+nav{display:flex;gap:2px;overflow-x:auto;flex:1}
+nav button{font:inherit;font-size:14px;background:none;border:none;border-bottom:3px solid transparent;color:var(--ink-2);padding:8px 12px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+main{max-width:1400px;margin:0 auto;padding:18px 16px 80px}
+h1{font-size:24px;margin:0 0 6px}h2{font-size:19px;margin:22px 0 10px}h3{font-size:16px;margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--ink-3)}.small{font-size:13px}
+.num{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:14px 16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:14px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+.kpi b{display:block;font-size:22px;line-height:1.2}.kpi span{color:var(--ink-3);font-size:13px}
+.split{display:grid;grid-template-columns:minmax(260px,360px) minmax(0,1fr);gap:12px;align-items:start}
+.list{max-height:calc(100vh - 170px);overflow:auto}
+.list .it{padding:7px 12px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.list .it:hover{background:var(--surface-2)}.list .it.on{background:var(--accent-soft)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px}
+select,input[type=search],input[type=text],textarea{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:5px 8px}
+button.b{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:8px;padding:5px 11px;cursor:pointer}
+button.b:hover{border-color:var(--ink-3)}button.b.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+button.b[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th{font-weight:600;color:var(--ink-2);font-size:13px;background:var(--surface-2);white-space:nowrap}
+th.s{cursor:pointer}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--surface-2)}
+.tscroll{overflow-x:auto}
+.row{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dotted var(--line);padding:3px 0;font-size:14px}
+.row>span:first-child{color:var(--ink-3)}
+.pill{display:inline-block;border-radius:999px;padding:1px 8px;font-size:12px;font-weight:600;white-space:nowrap}
+.p-before{background:var(--ok-soft);color:var(--ok)}.p-overlap{background:var(--dir-soft);color:var(--dir)}.p-after{background:var(--bad-soft);color:var(--bad)}
+.p-up{background:var(--ok-soft);color:var(--ok)}.p-down{background:var(--surface-2);color:var(--ink-3)}
+.v-via{color:var(--via);font-weight:600}.v-direct{color:var(--dir);font-weight:600}.v-undetermined{color:var(--und)}
+.lnk{color:var(--accent);cursor:pointer}
+.txt{font-size:16px;line-height:2.05;text-align:justify}
+.txt span{border-radius:3px}
+.txt .ell{color:var(--ink-3)}
+.a-o{border-bottom:2px solid var(--dir)}.a-n{text-decoration:underline 2px var(--via);text-underline-offset:6px}
+.a-x{border-bottom:2px solid var(--accent)}.a-x.f{border-bottom-style:dotted}
+.e-o{background:var(--dir-soft)}.e-n{background:var(--via-soft)}.om{background:var(--om);text-decoration:line-through;text-decoration-color:var(--ink-3)}
+.u0{background:var(--u1)}.u1{background:var(--u2)}.u2{background:var(--u3)}.u3{background:var(--u4)}.u4{background:var(--u5)}
+.utag{font-size:10px;font-weight:700;vertical-align:super;color:var(--ink-3);margin-inline-end:2px}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.colh{display:flex;justify-content:space-between;gap:6px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:4px;margin-bottom:6px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink-2);margin:8px 0}
+.legend i{display:inline-block;width:18px;height:12px;border-radius:3px;margin-inline-end:5px;vertical-align:-1px}
+.evt td,.evt th{font-size:13px;padding:4px 6px}
+.verd{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.stat{font-size:12px;color:var(--ink-3);min-height:16px}
+.callout{border-inline-start:3px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:6px;font-size:14px;margin:10px 0}
+.kbd{font-family:Menlo,Consolas,monospace;font-size:12px;border:1px solid var(--line);border-radius:4px;padding:0 4px;background:var(--surface-2)}
+textarea.q{width:100%;min-height:180px;direction:ltr;text-align:left;font-family:Menlo,Consolas,monospace;font-size:13px}
+.hidden{display:none!important}
+svg text{fill:var(--ink-2);font-size:12px}svg .wl{fill:var(--ink);font-size:12px;font-weight:600}svg .node{cursor:pointer}svg .edge{fill:none}
+.graphbox{overflow-x:auto}
+@media (max-width:980px){.split{grid-template-columns:minmax(0,1fr)}.list{max-height:320px}.cols{grid-template-columns:minmax(0,1fr)}.cols2{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<div class="top"><div class="topin"><div class="brand">סייר אופנהיימר 128</div>
+<nav id="nav" role="tablist">
+ <button data-t="overview" aria-selected="true">סקירה</button><button data-t="works">חיבורים</button><button data-t="passages">קטעים</button>
+ <button data-t="verify">בדיקת השוואות</button><button data-t="matches">התאמות</button><button data-t="sparql">SPARQL</button>
+</nav></div></div>
+<main>
+<section id="t-overview">
+ <h1>אופנהיימר 128: התאמות, ציונים ומטריושקה של ציטוטים</h1>
+ <p class="muted" style="max-width:900px">כל הנתונים במקום אחד: הקטעים וההתאמות של ACT, הציון המשוכלל והתיוג הידני, החיבורים ותיארוכיהם, יחידות הטקסט וההשוואות בין העדים. בלשונית "בדיקת השוואות" אפשר לעבור על ההשוואות ולסמן הכרעה ידנית. הסימונים נשמרים כאן.</p>
+ <div class="kpis" id="kpis"></div>
+ <div class="callout small"><b>הסתייגות:</b> הנתונים מבוססים על המועמדים שדוח ACT החזיר (עד 30 לקטע) וקיבלו יישור מלא. יחידות הטקסט וההשוואות מבוססות רק על התאמות מעל הסף (S ≥ 21.14). היעדר עד אינו ראיה להיעדר הטקסט. ההכרעה בהשוואה היא קרבה טקסטואלית ולא הוכחת העתקה.</div>
+ <h2>החיבורים על ציר הזמן</h2>
+ <div class="filters small"><label><input type="checkbox" id="gOpp" checked> קשתות לאופנהיימר</label><label><input type="checkbox" id="gWW" checked> קשתות בין חיבורים</label>
+  <label>מינימום יחידות <input type="range" id="gMin" min="1" max="20" value="6"> <span id="gMinV" class="num">6</span></label></div>
+ <div class="card pad"><div class="graphbox" id="gbox"></div>
+  <div class="legend"><span><i style="background:var(--g-midrash)"></i>מדרש</span><span><i style="background:var(--g-anth)"></i>ילקוט / אוסף</span><span><i style="background:var(--g-talmud)"></i>תלמוד</span><span><i style="background:var(--g-minor)"></i>מסכת קטנה</span>
+   <span><i style="background:var(--dir)"></i>אופנהיימר קרוב יותר לישן</span><span><i style="background:var(--via)"></i>קרוב יותר לחדש</span><span><i style="background:var(--und)"></i>מעורב</span><span><i style="background:var(--bad);opacity:.4"></i>מאוחר לאופנהיימר (מקווקו)</span></div>
+  <p class="muted small">מוקדם מימין, מאוחר משמאל; בציר יש קטיעה בין 1550 ל־1900. לחיצה על חיבור מדגישה את כל המסלולים שהוא חלק מהם, עד אופנהיימר; לחיצה נוספת או על רקע הגרף מנקה.</p></div>
+ <div class="card pad hidden" id="gpath" style="margin-top:10px"></div>
+</section>
+
+<section id="t-works" class="hidden"><div class="split">
+ <div class="card"><div class="pad" style="padding-bottom:6px"><div class="filters"><input type="search" id="wq" placeholder="חיפוש חיבור"><select id="wtype"><option value="">כל הסוגים</option><option>מדרש</option><option>ילקוט / אוסף</option><option>תלמוד</option><option>מסכת קטנה</option></select>
+  <select id="wrel"><option value="">כל התקופות</option><option value="before">קודם לאופנהיימר</option><option value="overlap">חופף</option><option value="after">מאוחר</option></select>
+  <select id="wsort"><option value="units">לפי מספר יחידות</option><option value="date">לפי תיארוך</option></select></div></div><div class="list" id="wlist"></div></div>
+ <div class="card pad" id="wdetail"><p class="muted">בחרו חיבור.</p></div></div></section>
+
+<section id="t-passages" class="hidden"><div class="split">
+ <div class="card"><div class="pad" style="padding-bottom:6px"><div class="filters"><input type="search" id="pq" placeholder="חיפוש דף, למשל 85v"><select id="pf"><option value="">כל הקטעים</option><option value="units">עם יחידות טקסט</option><option value="none">בלי התאמה מעל הסף</option><option value="lab">עם זוגות מתויגים</option></select></div></div><div class="list" id="plist"></div></div>
+ <div id="pdetail"><div class="card pad"><p class="muted">בחרו קטע.</p></div></div></div></section>
+
+<section id="t-verify" class="hidden">
+ <div class="filters">
+  <select id="vv"><option value="">כל הכרעות הכלי</option><option value="direct">ישיר</option><option value="via">דרך החדש</option><option value="undetermined">לא מוכרע</option></select>
+  <select id="vo"><option value="">כל העדים הישנים</option></select><select id="vn"><option value="">כל העדים החדשים</option></select>
+  <select id="vs"><option value="">כל הסטטוסים</option><option value="todo">טרם נבדק</option><option value="agree">מסכים עם הכלי</option><option value="disagree">לא מסכים</option></select>
+  <label class="small"><input type="checkbox" id="vc"> רק סדר תיארוך ודאי</label>
+  <button class="b" id="vcsv">ייצוא הבדיקות (CSV)</button><span class="muted small" id="vcount"></span>
+ </div>
+ <div class="split"><div class="card"><div class="list" id="vlist"></div></div><div id="vdetail"><div class="card pad"><p class="muted">בחרו השוואה.</p></div></div></div>
+</section>
+
+<section id="t-matches" class="hidden">
+ <p class="muted small">כל 2,650 המועמדים שקיבלו יישור מלא ב־ACT, עם הציון המשוכלל, ההסתברות, ותיוג ידני אם קיים. לחיצה על שורה פותחת את היישור בלשונית "קטעים".</p>
+ <div class="filters"><select id="mt"><option value="">מעל ומתחת לסף</option><option value="up">מעל הסף</option><option value="down">מתחת לסף</option></select>
+  <select id="ml"><option value="">מתויגים ולא מתויגים</option><option value="lab">רק מתויגים</option><option value="miss">זהים מתחת לסף</option><option value="fp">מעל הסף ולא זהים</option></select>
+  <select id="mrel"><option value="">כל הקשרים</option></select><input type="search" id="mq" placeholder="חיבור או דף"><span class="muted small" id="mcount"></span></div>
+ <div class="card pad tscroll"><table id="mtable"></table></div><div class="filters" style="margin-top:8px" id="mpage"></div>
+</section>
+
+<section id="t-sparql" class="hidden">
+ <p class="muted small">שאילתות SPARQL על כל ה־RDF: המטריושקה (חיבורים, תיארוכים, יחידות, עדויות, השוואות) וההתאמות עם התיוג. המנוע (Oxigraph) רץ בדפדפן, והקידומות נוספות אוטומטית. מרחב השמות <span class="num">opp:</span> זמני.</p>
+ <div class="filters"><select id="qex"></select><button class="b pri" id="qrun">הרצה</button><span class="muted small" id="qstat">המנוע ייטען בהרצה הראשונה.</span></div>
+ <textarea class="q" id="qtext" spellcheck="false"></textarea>
+ <div class="card pad tscroll" style="margin-top:10px"><table id="qres"></table></div>
+</section>
+</main>
+
+<script type="module">
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+let D;try{D=await (await fetch('core.json')).json()}catch(e){$('main').innerHTML='<p>טעינת הנתונים נכשלה.</p>';throw e}
+let TX=null;async function texts(){if(!TX){const st=document.createElement('div');TX=await (await fetch('texts.json')).json()}return TX}
+const W=Object.fromEntries(D.works.map(w=>[w.key,w])),C=Object.fromEntries(D.cands.map(c=>[c.id,c])),P=Object.fromEntries(D.passages.map(p=>[p.pid,p])),U=Object.fromEntries(D.units.map(u=>[u.uid,u]));
+const wn=k=>W[k]?.name_he||(D.cands.find(c=>c.k===k)?.work)||k;
+const REL={before:['קודם לאופנהיימר','p-before'],overlap:['חופף לתקופת אופנהיימר','p-overlap'],after:['מאוחר לאופנהיימר','p-after']};
+const VER={via:'דרך החדש',direct:'ישיר',undetermined:'לא מוכרע',unclear:'לא ניתן לקבוע'};
+const CONF={high:'גבוהה',medium:'בינונית',low:'נמוכה'};
+const unitsByPid={};D.units.forEach(u=>(unitsByPid[u.pid]=unitsByPid[u.pid]||[]).push(u));
+const candsByPid={};D.cands.forEach(c=>(candsByPid[c.pid]=candsByPid[c.pid]||[]).push(c));
+D.comps.forEach((c,i)=>c.i=i);
+const compsByUnit={};D.comps.forEach(c=>(compsByUnit[c.uid]=compsByUnit[c.uid]||[]).push(c));
+const row=(a,b)=>`<div class="row"><span>${a}</span><span>${b}</span></div>`;
+const nf=n=>Number(n).toLocaleString();
+
+// ---------- tabs ----------
+const TABS=['overview','works','passages','verify','matches','sparql'];
+function tab(t){TABS.forEach(x=>{$('#t-'+x).classList.toggle('hidden',x!==t);document.querySelector(`nav button[data-t="${x}"]`).setAttribute('aria-selected',x===t)});
+ if(t==='overview')drawGraph();if(t==='matches')renderMatches();if(t==='sparql')initSparql();if(t==='verify')renderVList();scrollTo(0,0)}
+$('#nav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)tab(b.dataset.t)});
+
+// ---------- overview ----------
+const st=D.stats,vc=st.verdicts,nAbove=D.cands.filter(c=>c.above).length,nLab=D.cands.filter(c=>c.tid).length;
+$('#kpis').innerHTML=[[D.passages.length,'קטעים'],[D.cands.length,'התאמות ביישור מלא'],[nAbove,'מעל הסף'],[nLab,'מתויגות ידנית'],[D.works.length,'חיבורים מתוארכים'],[st.units,'יחידות טקסט'],[st.hyps,'השוואות בין עדים']]
+ .map(([b,s])=>`<div class="kpi"><b class="num">${nf(b)}</b><span>${s}</span></div>`).join('');
+const GCOL={'מדרש':'--g-midrash','ילקוט / אוסף':'--g-anth','תלמוד':'--g-talmud','מסכת קטנה':'--g-minor'};
+let GW=1100,LAY={},GH=0;
+function X(y){const L=24,R=GW-24,f=.86,span=R-L;let t;if(y<=1550)t=(y-200)/1350*f;else if(y<1900)t=f+.01;else t=f+.03+(y-1900)/50*(1-f-.03);return R-t*span}
+const yr=w=>w.date_from===w.date_to?`${w.date_from}`:`${w.date_from}–${w.date_to}`;
+const rad=w=>4+Math.sqrt(w.n_units)*1.5;
+function layout(){LAY={};let y=34;const B=[['תלמוד','מסכת קטנה'],['מדרש'],['ילקוט / אוסף']];
+ B.forEach(types=>{const ws=D.works.filter(w=>types.includes(w.type)).sort((a,b)=>(a.date_from+a.date_to)-(b.date_from+b.date_to));const rows=[];
+  ws.forEach(w=>{const xm=X((w.date_from+w.date_to)/2),r0=rad(w),lw=(w.name_he.length+(w.rel==='after'?8:0))*6.4,left=xm-r0-4-lw>=4;
+   const xa=Math.min(X(w.date_to),left?xm-r0-4-lw:xm-r0),xb=Math.max(X(w.date_from),left?xm+r0+2:xm+r0+4+lw);
+   let r=rows.findIndex(rr=>rr.every(([a,b])=>xb<a-6||xa>b+6));if(r<0){rows.push([]);r=rows.length-1}rows[r].push([xa,xb]);
+   LAY[w.key]={x:xm,y:y+16+r*30,x0:X(w.date_to),x1:X(w.date_from),r:r0,left}});y+=Math.max(1,rows.length)*30+24});
+ LAY.__o={x:X(1386),y:y+26,r:14};GH=y+70}
+function ecol(e){if(e.via>e.direct&&e.via>=e.undetermined*.5)return css('--via');if(e.direct>e.via&&e.direct>=e.undetermined*.5)return css('--dir');return css('--und')}
+let SEL=null,SELP=null,PATS=[];
+const byDate=(a,b)=>W[a].date_from-W[b].date_from||W[a].date_to-W[b].date_to;
+function pathsOf(k){const pats={};
+ D.units.forEach(u=>{const ks=[...new Set(u.wit.map(x=>x.k))].filter(x=>W[x]);if(!ks.includes(k))return;
+  const early=ks.filter(x=>W[x].rel!=='after').sort(byDate),late=ks.filter(x=>W[x].rel==='after').sort(byDate);
+  const cl=u.closest.filter(x=>early.includes(x)),att=cl.length?cl:early.slice(-1);
+  const key=early.join('>')+'|'+att.join(',')+'|'+late.join(',');
+  (pats[key]=pats[key]||{early,att,late,sure:cl.length>0,units:[]}).units.push(u)});
+ return Object.values(pats).sort((a,b)=>b.units.length-a.units.length)}
+function segsOf(pats){const S={};const add=(a,b,kind,u)=>{const id=a+'>'+b;const x=S[id]=S[id]||{a,b,kind,n:0,direct:0,via:0,undetermined:0};x.n++;
+  if(kind==='w'){const c=(compsByUnit[u.uid]||[]).find(c=>(c.o===a&&c.n===b)||(c.o===b&&c.n===a));if(c)x[c.v]++}};
+ pats.forEach(p=>p.units.forEach(u=>{for(let i=0;i+1<p.early.length;i++)add(p.early[i],p.early[i+1],'w',u);
+  p.att.forEach(k=>add(k,'__o',p.sure?'o':'o?',u));p.late.forEach(k=>add('__o',k,'late',u))}));return Object.values(S)}
+function drawGraph(){const box=$('#gbox');GW=Math.max(900,box.clientWidth);layout();const mn=+$('#gMin').value;
+ const O=LAY.__o,curve=(a,b)=>{if(b===O||a===O){const p=a===O?b:a;return `M${p.x},${p.y} C${p.x},${(p.y+O.y)/2} ${O.x},${(p.y+O.y)/2} ${O.x},${O.y}`}
+  const my=Math.min(a.y,b.y)-18-Math.abs(a.x-b.x)*.12;return `M${a.x},${a.y} Q${(a.x+b.x)/2},${my} ${b.x},${b.y}`};
+ const act=SEL?(SELP!==null?[PATS[SELP]]:PATS):[];const inv=new Set([SEL]);act.forEach(p=>[...p.early,...p.late].forEach(k=>inv.add(k)));
+ let s=`<svg width="${GW}" height="${GH}" role="img" aria-label="ציר זמן של החיבורים">`;
+ [200,400,600,800,1000,1200,1400,1950].forEach(t=>{const x=X(t);s+=`<line x1="${x}" x2="${x}" y1="16" y2="${GH-22}" stroke="${css('--line')}" stroke-dasharray="2 4"/><text x="${x}" y="${GH-6}" text-anchor="middle">${t}</text>`});
+ s+=`<rect class="bg" x="0" y="0" width="${GW}" height="${GH}" fill="transparent"/><rect x="${X(1400)}" y="12" width="${X(1372)-X(1400)}" height="${GH-36}" fill="${css('--opp')}" opacity=".07"/>`;
+ s+=`<g opacity="${SEL?.08:1}">`;
+ if($('#gOpp').checked)D.works.forEach(w=>{if(w.n_units<mn)return;const a=LAY[w.key];s+=`<path class="edge" d="${curve(a,O)}" stroke="${w.rel==='after'?css('--bad'):css('--ink-3')}" stroke-width="${(.6+Math.sqrt(w.n_units)*.4).toFixed(1)}" stroke-opacity=".25" ${w.rel==='after'?'stroke-dasharray="5 4"':''}/>`});
+ if($('#gWW').checked)D.edges.forEach(e=>{if(e.units<mn)return;const a=LAY[e.older],b=LAY[e.newer];if(!a||!b)return;
+  s+=`<path class="edge" d="${curve(a,b)}" stroke="${ecol(e)}" stroke-width="${(1+Math.sqrt(e.units)*.85).toFixed(1)}" stroke-opacity=".5" ${e.newer_late?'stroke-dasharray="5 4"':''}><title>${esc(wn(e.older))} ← ${esc(wn(e.newer))}: ${e.units}</title></path>`});
+ s+='</g>';
+ if(SEL)segsOf(act).sort((x,y)=>y.n-x.n).forEach(g=>{const a=g.a==='__o'?O:LAY[g.a],b=g.b==='__o'?O:LAY[g.b];if(!a||!b)return;
+  const col=g.kind==='w'?(g.direct+g.via+g.undetermined?ecol(g):css('--ink-3')):g.kind==='late'?css('--bad'):css('--opp');
+  const ttl=g.kind==='w'?`${wn(g.a)} ← ${wn(g.b)}: ${g.n} יחידות · ישיר ${g.direct} · דרך החדש ${g.via} · לא מוכרע ${g.undetermined}`:g.kind==='late'?`${wn(g.b)} (מאוחר לאופנהיימר): ${g.n} יחידות`:`${wn(g.a)} ← אופנהיימר: ${g.n} יחידות${g.kind==='o?'?' (הקרוב ביותר לא הוכרע; מחובר לעד המאוחר)':''}`;
+  s+=`<path class="edge" d="${curve(a,b)}" stroke="${col}" stroke-width="${(1.6+Math.sqrt(g.n)*1.25).toFixed(1)}" stroke-opacity=".9" stroke-linecap="round" ${g.kind==='late'||g.kind==='o?'?'stroke-dasharray="6 4"':''}><title>${esc(ttl)}</title></path>`});
+ D.works.forEach(w=>{const L=LAY[w.key],col=css(GCOL[w.type]),late=w.rel==='after',t=esc(w.name_he)+(late?' · מאוחר':''),on=w.key===SEL;
+  s+=`<g class="node" data-k="${w.key}" opacity="${!SEL||inv.has(w.key)?1:.22}"><line x1="${L.x0}" x2="${L.x1}" y1="${L.y}" y2="${L.y}" stroke="${col}" stroke-width="3" stroke-opacity=".4"/>${on?`<circle cx="${L.x}" cy="${L.y}" r="${L.r+5}" fill="none" stroke="${css('--ink')}" stroke-width="2"/>`:''}<circle cx="${L.x}" cy="${L.y}" r="${L.r}" fill="${col}" fill-opacity="${late?.25:.85}" stroke="${late?css('--bad'):css('--surface')}" stroke-width="1.5" ${late?'stroke-dasharray="3 2"':''}/>
+  <text class="wl" x="${L.left?L.x-L.r-4:L.x+L.r+4}" y="${L.y+4}" text-anchor="${L.left?'start':'end'}" ${on?'style="font-size:13.5px"':''}>${t}</text><title>${esc(w.name_he)} · ${yr(w)} · ${w.n_units} יחידות</title></g>`});
+ s+=`<circle cx="${O.x}" cy="${O.y}" r="${O.r}" fill="${css('--opp')}"/><text class="wl" x="${O.x+O.r+6}" y="${O.y+5}" text-anchor="end">אופנהיימר 128 (1372–1400)</text>`;
+ box.innerHTML=s+'</svg>'}
+function pathPanel(){const el=$('#gpath');if(!SEL){el.innerHTML='';el.classList.add('hidden');return}el.classList.remove('hidden');
+ const w=W[SEL],tot=PATS.reduce((n,p)=>n+p.units.length,0),nm=k=>`<span ${k===SEL?'style="font-weight:700"':''}>${esc(wn(k))}</span>`;
+ el.innerHTML=`<div class="colh"><h3 style="margin:0">המסלולים של ${esc(w.name_he)}</h3><span class="verd"><span class="lnk small" data-work="${SEL}">לפרטי החיבור ←</span><button class="b" id="gclear">ניקוי הבחירה</button></span></div>
+  <p class="muted small">כל יחידת טקסט שהחיבור מעיד עליה היא מסלול: העדים מסודרים לפי תיארוך (מוקדם מימין), ואופנהיימר מחובר לעד שנמצא הקרוב אליו ביותר. כשהקרוב ביותר לא הוכרע, הקשת לאופנהיימר יוצאת מהעד המאוחר והיא מקווקוות. קשת אדומה רציפה מובילה לאופנהיימר; עדים מאוחרים לאופנהיימר מחוברים בקו אדום מקווקו. צבע הקשתות בין חיבורים לפי הכרעת ההשוואות ביחידות האלה. עובי הקשת = מספר היחידות. במצב בחירה מוצגות כל הקשתות של המסלולים, בלי קשר לסינון "מינימום יחידות".</p>
+  <p class="small"><b class="num">${tot}</b> יחידות ב־<b class="num">${PATS.length}</b> מסלולים שונים. לחיצה על מסלול מבודדת אותו בגרף.</p>
+  <div class="list" style="max-height:340px;border:1px solid var(--line);border-radius:8px">${PATS.map((p,i)=>`<div class="it ${SELP===i?'on':''}" data-pat="${i}" style="display:block">
+   <div style="display:flex;justify-content:space-between;gap:8px"><span>${p.early.map(nm).join(' ← ')}${p.early.length?' ← ':''}<span style="color:var(--opp);font-weight:600">אופנהיימר</span>${p.late.length?` <span class="pill p-after">+ ${p.late.map(k=>esc(wn(k))).join(', ')}</span>`:''}</span><span class="num muted small">${p.units.length} יח'</span></div>
+   <div class="muted small">${p.early.length>1?(p.sure?`אופנהיימר קרוב ביותר ל: ${p.att.map(k=>esc(wn(k))).join(', ')}`:'הקרוב ביותר לא הוכרע'):p.early.length?'עד יחיד':'רק עדים מאוחרים'}</div>
+   ${SELP===i?`<div class="small" style="margin-top:4px">${p.units.map(u=>`<span class="lnk" data-unit="${esc(u.uid)}">${esc(P[u.pid].folio)} ${esc(u.uid.split('#')[1])}</span>`).join(' · ')}</div>`:''}</div>`).join('')}</div>`}
+function selectWork(k){SEL=k;SELP=null;PATS=k?pathsOf(k):[];drawGraph();pathPanel()}
+['#gOpp','#gWW'].forEach(s=>$(s).addEventListener('change',drawGraph));$('#gMin').addEventListener('input',()=>{$('#gMinV').textContent=$('#gMin').value;drawGraph()});
+$('#gbox').addEventListener('click',e=>{const n=e.target.closest('.node');if(n){selectWork(n.dataset.k===SEL?null:n.dataset.k);return}if(e.target.closest('.bg'))selectWork(null)});
+$('#gpath').addEventListener('click',e=>{if(e.target.closest('#gclear')){selectWork(null);return}if(e.target.closest('[data-unit],[data-work]'))return;const it=e.target.closest('[data-pat]');if(it){const i=+it.dataset.pat;SELP=SELP===i?null:i;drawGraph();pathPanel()}});
+addEventListener('resize',()=>{clearTimeout(window.__r);window.__r=setTimeout(()=>{if(!$('#t-overview').classList.contains('hidden'))drawGraph()},150)});
+
+// ---------- works ----------
+function renderWList(){const q=$('#wq').value.trim(),t=$('#wtype').value,r=$('#wrel').value,so=$('#wsort').value;
+ let ws=D.works.filter(w=>(!q||w.name_he.includes(q)||w.name_en.toLowerCase().includes(q.toLowerCase()))&&(!t||w.type===t)&&(!r||w.rel===r));
+ ws.sort(so==='date'?(a,b)=>a.date_from-b.date_from:(a,b)=>b.n_units-a.n_units);
+ $('#wlist').innerHTML=ws.map(w=>`<div class="it ${CUR.work===w.key?'on':''}" data-k="${w.key}"><span>${esc(w.name_he)} ${w.rel==='after'?'<span class="pill p-after">מאוחר</span>':''}</span><span class="muted num small">${yr(w)} · ${w.n_units}</span></div>`).join('')}
+['#wq','#wtype','#wrel','#wsort'].forEach(s=>$(s).addEventListener('input',renderWList));
+$('#wlist').addEventListener('click',e=>{const it=e.target.closest('.it');if(it)showWork(it.dataset.k)});
+const CUR={};
+function showWork(k){CUR.work=k;renderWList();const w=W[k];if(!w)return;
+ const ed=D.edges.filter(e=>e.older===k||e.newer===k).sort((a,b)=>b.units-a.units);
+ const us=D.units.filter(u=>u.wit.some(x=>x.k===k));
+ $('#wdetail').innerHTML=`<h2 style="margin-top:0">${esc(w.name_he)}</h2><p class="muted small">${esc(w.name_en)}</p>
+  <div class="cols2"><div>${row('תיארוך',`<span class="num">${yr(w)}</span> · ${esc(w.date_he)}`)}${row('ביחס לאופנהיימר',`<span class="pill ${REL[w.rel][1]}">${REL[w.rel][0]}</span>`)}${row('סוג',esc(w.type))}${row('אזור',esc(w.region))}${row('ודאות התיארוך',CONF[w.confidence]||esc(w.confidence))}</div>
+  <div>${row('יחידות שהוא מעיד עליהן',w.n_units)}${row('מהן העד היחיד',w.n_only)}${row('הקרוב ביותר מבין כמה',w.n_closest-w.n_only)}${row('המוקדם מבין כמה',w.n_earliest)}${row('קבצים',`<span class="small">${w.files.map(esc).join(', ')}</span>`)}</div></div>
+  ${w.dispute?`<p class="small" style="margin-top:8px"><b>מחלוקת:</b> ${esc(w.dispute)}</p>`:''}
+  <p class="small"><b>מקורות לתיארוך:</b></p><ul class="small">${w.sources.map(s=>`<li>${s.url?`<a class="lnk" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`:esc(s.title)}: ${esc(s.says)}</li>`).join('')}</ul>
+  <h3 style="margin-top:14px">טקסט משותף עם חיבורים אחרים</h3><div class="tscroll"><table><thead><tr><th>חיבור</th><th>יחידות</th><th>ישיר</th><th>דרך החדש</th><th>לא מוכרע</th><th></th></tr></thead><tbody>
+  ${ed.map(e=>{const o=e.older===k?e.newer:e.older;return `<tr><td><span class="lnk" data-work="${o}">${esc(wn(o))}</span> <span class="muted small">(${e.older===k?'חדש':'ישן'})</span></td><td class="num">${e.units}</td><td class="num v-direct">${e.direct}</td><td class="num v-via">${e.via}</td><td class="num">${e.undetermined}</td><td><span class="lnk small" data-vpair="${e.older}|${e.newer}">לבדיקה ←</span></td></tr>`}).join('')}</tbody></table></div>
+  <h3 style="margin-top:14px">יחידות טקסט (${us.length})</h3><div class="tscroll"><table><thead><tr><th>קטע</th><th>יחידה</th><th>עדים</th><th>הקרוב ביותר</th></tr></thead><tbody>
+  ${us.map(u=>`<tr class="click" data-unit="${esc(u.uid)}"><td>${esc(P[u.pid].folio)}</td><td class="num">${esc(u.uid.split('#')[1])}</td><td class="small">${u.wit.map(x=>esc(wn(x.k))).join(' · ')}</td><td class="small">${u.closest.map(x=>esc(wn(x))).join(', ')||'<span class="muted">—</span>'}</td></tr>`).join('')}</tbody></table></div>`}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-work]');if(a){tab('works');showWork(a.dataset.work);return}
+ const u=e.target.closest('[data-unit]');if(u){const x=U[u.dataset.unit];tab('passages');showPassage(x.pid,{unit:x.uid});return}
+ const vp=e.target.closest('[data-vpair]');if(vp){const [o,n]=vp.dataset.vpair.split('|');$('#vo').value=o;$('#vn').value=n;$('#vv').value='';$('#vs').value='';tab('verify');return}
+ const vi=e.target.closest('[data-comp]');if(vi){tab('verify');showComp(+vi.dataset.comp);return}
+ const cd=e.target.closest('[data-cand]');if(cd){const c=C[cd.dataset.cand];tab('passages');showPassage(c.pid,{cand:c.id});return}});
+
+// ---------- passages ----------
+function renderPList(){const q=$('#pq').value.trim(),f=$('#pf').value;
+ const ps=D.passages.filter(p=>(!q||p.folio.includes(q))&&(!f||(f==='units'&&unitsByPid[p.pid])||(f==='none'&&p.n_full&&!(candsByPid[p.pid]||[]).some(c=>c.above))||(f==='lab'&&(candsByPid[p.pid]||[]).some(c=>c.tid))));
+ $('#plist').innerHTML=ps.map(p=>{const cs=candsByPid[p.pid]||[];return `<div class="it ${CUR.pid===p.pid?'on':''}" data-p="${p.pid}"><span>${esc(p.folio)}</span><span class="muted num small">${cs.filter(c=>c.above).length}/${p.n_full} מעל הסף · ${(unitsByPid[p.pid]||[]).length} יח'</span></div>`}).join('')}
+['#pq','#pf'].forEach(s=>$(s).addEventListener('input',renderPList));
+$('#plist').addEventListener('click',e=>{const it=e.target.closest('.it');if(it)showPassage(it.dataset.p,{})});
+function tokSpan(tokens,lo,hi,cls,tags){let h='';if(lo>0)h+='<span class="ell">… </span>';for(let i=lo;i<hi;i++){const c=cls(i);h+=(tags&&tags[i]?tags[i]:'')+(c?`<span class="${c}">${esc(tokens[i])}</span>`:esc(tokens[i]))+' '}if(hi<tokens.length)h+='<span class="ell">…</span>';return h}
+async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await texts();const p=P[pid];const toks=(T.p[pid]||'').split(' ');
+ const us=unitsByPid[pid]||[],cs=(candsByPid[pid]||[]).slice().sort((a,b)=>b.S-a.S);
+ const ucls=new Array(toks.length).fill(''),tags={};us.forEach((u,k)=>{for(let i=u.lo;i<=u.hi;i++)if(!ucls[i])ucls[i]='u'+(k%5);tags[u.lo]=(tags[u.lo]||'')+`<span class="utag">${esc(u.uid.split('#')[1])}</span>`});
+ let al=null,cand=opt.cand?C[opt.cand]:null;if(cand){al={};T.c[cand.id].al.forEach(([i,j,x])=>al[i]=[j,x])}
+ const cls=i=>[ucls[i],al&&al[i]?('a-x'+(al[i][1]?'':' f')):''].filter(Boolean).join(' ');
+ let html=`<div class="card pad"><h2 style="margin-top:0">${esc(p.folio)}</h2><p class="muted small">${p.n_cand} מועמדים · ${p.n_full} ביישור מלא · ${cs.filter(c=>c.above).length} מעל הסף · ${us.length} יחידות טקסט</p>
+  <div class="txt">${toks.length>1?tokSpan(toks,0,toks.length,cls,tags):'<span class="muted">אין טקסט לקטע הזה בדוח.</span>'}</div>
+  <div class="legend">${us.map((u,k)=>`<span><i class="u${k%5}"></i>${esc(u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(', ')}</span>`).join('')}${cand?'<span><i style="border-bottom:2px solid var(--accent);height:8px"></i>מיושר למועמד הנבחר (מנוקד: התאמה לא מדויקת)</span>':''}</div></div>`;
+ if(cand){const src=T.c[cand.id].src.split(' ');const sj={};T.c[cand.id].al.forEach(([i,j,x])=>sj[j]=x);const js=Object.keys(sj).map(Number);const s0=Math.max(0,Math.min(...js)-25),s1=Math.min(src.length,Math.max(...js)+26);
+  html+=`<div class="card pad" style="margin-top:10px"><div class="colh"><h3>${esc(cand.work)} <span class="muted small" dir="ltr">${esc(cand.ref)}</span></h3><span class="pill ${cand.above?'p-up':'p-down'}">S ${cand.S} · p ${cand.p}</span></div>
+   <div class="txt">${tokSpan(src,s0,s1,j=>sj[j]!==undefined?('a-x'+(sj[j]?'':' f')):'')}</div>
+   <div class="small muted">${row('ציון ACT',cand.score)}${row('norm / align',`${cand.norm} / ${cand.align}`)}${row('N / C / Cp',`${cand.N} / ${cand.C} / ${cand.Cp}`)}${cand.tid?row('תיוג ידני',`${esc(cand.tid)} · <b>${esc(cand.rel)}</b> (${esc(cand.conf)}) · ${esc(cand.note)}`):''}<span dir="ltr" class="small">${esc(cand.loc)}</span></div></div>`}
+ html+=`<div class="card pad tscroll" style="margin-top:10px"><h3>המועמדים ביישור מלא</h3><table><thead><tr><th>rank</th><th>חיבור</th><th>מראה מקום</th><th>S</th><th>p</th><th>תיוג ידני</th></tr></thead><tbody>
+  ${cs.map(c=>`<tr class="click" data-cand="${esc(c.id)}" ${cand&&cand.id===c.id?'style="background:var(--accent-soft)"':''}><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="small">${c.tid?esc(c.rel):''}</td></tr>`).join('')}</tbody></table></div>`;
+ if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
+  ${(compsByUnit[u.uid]||[]).map(c=>`<br><span class="lnk" data-comp="${c.i}">${esc(wn(c.o))} ← ${esc(wn(c.n))}</span>: <span class="v-${c.v}">${VER[c.v]}</span>`).join('')}</p>`).join('')}</div>`;
+ $('#pdetail').innerHTML=html;
+ if(opt.unit){const el=document.querySelector('.utag');el&&el.scrollIntoView({block:'center'})}}
+
+// ---------- verification ----------
+const workOpts=k=>D.works.slice().sort((a,b)=>a.date_from-b.date_from).map(w=>`<option value="${w.key}">${esc(w.name_he)}</option>`).join('');
+$('#vo').insertAdjacentHTML('beforeend',workOpts());$('#vn').insertAdjacentHTML('beforeend',workOpts());
+let REV={},VL=[],CI=null,DB=null;const LSK='oppenheim128.comparisonReviews';
+const did=c=>`${c.uid}__${c.o}__${c.n}`.replace(/[^A-Za-z0-9_\-.~:@+]/g,'~');
+function status(c){const r=REV[did(c)];if(!r||!r.mine)return 'todo';return r.mine===c.v?'agree':'disagree'}
+function renderVList(){const v=$('#vv').value,o=$('#vo').value,n=$('#vn').value,s=$('#vs').value,oc=$('#vc').checked;
+ VL=D.comps.filter(c=>(!v||c.v===v)&&(!o||c.o===o)&&(!n||c.n===n)&&(!oc||c.oc)&&(!s||status(c)===s));
+ const done=VL.filter(c=>status(c)!=='todo').length;
+ $('#vcount').textContent=`${nf(VL.length)} השוואות · ${nf(done)} נבדקו`;
+ $('#vlist').innerHTML=VL.slice(0,800).map(c=>{const stt=status(c);return `<div class="it ${CI===c.i?'on':''}" data-c="${c.i}"><span class="small">${esc(P[U[c.uid].pid].folio)} · ${esc(wn(c.o))} ← ${esc(wn(c.n))}</span><span class="small"><span class="v-${c.v}">${VER[c.v]}</span>${stt==='todo'?'':stt==='agree'?' ✓':' ✗'}</span></div>`}).join('')+(VL.length>800?'<p class="muted small pad">מוצגות 800 הראשונות; צמצמו בעזרת הסינון.</p>':'')}
+['#vv','#vo','#vn','#vs','#vc'].forEach(s=>$(s).addEventListener('change',renderVList));
+$('#vlist').addEventListener('click',e=>{const it=e.target.closest('.it');if(it)showComp(+it.dataset.c)});
+function merged(T,unit,k){const w=unit.wit.find(x=>x.k===k);let src=[],am={},off=0;
+ w.ids.forEach(id=>{const t=T.c[id];t.al.forEach(([i,j,x])=>{if(am[i]===undefined||(x&&!am[i][1]))am[i]=[j+off,x]});const s=t.src.split(' ');src=src.concat(s);off+=s.length});return {src,am,ids:w.ids}}
+async function showComp(i){CI=i;const c=D.comps[i],u=U[c.uid],T=await texts();renderVList();
+ const toks=(T.p[u.pid]||'').split(' ');const O=merged(T,u,c.o),N=merged(T,u,c.n);
+ const eo=new Set((c.b.opp_O_notM||[]).flat()),en=new Set((c.b.opp_M_notO||[]).flat()),om=new Set((c.b.shared_omission||[]).flat());
+ const lo=Math.max(0,u.lo-12),hi=Math.min(toks.length,u.hi+13);
+ const oppCls=i=>[O.am[i]?'a-o':'',N.am[i]?'a-n':'',eo.has(i)?'e-o':'',en.has(i)?'e-n':''].filter(Boolean).join(' ');
+ const win=(M)=>{const js=Object.values(M.am).map(x=>x[0]);return [Math.max(0,Math.min(...js)-15),Math.min(M.src.length,Math.max(...js)+16)]};
+ const oj=new Set(Object.values(O.am).map(x=>x[0])),nj=new Set(Object.values(N.am).map(x=>x[0]));
+ const [o0,o1]=win(O),[n0,n1]=win(N);const r=REV[did(c)]||{};const wO=W[c.o],wN=W[c.n];const e=c.ev;
+ const ref=M=>M.ids.map(id=>C[id].ref).join(' + ');
+ $('#vdetail').innerHTML=`<div class="card pad">
+  <div class="colh"><h2 style="margin:0">${esc(P[u.pid].folio)} <span class="muted small">${esc(u.uid.split('#')[1])}</span></h2><span class="small">הכרעת הכלי: <span class="v-${c.v}">${VER[c.v]}</span> <span class="muted num">(ישיר ${c.sd} · דרך החדש ${c.sv})</span></span></div>
+  <p class="small">ישן: <b>${esc(wO.name_he)}</b> <span class="num">${yr(wO)}</span> · חדש: <b>${esc(wN.name_he)}</b> <span class="num">${yr(wN)}</span>${c.oc?'':' · <span class="pill p-overlap">טווחי תיארוך חופפים</span>'}${c.nl?' · <span class="pill p-after">החדש מאוחר לאופנהיימר</span>':''}</p>
+  <table class="evt"><thead><tr><th>ראיה</th><th>תומך בישיר</th><th>תומך בדרך החדש</th></tr></thead><tbody>
+   <tr><td>מילים באופנהיימר שיש רק בעד אחד</td><td class="num v-direct">${e.opp_O_notM||0}</td><td class="num v-via">${e.opp_M_notO||0}</td></tr>
+   <tr><td>השמטה משותפת לאופנהיימר ולחדש (משקל ¼)</td><td></td><td class="num">${e.shared_omission||0}</td></tr>
+   <tr><td>נוסחאות</td><td class="num">${e.reading_O||0}</td><td class="num">${e.reading_M||0}</td></tr>
+   <tr><td>סדר יחידות סמוכות</td><td class="num">${e.order_O||0}</td><td class="num">${e.order_M||0}</td></tr>
+   <tr><td>גבולות</td><td class="num">${e.boundary_O||0}</td><td class="num">${e.boundary_M||0}</td></tr></tbody></table>
+  <div class="legend"><span><i style="border-bottom:2px solid var(--dir);height:8px"></i>מיושר לישן</span><span><i style="border-bottom:2px solid var(--via);height:8px"></i>מיושר לחדש</span><span><i style="background:var(--dir-soft)"></i>באופנהיימר ובישן, חסר בחדש</span><span><i style="background:var(--via-soft)"></i>באופנהיימר ובחדש, חסר בישן</span><span><i style="background:var(--om)"></i>בישן בלבד (השמטה משותפת)</span></div>
+  <div class="cols">
+   <div><div class="colh"><h3>אופנהיימר 128</h3><span class="muted small">HTR</span></div><div class="txt">${tokSpan(toks,lo,hi,oppCls)}</div></div>
+   <div><div class="colh"><h3 class="v-direct">${esc(wO.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(O))}</span></div><div class="txt">${tokSpan(O.src,o0,o1,j=>[oj.has(j)?'a-o':'',om.has(j)?'om':''].filter(Boolean).join(' '))}</div></div>
+   <div><div class="colh"><h3 class="v-via">${esc(wN.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(N))}</span></div><div class="txt">${tokSpan(N.src,n0,n1,j=>nj.has(j)?'a-n':'')}</div></div>
+  </div>
+  <div class="card pad" style="margin-top:12px;background:var(--surface-2)">
+   <h3>ההכרעה שלי</h3>
+   <div class="verd" id="vbtn">${['direct','via','undetermined','unclear'].map((k,n)=>`<button class="b" data-m="${k}" aria-pressed="${r.mine===k}"><span class="kbd">${n+1}</span> ${VER[k]}</button>`).join('')}</div>
+   <textarea id="vnote" rows="2" style="width:100%;margin-top:8px" placeholder="הערה (למשל: ההבדל נובע מגבול סגמנט / HTR / קיצור של המדפיס)">${esc(r.note||'')}</textarea>
+   <div class="verd" style="margin-top:6px"><button class="b" id="vprev">→ הקודם</button><button class="b" id="vnext">הבא ←</button><span class="stat" id="vst">${r.at?'נשמר '+new Date(r.at).toLocaleString('he-IL'):''}</span>
+    <span class="muted small" style="margin-inline-start:auto">מקלדת: <span class="kbd">1</span>–<span class="kbd">4</span> הכרעה · <span class="kbd">J</span>/<span class="kbd">K</span> הבא/הקודם</span></div>
+   <p class="muted small" id="vdbmsg"></p>
+  </div></div>`;
+ if(!DB)$('#vdbmsg').textContent='מחוץ ל־claude.ai הבדיקות נשמרות בדפדפן הזה בלבד. לגיבוי או לשיתוף: ייצוא ל־CSV.'}
+function stepComp(d){if(CI===null)return;const k=VL.findIndex(c=>c.i===CI);const nx=VL[k+d];if(nx)showComp(nx.i)}
+document.addEventListener('click',e=>{if(e.target.closest('#vnext'))stepComp(1);if(e.target.closest('#vprev'))stepComp(-1);const b=e.target.closest('#vbtn button');if(b)saveMine(b.dataset.m)});
+document.addEventListener('keydown',e=>{if($('#t-verify').classList.contains('hidden')||e.target.matches('textarea,input,select'))return;
+ if(['1','2','3','4'].includes(e.key))saveMine(['direct','via','undetermined','unclear'][+e.key-1]);if(e.key==='j'||e.key==='J')stepComp(1);if(e.key==='k'||e.key==='K')stepComp(-1)});
+document.addEventListener('focusout',e=>{if(e.target.id==='vnote'&&CI!==null){const c=D.comps[CI];const r=REV[did(c)]||{};if((r.note||'')!==e.target.value)save(c,{note:e.target.value})}});
+function saveMine(m){if(CI===null)return;const c=D.comps[CI];const r=REV[did(c)]||{};save(c,{mine:r.mine===m?'':m})}
+async function save(c,patch){const id=did(c);const next=Object.assign({},REV[id]||{},patch,{uid:c.uid,older:c.o,newer:c.n,tool:c.v,at:new Date().toISOString()});
+ if(!DB){REV[id]=next;try{localStorage.setItem(LSK,JSON.stringify(REV))}catch(e){}showComp(c.i);return}
+ const s=$('#vst');s&&(s.textContent='שומר…');
+ try{await DB.collection('comparisonReviews').doc(id).set(next);REV[id]=next;showComp(c.i)}catch(err){s&&(s.textContent=err&&err.code==='permission_denied'?'אין הרשאת כתיבה':'השמירה נכשלה')}}
+$('#vcsv').addEventListener('click',async()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const lines=['unit,folio,older,newer,tool_verdict,direct_score,via_score,my_verdict,agree,note,saved_at'].concat(D.comps.filter(c=>REV[did(c)]).map(c=>{const r=REV[did(c)];return [c.uid,P[U[c.uid].pid].folio,wn(c.o),wn(c.n),VER[c.v],c.sd,c.sv,r.mine?VER[r.mine]:'',r.mine?(r.mine===c.v?'כן':'לא'):'',r.note||'',r.at||''].map(q).join(',')}));
+ const data='﻿'+lines.join('\n');const dl=window.claude?await window.claude.use('downloads'):null;
+ if(dl){try{await dl.save({filename:'oppenheim128_comparison_reviews.csv',data})}catch(e){}}else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'text/csv'}));a.download='oppenheim128_comparison_reviews.csv';a.click()}});
+
+// ---------- matches ----------
+const RELS=['אותו טקסט','אותו טקסט · חלקי','נוסח מקביל','אותו חיבור · קטע אחר','דרשה על המקור','ציטוט פסוק מהמקור','ציטוט משותף','אין קשר'];
+$('#mrel').insertAdjacentHTML('beforeend',RELS.map(r=>`<option>${r}</option>`).join(''));
+let MP=0;const MPS=100;
+function renderMatches(){const t=$('#mt').value,l=$('#ml').value,rl=$('#mrel').value,q=$('#mq').value.trim();const A=c=>c.tier==='A';
+ const rows=D.cands.filter(c=>(!t||(t==='up'?c.above:!c.above))&&(!l||(l==='lab'&&c.tid)||(l==='miss'&&c.tid&&A(c)&&!c.above)||(l==='fp'&&c.tid&&!A(c)&&c.above))&&(!rl||c.rel===rl)&&(!q||c.work.includes(q)||P[c.pid].folio.includes(q)||c.k.toLowerCase().includes(q.toLowerCase())));
+ const pages=Math.ceil(rows.length/MPS);MP=Math.min(MP,Math.max(0,pages-1));$('#mcount').textContent=`${nf(rows.length)} התאמות`;
+ $('#mtable').innerHTML=`<thead><tr><th>קטע</th><th>rank</th><th>חיבור</th><th>מראה מקום</th><th>S</th><th>p</th><th>N</th><th>C</th><th>score</th><th>תיוג</th><th>הערה</th></tr></thead><tbody>`+
+  rows.slice(MP*MPS,(MP+1)*MPS).map(c=>`<tr class="click" data-cand="${esc(c.id)}"><td>${esc(P[c.pid].folio)}</td><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="num">${c.N}</td><td class="num">${c.C}</td><td class="num">${c.score}</td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small muted">${c.tid?esc(c.note).slice(0,90):''}</td></tr>`).join('')+'</tbody>';
+ $('#mpage').innerHTML=pages>1?`<button class="b" id="mprev" ${MP?'':'disabled'}>→ הקודם</button><span class="small num">${MP+1} / ${pages}</span><button class="b" id="mnext" ${MP<pages-1?'':'disabled'}>הבא ←</button>`:''}
+['#mt','#ml','#mrel','#mq'].forEach(s=>$(s).addEventListener('input',()=>{MP=0;renderMatches()}));
+$('#mpage').addEventListener('click',e=>{if(e.target.id==='mprev'){MP--;renderMatches()}if(e.target.id==='mnext'){MP++;renderMatches()}});
+
+// ---------- SPARQL ----------
+const PFX=`PREFIX opp: <http://example.org/oppenheim128#>
+PREFIX bf: <http://id.loc.gov/ontologies/bibframe/>
+PREFIX oa: <http://www.w3.org/ns/oa#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+`;
+const EX=[
+['חיבורים: תיארוך ומספר יחידות',`SELECT ?work ?from ?to ?units ?sole WHERE {
+  ?s a opp:WitnessSummary ; opp:work ?w ; opp:units ?units ; opp:soleWitnessUnits ?sole .
+  ?w rdfs:label ?work ; opp:hasDating ?d . FILTER(lang(?work)="he")
+  ?d time:hasBeginning/time:inXSDgYear ?from ; time:hasEnd/time:inXSDgYear ?to .
+} ORDER BY DESC(?units)`],
+['זוגות חיבורים והכרעות',`SELECT ?older ?newer ?units ?direct ?via ?undetermined WHERE {
+  ?r a opp:SharedTextRelation ; opp:olderWork ?o ; opp:newerWork ?n ; opp:sharedUnits ?units ;
+     opp:directCount ?direct ; opp:viaCount ?via ; opp:undeterminedCount ?undetermined .
+  ?o rdfs:label ?older . ?n rdfs:label ?newer . FILTER(lang(?older)="he" && lang(?newer)="he")
+} ORDER BY DESC(?units) LIMIT 50`],
+['יחידות שבהן פסיקתא דרב כהנא היא העד הקרוב ביותר',`SELECT ?folio ?unit ?text WHERE {
+  ?u a opp:TextUnit ; opp:closestWitness opp:work_Pesikta_DRav_Kahanna ; oa:hasSource ?p ; rdfs:label ?unit ; rdf:value ?text .
+  ?p rdfs:label ?folio .
+} LIMIT 100`],
+['השוואות "דרך החדש" כשהחדש הוא ילקוט, וסדר התיארוך ודאי',`SELECT ?unit ?older ?newer ?via ?direct WHERE {
+  ?c a opp:PathComparison ; opp:verdict opp:verdict_via ; opp:orderCertain true ; opp:ofUnit ?u ;
+     opp:olderWitness ?o ; opp:newerWitness ?n ; opp:viaPathSupport ?via ; opp:directPathSupport ?direct .
+  ?n bf:genreForm opp:genre_anthology .
+  ?u rdfs:label ?unit . ?o rdfs:label ?older . ?n rdfs:label ?newer . FILTER(lang(?older)="he" && lang(?newer)="he")
+} ORDER BY DESC(?via) LIMIT 100`],
+['השוואות שבהן העד החדש מאוחר לאופנהיימר',`SELECT ?unit ?older ?newer ?verdict WHERE {
+  ?c a opp:PathComparison ; opp:newerIsLate true ; opp:ofUnit ?u ; opp:olderWitness ?o ; opp:newerWitness ?n ; opp:verdict ?v .
+  ?v skos:prefLabel ?verdict . ?u rdfs:label ?unit . ?o rdfs:label ?older . ?n rdfs:label ?newer .
+  FILTER(lang(?older)="he" && lang(?newer)="he" && lang(?verdict)="he")
+} LIMIT 100`],
+['התאמות מעל הסף שתויגו כלא־זהות',`SELECT ?folio ?work ?S ?relation ?note WHERE {
+  ?m a opp:Match ; opp:aboveThreshold true ; opp:inPassage ?p ; opp:byWork ?w ; opp:compositeScore ?S ; opp:manualRelation ?r .
+  OPTIONAL { ?m rdfs:comment ?note }
+  ?r skos:prefLabel ?relation . ?p rdfs:label ?folio . ?w rdfs:label ?work . FILTER(lang(?work)="he")
+  FILTER(?r != opp:rel_same && ?r != opp:rel_same_partial)
+} ORDER BY DESC(?S)`],
+['ממוצע S לפי קשר מתויג',`SELECT ?relation (COUNT(?m) AS ?n) (ROUND(AVG(?s)*100)/100 AS ?avgS) (SUM(IF(?up,1,0)) AS ?aboveThreshold) WHERE {
+  ?m a opp:Match ; opp:manualRelation ?r ; opp:compositeScore ?s ; opp:aboveThreshold ?up . ?r skos:prefLabel ?relation .
+} GROUP BY ?relation ORDER BY DESC(?n)`],
+['קטעים בלי שום התאמה מעל הסף',`SELECT ?folio (COUNT(?m) AS ?matches) (MAX(?s) AS ?bestS) WHERE {
+  ?m a opp:Match ; opp:inPassage ?p ; opp:compositeScore ?s ; opp:aboveThreshold ?up . ?p rdfs:label ?folio .
+} GROUP BY ?folio HAVING (MAX(IF(?up,1,0)) = 0) ORDER BY DESC(?bestS)`]];
+$('#qex').innerHTML=EX.map((e,i)=>`<option value="${i}">${esc(e[0])}</option>`).join('');$('#qtext').value=EX[0][1];
+$('#qex').addEventListener('change',()=>$('#qtext').value=EX[+$('#qex').value][1]);
+let OX=null,STORE=null;
+async function initSparql(){}
+async function engine(){if(STORE)return STORE;$('#qstat').textContent='טוען את המנוע ואת ה־RDF…';
+ OX=await import('./oxigraph/web.js');await OX.default({module_or_path:new URL('oxigraph/web_bg.wasm',location.href)});
+ STORE=new OX.Store();for(const f of ['oppenheim128-matryoshka.ttl','oppenheim128-matches.ttl']){const t=await (await fetch(f)).text();STORE.load(t,{format:'text/turtle',base_iri:'http://example.org/oppenheim128'})}
+ $('#qstat').textContent=`נטענו ${nf(STORE.size)} טריפלים.`;return STORE}
+$('#qrun').addEventListener('click',async()=>{const tb=$('#qres');tb.innerHTML='';try{const s=await engine();const q=$('#qtext').value;const full=/^\s*PREFIX/i.test(q)?q:PFX+q;
+ const t0=performance.now();const res=s.query(full,{results_format:'application/sparql-results+json'});const j=typeof res==='string'?JSON.parse(res):res;
+ if(j.boolean!==undefined){tb.innerHTML=`<tr><td>${j.boolean}</td></tr>`;return}
+ const vars=j.head.vars,b=j.results.bindings;const short=v=>v.type==='uri'?v.value.replace('http://example.org/oppenheim128#','opp:'):v.value;
+ tb.innerHTML=`<thead><tr>${vars.map(v=>`<th>${esc(v)}</th>`).join('')}</tr></thead><tbody>${b.slice(0,1000).map(r=>`<tr>${vars.map(v=>`<td class="small">${r[v]?esc(short(r[v])):''}</td>`).join('')}</tr>`).join('')}</tbody>`;
+ $('#qstat').textContent=`${nf(b.length)} תוצאות · ${Math.round(performance.now()-t0)} ms${b.length>1000?' · מוצגות 1000 הראשונות':''}`}
+ catch(e){$('#qstat').textContent='שגיאה: '+(e&&e.message||e)}});
+
+// ---------- db ----------
+renderWList();renderPList();drawGraph();
+try{DB=window.claude?await window.claude.use('db'):null}catch(e){DB=null}
+if(!DB){try{REV=JSON.parse(localStorage.getItem(LSK)||'{}')||{}}catch(e){REV={}}}
+if(DB){DB.collection('comparisonReviews').onSnapshot(s=>{REV={};s.docs.forEach(d=>REV[d.id]=d.data());if(!$('#t-verify').classList.contains('hidden')){renderVList()}},()=>{})}
+</script>
+</body>
+</html>

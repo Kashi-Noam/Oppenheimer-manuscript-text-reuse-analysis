@@ -1,0 +1,572 @@
+[
+  {
+    "key": "Pesikta_DRav_Kahanna",
+    "name_he": "פסיקתא דרב כהנא",
+    "name_en": "Pesikta de-Rav Kahana",
+    "type": "מדרש",
+    "date_from": 400,
+    "date_to": 550,
+    "date_he": "המאה ה-5 (עד תחילת המאה ה-6)",
+    "region": "ארץ ישראל",
+    "region_note": "מדרש אמוראי ארץ-ישראלי (לשון, חכמים ושמות מקומות)",
+    "confidence": "high",
+    "dispute": "Most scholars date it to the 5th century, but Zunz put it at c. 700 (after Leviticus Rabbah), and the EJ survey table puts it in the 500–640 block; Strack & Stemberger add that the text was not finally fixed until its first printing.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Pesikta de-Rav Kahana', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/pesikta-de-rav-kahana",
+        "says": "'A Palestinian text, probably of the fifth century', judged from its language and the rabbis and place names it mentions; the Shavuot and Simhat Torah chapters are later additions."
+      },
+      {
+        "title": "Wikipedia (English), 'Pesikta de-Rav Kahana' (cites Strack & Stemberger 1991)",
+        "url": "https://en.wikipedia.org/wiki/Pesikta_de-Rav_Kahana",
+        "says": "Probably composed in the Land of Israel; Zunz gives 700 CE, but 'other factors argue for a date of composition in the 5th or early 6th century' (citing Strack & Stemberger)."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Midrash' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0014_0_13846.html",
+        "says": "Its chronological table puts Pesikta de-Rav Kahana in the 500–640 block of the early (amoraic) period."
+      }
+    ]
+  },
+  {
+    "key": "Pesikta_Rabbati",
+    "name_he": "פסיקתא רבתי",
+    "name_en": "Pesikta Rabbati",
+    "type": "מדרש",
+    "date_from": 500,
+    "date_to": 900,
+    "date_he": "המאה ה-6–ה-7 (שכבת ילמדנו: 845 בערך)",
+    "region": "ארץ ישראל",
+    "region_note": "כל מקורותיו ארץ-ישראליים; מקום העריכה המדויק לא הוכרע",
+    "confidence": "medium",
+    "dispute": "It is a composite work: EJ says scholarly opinion favours a 6th–7th-century Palestinian origin, with the date 845 in the text applying only to the Tanhuma-Yelammedenu layer, while the Jewish Encyclopedia (via English Wikipedia) dates the whole work to c. 845.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Pesikta Rabbati', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/pesikta-rabbati",
+        "says": "'The precise date and place of compilation have not yet been fixed with certainty'; scholarly opinion favours a 6th–7th-century Palestinian origin; the date 845 in the first homily applies to the Yelammedenu stratum, and the date 1219 is a later gloss."
+      },
+      {
+        "title": "Wikipedia (English), 'Pesikta Rabbati' (text from the Jewish Encyclopedia, 1906)",
+        "url": "https://en.wikipedia.org/wiki/Pesikta_Rabbati",
+        "says": "'Composed around 845 CE'; it seems to be a combination of parts, with some homilies perhaps added later."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Midrash' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0014_0_13846.html",
+        "says": "Its table puts Pesikta Rabbati with Tanhuma, Deuteronomy Rabbah and Numbers Rabbah II in the 775–900 group of the middle period."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Tanchuma",
+    "name_he": "מדרש תנחומא (הנדפס)",
+    "name_en": "Midrash Tanhuma (printed/standard edition)",
+    "type": "מדרש",
+    "date_from": 700,
+    "date_to": 900,
+    "date_he": "המאות ה-8–ה-9 (גרעין ארץ-ישראלי מהמאות ה-6–ה-7)",
+    "region": "ארץ ישראל",
+    "region_note": "החומר המשותף לנוסחים ארץ-ישראלי (המאות ה-6–ה-7); לפי ברגמן (EJ) העריכה הסופית של הנוסח הנדפס כנראה בבבל הגאונית",
+    "confidence": "medium",
+    "dispute": "Tanhuma-Yelammedenu literature grew in strata: Bregman holds that the shared core is Palestinian from the 6th–7th century, but the printed recension took shape after the Islamic conquests and perhaps had its final redaction in geonic Babylonia; the EJ table gives 775–900.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 2nd ed., 'Tanhuma Yelammedenu' (Marc Bregman), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/tanhuma-yelammedenu",
+        "says": "The genre 'began to crystallize toward the end of the Byzantine period in Palestine (5–7th century)'; the printed Tanhuma (Constantinople 1520–22) 'seems to have undergone final redaction in geonic Babylonia'."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Tanhuma' (cites Bregman 2003)",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Tanhuma",
+        "says": "The material shared by the printed and Buber recensions comes from 6th–7th-century Palestine; 'the formation of the printed edition is dated to after the Islamic conquests'."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Midrash' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0014_0_13846.html",
+        "says": "Its table puts Tanhuma in the 775–900 group of the middle period."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Tanchuma_Buber",
+    "name_he": "מדרש תנחומא, מהדורת בובר",
+    "name_en": "Midrash Tanhuma (Buber recension)",
+    "type": "מדרש",
+    "date_from": 750,
+    "date_to": 1000,
+    "date_he": "אחרי אמצע המאה ה-8 (תלוי בשאילתות)",
+    "region": "איטליה",
+    "region_note": "נוסח אירופי (איטלקי-אשכנזי) לפי ברגמן; יש המציעים צפון איטליה (לומברדית) או דרום איטליה",
+    "confidence": "low",
+    "dispute": "Buber thought it was a 5th-century Palestinian work older than the Babylonian Talmud, but later scholars reject this: it depends on the mid-8th-century She'iltot (Townsend), and Bregman sees it as a European (Italian-Ashkenazi) recension, while others favour southern Italy.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 2nd ed., 'Tanhuma Yelammedenu' (Marc Bregman), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/tanhuma-yelammedenu",
+        "says": "Calls Tanhuma Buber (first published Vilna 1875) 'a European (Italian-Ashkenazi) recension of similar midrashic material'; gives no exact date."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Tanhuma' (cites Townsend 1989; Bregman 2003)",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Tanhuma",
+        "says": "Buber dated it to the 5th century, but others disagree; it relies on R. Ahai's mid-8th-century She'iltot (Townsend); Bregman places its origin in Lombard northern Italy, and others favour southern Italy."
+      }
+    ]
+  },
+  {
+    "key": "Eichah_Rabbah",
+    "name_he": "איכה רבה",
+    "name_en": "Lamentations Rabbah",
+    "type": "מדרש",
+    "date_from": 450,
+    "date_to": 550,
+    "date_he": "סוף המאה ה-5 בערך",
+    "region": "ארץ ישראל",
+    "region_note": "מדרש אמוראי ארץ-ישראלי; אין בו חכם מאוחר מהמאה ה-4",
+    "confidence": "high",
+    "dispute": "Herr (EJ) dates it to about the end of the 5th century, but Zunz argued for completion no earlier than the second half of the 7th century, citing an apparent allusion to the Arab empire, an argument later rejected.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Lamentations Rabbah' (M. D. Herr), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/lamentations-rabbah",
+        "says": "'Apparently redacted in Ereẓ Israel at about the end of the fifth century'; no sage later than the 4th century appears; it used the Jerusalem Talmud, Genesis Rabbah and Leviticus Rabbah."
+      },
+      {
+        "title": "Wikipedia (English), 'Lamentations Rabbah'",
+        "url": "https://en.wikipedia.org/wiki/Lamentations_Rabbah",
+        "says": "Hasan-Rokem places it in Roman Palestine 'approximately in the middle of the first millennium'; Zunz's dating to after the mid-7th century is rebutted; it was edited after the Yerushalmi."
+      },
+      {
+        "title": "Posen Library, 'What Is Lamentations Rabbah?'",
+        "url": "https://www.posenlibrary.com/node/13954",
+        "says": "'Generally dated between the fifth and sixth centuries CE', with a Palestinian redaction."
+      }
+    ]
+  },
+  {
+    "key": "Vayikra_Rabbah",
+    "name_he": "ויקרא רבה",
+    "name_en": "Leviticus Rabbah",
+    "type": "מדרש",
+    "date_from": 400,
+    "date_to": 500,
+    "date_he": "המאה ה-5",
+    "region": "ארץ ישראל",
+    "region_note": "מדרש אמוראי ארץ-ישראלי",
+    "confidence": "high",
+    "dispute": "Most scholars (EJ, Neusner) put it in the 5th century and Zunz in the mid-7th; Margulies holds that it is contemporary with Pesikta de-Rav Kahana and perhaps by the same author, while Albeck puts it somewhat later.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Leviticus Rabbah' (Joseph Heinemann), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/leviticus-rabbah",
+        "says": "'Probably composed in the fifth century in Palestine'; Margulies holds that it is contemporary with Pesikta de-Rav Kahana and Albeck that it is somewhat later."
+      },
+      {
+        "title": "Wikipedia (English), 'Leviticus Rabbah'",
+        "url": "https://en.wikipedia.org/wiki/Leviticus_Rabbah",
+        "says": "Originated in the Land of Israel; Zunz dates it to the mid-7th century, while the EJ and Neusner date it to the 5th century."
+      }
+    ]
+  },
+  {
+    "key": "Bamidbar_Rabbah",
+    "name_he": "במדבר רבה",
+    "name_en": "Numbers Rabbah",
+    "type": "מדרש",
+    "date_from": 1150,
+    "date_to": 1230,
+    "date_he": "חלק א' – לא לפני אמצע המאה ה-12; חלק ב' – המאה ה-9; צורפו בתחילת המאה ה-13",
+    "region": "לא ידוע",
+    "region_note": "חלק ב' (פרשות 15–23) הוא חומר תנחומא (ממוצא ארץ-ישראלי); חלק א' (פרשות 1–14) בנוי על מדרש ר' משה הדרשן מנרבונה (פרובנס), ולא נקבע מקום עריכתו",
+    "confidence": "medium",
+    "dispute": "The two parts differ in date and origin: Part II is a 9th-century Tanhuma-type midrash, while Part I is late (Zunz: hardly before the 12th century) and depends on Moses ha-Darshan; the two were joined by a copyist around the start of the 13th century.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Numbers Rabbah' (M. D. Herr), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/numbers-rabbah",
+        "says": "For Part I (sections 1–14), 'the middle of the 12th century seems to be indicated as the earliest possible date', with Moses ha-Darshan of Narbonne as its main source; most scholars put Part II (sections 15–23) in the 9th century; a copyist joined the two at the beginning of the 13th century."
+      },
+      {
+        "title": "Wikipedia (English), 'Numbers Rabbah' (Jewish Encyclopedia-based)",
+        "url": "https://en.wikipedia.org/wiki/Numbers_Rabbah",
+        "says": "Zunz says it is hardly older than the 12th century, and the EJ also gives the 12th century; it was unknown to Nathan b. Jehiel and Rashi but cited by Nahmanides; the two parts differ in origin."
+      }
+    ]
+  },
+  {
+    "key": "Shir_HaShirim_Rabbah",
+    "name_he": "שיר השירים רבה",
+    "name_en": "Song of Songs Rabbah",
+    "type": "מדרש",
+    "date_from": 500,
+    "date_to": 640,
+    "date_he": "אמצע המאה ה-6 בערך",
+    "region": "ארץ ישראל",
+    "region_note": "מדרש אמוראי ארץ-ישראלי",
+    "confidence": "medium",
+    "dispute": "EJ dates it to about the mid-6th century (its table: 500–640), the Posen Library to between the 6th and 8th centuries, and the Jewish Encyclopedia-based Wikipedia article to the end of the 8th century (reasoning that it predates Pesikta Rabbati, c. 845).",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Song of Songs Rabbah', on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/song-of-songs-rabbah",
+        "says": "'The work was apparently redacted in Ereẓ Israel about the middle of the sixth century C.E.'"
+      },
+      {
+        "title": "Wikipedia (English), 'Song of Songs Rabbah' (Jewish Encyclopedia-based)",
+        "url": "https://en.wikipedia.org/wiki/Song_of_Songs_Rabbah",
+        "says": "The date cannot be fixed exactly; it is later than Pesikta de-Rav Kahana (Theodor) and older than Pesikta Rabbati, hence 'around the end of the 8th century'; Simon Duran calls it a 'Judean aggadic collection'."
+      },
+      {
+        "title": "Posen Library, 'What Is Song of Songs Rabbah?'",
+        "url": "https://www.posenlibrary.com/node/13955",
+        "says": "'Final redaction sometime between the sixth and eighth centuries CE', with a largely Palestinian perspective."
+      }
+    ]
+  },
+  {
+    "key": "Bereishit_Rabbah",
+    "name_he": "בראשית רבה",
+    "name_en": "Genesis Rabbah",
+    "type": "מדרש",
+    "date_from": 400,
+    "date_to": 450,
+    "date_he": "המחצית הראשונה של המאה ה-5",
+    "region": "ארץ ישראל",
+    "region_note": "המדרש האמוראי הקדום ביותר; עריכה ארץ-ישראלית (לשון, חכמים, רמזים היסטוריים)",
+    "confidence": "high",
+    "dispute": "Scholars broadly agree on an early-5th-century Palestinian redaction (Strack & Stemberger: 400–450; EJ: beginning of the 5th century; Elbaum: early 5th century), while recognising later additions; its literary relationship to the Yerushalmi is debated.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Genesis Rabbah' (cites Strack & Stemberger 1996, pp. 279–280)",
+        "url": "https://en.wikipedia.org/wiki/Genesis_Rabbah",
+        "says": "Strack & Stemberger: 'composed between 400 and 450'; Elbaum: early 5th century; generally dated to the 5th century, with some later additions."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 2nd ed., 'Genesis Rabbah' (M. D. Herr & S. G. Wald), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/genesis-rabbah",
+        "says": "'Edited in Ereẓ Israel, probably in the beginning of the fifth century'; it is 'the earliest amoraic aggadic Midrash extant'."
+      }
+    ]
+  },
+  {
+    "key": "Kohelet_Rabbah",
+    "name_he": "קהלת רבה",
+    "name_en": "Ecclesiastes Rabbah",
+    "type": "מדרש",
+    "date_from": 500,
+    "date_to": 800,
+    "date_he": "המאה ה-6–ה-8",
+    "region": "ארץ ישראל",
+    "region_note": "נערך בארץ ישראל (הירשמן); מבוסס על מדרשים ארץ-ישראליים",
+    "confidence": "medium",
+    "dispute": "Its critical editor Hirshman dates it to 6th–7th-century Eretz Israel, but Herr (EJ) puts it 'not earlier than the eighth century'; it was in any case known by the 10th century (Solomon b. Judah ha-Bavli) and to the Arukh (c. 1100).",
+    "sources": [
+      {
+        "title": "Schechter Institute, Marc Hirshman (ed.), Midrash Kohelet Rabbah 1–6 (2016), publisher's description",
+        "url": "https://schechter.edu/publication/midrash-kohelet-rabbah-1-6-hebrew/",
+        "says": "Kohelet Rabbah 'was edited in Eretz Yisrael in the 6th or 7th century'."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Ecclesiastes Rabbah' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0006_0_05532.html",
+        "says": "'Redacted apparently not earlier than the eighth century C.E.'; it was used in the second half of the 10th century and quoted in the Arukh."
+      },
+      {
+        "title": "Wikipedia (English), 'Ecclesiastes Rabbah'",
+        "url": "https://en.wikipedia.org/wiki/Ecclesiastes_Rabbah",
+        "says": "Dates the compiler to the 6th–8th centuries; Zunz counts it among the middle midrashim."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Tehillim",
+    "name_he": "מדרש תהלים (שוחר טוב)",
+    "name_en": "Midrash Tehillim (Shoher Tov)",
+    "type": "מדרש",
+    "date_from": 650,
+    "date_to": 1000,
+    "date_he": "החלק העיקרי (תהלים א–קיח): המאות ה-7–ה-9/10; ההשלמה (קיט–קנ): המאה ה-13",
+    "region": "ארץ ישראל",
+    "region_note": "החלק העיקרי ארץ-ישראלי (לשון, אמוראים); צונץ הציע איטליה; ההשלמה לפרקים קיט–קנ מאוחרת (אולי ר' מתתיה היצהרי מסרגוסה)",
+    "confidence": "low",
+    "dispute": "It is a layered work: Buber argued for an early Palestinian origin, Zunz for redaction in Italy late in the geonic period, and Albeck for a gradual growth over several centuries; the supplement on Psalms 119–150 is a 13th-century addition.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrash Tehillim', on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/midrash-tehillim",
+        "says": "Zunz: edited in Italy in the last centuries of the geonic period; Buber: ancient and Palestinian; Albeck: groups of midrashim composed over 'some centuries'; the concluding section dates to the 13th century."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Tehillim' (cites Friedeman & Cuénod 2021)",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Tehillim",
+        "says": "Psalms 1–118 reached final form between the 7th and 9th centuries; Psalms 119–150 were compiled in the 13th century; edited in Palestine, and Zunz's Italy thesis is rejected."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Midrash' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0014_0_13846.html",
+        "says": "Its table puts Midrash Tehillim I in the middle period (640–1000; the Encyclopedia.com rendering shows the 900–1000 block) and Midrash Tehillim II in the late period (11th–12th centuries)."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Mishlei",
+    "name_he": "מדרש משלי",
+    "name_en": "Midrash Mishlei (Proverbs)",
+    "type": "מדרש",
+    "date_from": 750,
+    "date_to": 900,
+    "date_he": "המאה ה-8–ה-9 (אחרי חתימת הבבלי)",
+    "region": "בבל",
+    "region_note": "לפי בובר: בבל (משתמש בבבלי ולא בירושלמי), ולא איטליה כדעת צונץ; המקום שנוי במחלוקת",
+    "confidence": "low",
+    "dispute": "Buber put it in 8th-century Babylonia, after the Babylonian Talmud, citing apparent quotations in geonic works (Albeck doubted these), while Zunz put it in 11th-century Italy; EJ holds that it 'cannot be as late as the end of the geonic period'.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrash Proverbs', on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/midrash-proverbs-or-aggadat-proverbs",
+        "says": "Buber: compiled in Babylon (not Italy, as Zunz held), after the final editing of the Babylonian Talmud; the work 'cannot be as late as the end of the geonic period'."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Mishlei'",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Mishlei",
+        "says": "'The exact time of composition cannot be determined'; Zunz says mid-11th century (doubtful, since Hananel and Nathan of Rome cite it); Buber says 8th century; the editor was probably Babylonian."
+      },
+      {
+        "title": "Sefaria, 'Midrash Mishlei' (About This Text)",
+        "url": "https://prod.sefaria.org.il/Midrash_Mishlei",
+        "says": "Composed 'Talmudic Israel/Babylon, c.750 – c.850 CE'; 'the exact time and place of composition are subject to debate'."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Aggadah",
+    "name_he": "מדרש אגדה (מהדורת בובר, 1894)",
+    "name_en": "Midrash Aggadah (ed. Buber 1894, on the Torah)",
+    "type": "מדרש",
+    "date_from": 1100,
+    "date_to": 1200,
+    "date_he": "המאה ה-12",
+    "region": "לא ידוע",
+    "region_note": "קשור לחוג ר' משה הדרשן (נרבונה); ספריא: צרפת של ימי הביניים; כתב היד היחיד נמצא בחלב",
+    "confidence": "medium",
+    "dispute": "The 12th-century date (EJ) is broadly accepted, though Sefaria gives a range of c. 1020–1220 and suggests the 12th–13th century; the place of composition (Provence/France, through the Moses ha-Darshan link, or elsewhere) is not settled.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrashim, Smaller' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/midrashim-smaller",
+        "says": "Midrash Aggadah was 'compiled apparently in the 12th century' and published from the Aleppo manuscript by S. Buber (1894)."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Aggadah'",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Aggadah",
+        "says": "Dated to around 1020–1220 CE and associated with R. Moses ha-Darshan (Provence); found in a unique Aleppo manuscript."
+      },
+      {
+        "title": "Sefaria, 'Midrash Aggadah' (About This Text)",
+        "url": "https://prod.sefaria.org.il/Midrash_Aggadah",
+        "says": "Composed 'c.1020 – c.1220 CE', most likely in the 12th or 13th century, in medieval France."
+      }
+    ]
+  },
+  {
+    "key": "Ruth_Rabbah",
+    "name_he": "רות רבה",
+    "name_en": "Ruth Rabbah (incl. Lerner's edition, key Ruth_Rabbah_Lerner)",
+    "type": "מדרש",
+    "date_from": 500,
+    "date_to": 640,
+    "date_he": "המאה ה-6 (לא לפני)",
+    "region": "ארץ ישראל",
+    "region_note": "נערך בארץ ישראל; מקורותיו ירושלמי, בראשית רבה, ויקרא רבה, איכה רבה ופסיקתא דרב כהנא",
+    "confidence": "medium",
+    "dispute": "It is placed among the early Palestinian midrashim, but because it draws on Pesikta de-Rav Kahana EJ dates it no earlier than the 6th century (its table: 500–640); Zunz's claim that it used the Babylonian Talmud was disproved by Albeck.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Ruth Rabbah', on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/ruth-rabbah",
+        "says": "Its sages are no later than the end of the 4th century, but because it drew on Pesikta de-Rav Kahana 'it is difficult to assign the compilation … to a date prior to the sixth century'; it 'was redacted in Ereẓ Israel'."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Midrash' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0014_0_13846.html",
+        "says": "Its table groups Ruth Rabbah with Pesikta de-Rav Kahana and Song of Songs Rabbah in the 500–640 block."
+      },
+      {
+        "title": "Wikipedia (English), 'Ruth Rabbah'",
+        "url": "https://en.wikipedia.org/wiki/Ruth_Rabbah",
+        "says": "One of the earlier midrashim, contemporary with or shortly after Song of Songs Rabbah; Palestinian, with no Babylonian aggadot."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Shmuel",
+    "name_he": "מדרש שמואל",
+    "name_en": "Midrash Samuel",
+    "type": "מדרש",
+    "date_from": 900,
+    "date_to": 1100,
+    "date_he": "המאה ה-10–ה-11",
+    "region": "ארץ ישראל",
+    "region_note": "נערך בארץ ישראל (מקורות, אמוראים ותנאים ארץ-ישראליים)",
+    "confidence": "low",
+    "dispute": "Zunz (followed by EJ) dated it no earlier than the 11th century, but Buber refuted Zunz's arguments, and Strack & Stemberger (via English Wikipedia) hold that it was composed well before the 11th century and later revised, since Samuel b. Hofni and Nissim Gaon cite it.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrash Samuel', on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/midrash-samuel",
+        "says": "'Zunz's assumption that the work is to be dated no earlier than the 11th century appears probable'; 'overwhelming evidence … that it was edited in Palestine'."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Shmuel (aggadah)' (cites Strack & Stemberger 1991)",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Shmuel_(aggadah)",
+        "says": "The compiler lived in the Land of Israel; Zunz put him in the first half of the 11th century, which Buber refuted; Strack & Stemberger argue for composition well before the 11th century with later revision."
+      }
+    ]
+  },
+  {
+    "key": "Aggadat_Bereshit",
+    "name_he": "אגדת בראשית",
+    "name_en": "Aggadat Bereshit",
+    "type": "מדרש",
+    "date_from": 850,
+    "date_to": 1000,
+    "date_he": "המאה ה-9–ה-10",
+    "region": "איטליה",
+    "region_note": "לפי פרויקט מכללת הרצוג: כנראה דרום איטליה; Teugels (2021) בוחנת מחדש את מוצאו (הקשר ביזנטי)",
+    "confidence": "medium",
+    "dispute": "Herr (EJ) dates the editing to about the 10th century on grounds of style and anti-Christian polemic, while others (Herzog College, Sefaria) say the 9th century; its provenance (southern Italy or Byzantium, as a 'Tanhuma satellite') is under reassessment (Teugels 2021).",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Aggadat Bereshit' (M. D. Herr), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/dictionaries-thesauruses-pictures-and-press-releases/aggadat-bereshit",
+        "says": "The evidence 'would appear to place its date of editing at about the tenth century'; no place is given."
+      },
+      {
+        "title": "Herzog College, 'Midrash Aggadat Bereshit' (research page)",
+        "url": "https://old.herzog.ac.il/en/?p=77344",
+        "says": "The midrash 'was probably created in the ninth century in southern Italy'."
+      },
+      {
+        "title": "Teugels, 'The Provenance of Aggadat Bereshit: A reassessment of the origins of the work as a Tanchuma satellite' (Brill 2021), PThU record",
+        "url": "https://pure.pthu.nl/en/publications/the-provenance-of-aggadat-bereshit-a-reassessment-of-the-origins-/",
+        "says": "Record only, with no abstract; keywords include 'Byzantium'. The chapter reassesses its origin as a Tanhuma satellite."
+      }
+    ]
+  },
+  {
+    "key": "Esther_Rabbah",
+    "name_he": "אסתר רבה",
+    "name_en": "Esther Rabbah",
+    "type": "מדרש",
+    "date_from": 1100,
+    "date_to": 1300,
+    "date_he": "חלק א' (פרשות א–ו) – עד תחילת המאה ה-6; חלק ב' (ז–י) – המאה ה-11; צורפו במאה ה-12–ה-13",
+    "region": "ארץ ישראל",
+    "region_note": "חלק א' מדרש אמוראי ארץ-ישראלי; מקום חיבור חלק ב' (השואב מיוסיפון) לא נקבע",
+    "confidence": "medium",
+    "dispute": "Herr (EJ) and Strack & Stemberger agree that it has two parts: an older Palestinian part (c. 500) and a younger part (11th century, drawing on Yosippon), joined in the 12th or 13th century; Buber dated the whole after Yosippon.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Esther Rabbah' (M. D. Herr), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/esther-rabbah",
+        "says": "Esther Rabbah I (sections 1–6) was 'redacted in Ereẓ Israel not later than the beginning of the sixth century'; Esther Rabbah II (7–10) 'about the 11th century'; the two were 'apparently combined by a copyist in the 12th or 13th century'."
+      },
+      {
+        "title": "Wikipedia (English), 'Esther Rabbah' (cites Strack & Stemberger 1991)",
+        "url": "https://en.wikipedia.org/wiki/Esther_Rabbah",
+        "says": "According to Strack & Stemberger, it has two parts combined in the 12th or 13th century: an older Palestinian part from c. 500 CE and a younger part, drawing on Yosippon, from the 11th century."
+      }
+    ]
+  },
+  {
+    "key": "Sifrei_Aggadah_on_Esther",
+    "name_he": "ספרי דאגדתא על אסתר (בובר, 1886)",
+    "name_en": "Sifrei de-Aggadeta al Megillat Esther (ed. Buber 1886)",
+    "type": "ילקוט / אוסף",
+    "date_from": 800,
+    "date_to": 1200,
+    "date_he": "רכיבים מהמאה ה-9 בערך עד המאה ה-12",
+    "region": "לא ידוע",
+    "region_note": "קובץ מודרני של בובר משלושה מדרשים: מדרש אבא גוריון (לא אחרי המאה ה-9 / לפני 1050), פנים אחרים (לא לפני המאה ה-12) ולקח טוב לר' טוביה בן אליעזר (סוף המאה ה-11, הבלקן/ביזנטיון)",
+    "confidence": "low",
+    "dispute": "This is Buber's 19th-century collection of three separate midrashim, each dated differently; even for Abba Gurion opinions differ ('no later than the 9th century', per Lerner, versus 'before 1050', per the Academy of the Hebrew Language).",
+    "sources": [
+      {
+        "title": "Sefaria, 'Sifrei Aggadah on Esther' (About This Text)",
+        "url": "https://prod.sefaria.org.il/Sifrei_Aggadah_on_Esther",
+        "says": "A collection of three midrashim on Esther prepared by Buber: Midrash Abba Gurion, Midrash Panim Aherim and Midrash Lekah Tov. It gives the place as 'Lviv' (Buber's place of work) and no composition date."
+      },
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrashim, Smaller', on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/midrashim-smaller",
+        "says": "Midrash Panim Aherim le-Esther (version A) 'was redacted not earlier than the 12th century', using Esther Rabbah II and Abba Guryon; Buber published it in the Sifrei … Esther."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Abba Gorion' / EJ 'Midrash Lekah Tov' (JVL)",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Abba_Gorion",
+        "says": "Abba Gorion: 'no later than the ninth century' (Lerner) or 'before 1050' (Academy of the Hebrew Language). EJ (https://www.jewishvirtuallibrary.org/midrash-leka-x1e25-tov) calls Lekah Tov 'a late 11th-century Midrash' whose author lived in the Balkans; its Esther portion was published by Buber in the Sifrei de-Aggadata (1886)."
+      }
+    ]
+  },
+  {
+    "key": "Tanna_Debei_Eliyahu_Rabbah",
+    "name_he": "תנא דבי אליהו (סדר אליהו רבה)",
+    "name_en": "Tanna de-Vei Eliyahu (Seder Eliyahu Rabbah)",
+    "type": "מדרש",
+    "date_from": 700,
+    "date_to": 1000,
+    "date_he": "המאה ה-8–ה-10 (לפי רוב הדעות; הוצעו תאריכים מהמאה ה-3 עד ה-10)",
+    "region": "לא ידוע",
+    "region_note": "הוצעו בבל (פרידמן), ארץ ישראל, איטליה/רומי (גידמן, דרנבורג, גרץ); לא הוכרע",
+    "confidence": "low",
+    "dispute": "It has been dated 'almost anywhere between the third and tenth centuries' (Elbaum, EJ): Friedmann and Margalioth date the core to the 3rd century; Mann and Epstein to the end of the amoraic era; Aptowitzer to the 9th century; Rapoport and Zunz to the 10th (internal reckoning points to 968–984). Albeck holds only that it is certainly before the 9th century, and its place (Babylonia, Palestine or Italy) is disputed.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Tanna de-Vei Eliyahu' (Jacob Elbaum), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/tanna-de-vei-eliyahu",
+        "says": "The date and place are unresolved, with proposals 'almost anywhere between the third and tenth centuries' (Rapoport and Zunz: 10th; Friedmann and Margalioth: 3rd; Mann and Epstein: end of the amoraic era; Aptowitzer: 9th); Albeck: compiled before the 9th century."
+      },
+      {
+        "title": "Wikipedia (English), 'Tanna Devei Eliyahu' (Jewish Encyclopedia-based)",
+        "url": "https://en.wikipedia.org/wiki/Tanna_Devei_Eliyahu",
+        "says": "Composed around the end of the 10th century (internal chronology points to 968–984); place debated: Babylonia (Friedmann), Palestine, or Italy/Rome (Güdemann, Derenbourg, Grätz)."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Midrash' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0014_0_13846.html",
+        "says": "Its table puts Tanna de-Vei Eliyahu in the 640–900 block of the middle period."
+      }
+    ]
+  },
+  {
+    "key": "Mishnat_Rabbi_Eliezer",
+    "name_he": "משנת רבי אליעזר (מדרש ל\"ב מידות)",
+    "name_en": "Mishnat Rabbi Eliezer (Midrash of 32 Middot / Midrash Agur)",
+    "type": "מדרש",
+    "date_from": 700,
+    "date_to": 900,
+    "date_he": "אמצע המאה ה-8 בערך",
+    "region": "ארץ ישראל",
+    "region_note": "לפי הר (EJ): כנראה חובר בארץ ישראל, בערך בזמן פרקי דרבי אליעזר",
+    "confidence": "low",
+    "dispute": "EJ dates the midrash to about the mid-8th century in Eretz Israel (its table: 640–900); the attached Baraita of 32 Middot is traditionally tannaitic, but Zucker argued it was written by Samuel b. Hofni in the 10th century, which Greenbaum disputed.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Midrashim, Smaller' (M. D. Herr), entry 'Midrash Agur', on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/midrashim-smaller",
+        "says": "Midrash Agur (also called Mishnat R. Eliezer or Midrash of 32 Middot) 'was probably composed in Ereẓ Israel, more or less contemporaneously with Pirkei de-R. Eliezer … about the middle of the eighth century'."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Midrash' (M. D. Herr), on Jewish Virtual Library",
+        "url": "https://jewishvirtuallibrary.org/jsource/judaica/ejud_0002_0014_0_13846.html",
+        "says": "Its table puts Mishnat R. Eliezer (Midrash Agur) in the 640–900 block of the middle period."
+      },
+      {
+        "title": "Wikipedia (English), 'Baraita on the Thirty-two Rules'",
+        "url": "https://en.wikipedia.org/wiki/Baraita_on_the_Thirty-two_Rules",
+        "says": "The Baraita of 32 rules is traditionally c. 150 CE (school of R. Eliezer b. Jose), with interpolations; Zucker argued it was written only in the 10th century by Samuel b. Hofni, and Greenbaum challenged him."
+      }
+    ]
+  }
+]

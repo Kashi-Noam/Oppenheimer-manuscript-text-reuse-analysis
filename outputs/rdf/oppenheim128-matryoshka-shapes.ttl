@@ -1,0 +1,97 @@
+@prefix bf: <http://id.loc.gov/ontologies/bibframe/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix opp: <http://example.org/oppenheim128#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+opp:AttestationShape a sh:NodeShape ;
+    sh:property [ sh:minCount 1 ;
+            sh:path opp:viaSegment ],
+        [ sh:class bf:Work ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:byWork ],
+        [ sh:class opp:TextUnit ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:ofUnit ] ;
+    sh:targetClass opp:Attestation .
+
+opp:DatingShape a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path time:hasEnd ],
+        [ sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path dcterms:date ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path time:hasBeginning ] ;
+    sh:targetClass opp:DatingAssertion .
+
+opp:PathComparisonShape a sh:NodeShape ;
+    sh:property [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:ofUnit ],
+        [ sh:datatype xsd:decimal ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:viaPathSupport ],
+        [ sh:class bf:Work ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:newerWitness ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:verdict ],
+        [ sh:datatype xsd:decimal ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:directPathSupport ],
+        [ sh:class bf:Work ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:olderWitness ] ;
+    sh:targetClass opp:PathComparison .
+
+opp:SharedTextShape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:sharedUnits ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:olderWork ],
+        [ sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:newerWork ] ;
+    sh:targetClass opp:SharedTextRelation .
+
+opp:TextUnitShape a sh:NodeShape ;
+    sh:property [ sh:class bf:Work ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:earliestWitness ],
+        [ sh:class opp:Passage ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path oa:hasSource ],
+        [ sh:class opp:TokenPositionSelector ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path oa:hasSelector ] ;
+    sh:targetClass opp:TextUnit .
+
+opp:WorkShape a sh:NodeShape ;
+    sh:property [ sh:class opp:DatingAssertion ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:path opp:hasDating ],
+        [ sh:minCount 1 ;
+            sh:path rdfs:label ] ;
+    sh:targetClass bf:Work .
+

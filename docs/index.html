@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>אופנהיימר 128 · שימוש חוזר בטקסט</title>
+<style>
+:root{--bg:#f7f6f2;--surface:#fff;--ink:#1d1c1a;--ink-2:#55524c;--line:#e2dfd7;--accent:#2f5d8a}
+@media (prefers-color-scheme:dark){:root{--bg:#161615;--surface:#1f1f1d;--ink:#ecebe7;--ink-2:#b9b6af;--line:#34332f;--accent:#86b2dd}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Noto Sans Hebrew","Segoe UI","Arial Hebrew",Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 16px}
+h1{font-size:28px;margin:0 0 6px}p{color:var(--ink-2);margin:0 0 22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+a.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;color:inherit;text-decoration:none}
+a.card:hover{border-color:var(--accent)}a.card b{display:block;font-size:18px;color:var(--accent);margin-bottom:4px}a.card span{color:var(--ink-2);font-size:14px}
+footer{margin-top:28px;font-size:13px;color:var(--ink-2)}footer a{color:var(--accent)}
+</style>
+</head>
+<body><main>
+<h1>Bodleian MS. Oppenheim Add. 4° 128</h1>
+<p>תוצאות ניתוח השימוש החוזר בטקסט: התאמות ACT, ציון משוכלל ותיוג ידני, תיארוך החיבורים ו"מטריושקה" של ציטוטים.</p>
+<div class="cards">
+ <a class="card" href="explorer/"><b>סייר הנתונים</b><span>חיבורים, קטעים, בדיקת השוואות, כל ההתאמות ושאילתות SPARQL.</span></a>
+ <a class="card" href="graph/"><b>גרף המטריושקה</b><span>החיבורים על ציר הזמן והקשתות ביניהם.</span></a>
+ <a class="card" href="report/"><b>דוח התיוג והרף</b><span>487 הזוגות המתויגים, הרגרסיה הלוגיסטית והרף S ≥ 21.14.</span></a>
+</div>
+<footer>הקוד והנתונים: <a href="https://github.com/Kashi-Noam/Oppenheimer-manuscript-text-reuse-analysis">GitHub</a></footer>
+</main></body></html>

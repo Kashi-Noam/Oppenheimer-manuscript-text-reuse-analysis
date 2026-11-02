@@ -1,0 +1,457 @@
+[
+  {
+    "key": "Yalkut_Shimoni_on_Torah",
+    "name_he": "ילקוט שמעוני (תורה)",
+    "name_en": "Yalkut Shimoni on Torah",
+    "type": "ילקוט / אוסף",
+    "date_from": 1200,
+    "date_to": 1308,
+    "date_he": "המאה ה-13 (לפני כ\"י אוקספורד משנת 1308)",
+    "region": "אשכנז",
+    "region_note": "מיוחס לר' שמעון הדרשן; לפי Prinz ומסורת יהודי פרנקפורט – מפרנקפורט; צונץ: דרום גרמניה",
+    "confidence": "medium",
+    "dispute": "The 13th-century dating (Zunz, Epstein) prevails, but Rapoport put it in the 11th century, Aptowitzer in the mid-12th, and Gaster in 14th-century Spain; the author's identity (Simeon ha-Darshan vs. Simeon Kara) and his Frankfurt origin are also uncertain.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Yalkut Shimoni', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/yalkut-shimoni",
+        "says": "Dates it to the 13th century (Zunz's dating 'prevails'; Gaster's 14th-c. Spain and Aptowitzer's mid-12th c. not convincing); author Simeon ha-Darshan (Epstein), possibly of Frankfurt (Prinz); mentions an Oxford manuscript copied in 1308 and Azariah de' Rossi's manuscript written in 1310."
+      },
+      {
+        "title": "Wikipedia (English), 'Yalkut Shimoni' (based on the Jewish Encyclopedia)",
+        "url": "https://en.wikipedia.org/wiki/Yalkut_Shimoni",
+        "says": "Author uncertain; Rapoport's 11th-century dating 'untenable'; Epstein inclines to agree with Zunz that the author flourished in the early 13th century; a manuscript known to Azariah dei Rossi existed in 1310."
+      }
+    ]
+  },
+  {
+    "key": "Yalkut_Shimoni_on_Nach",
+    "name_he": "ילקוט שמעוני (נביאים וכתובים)",
+    "name_en": "Yalkut Shimoni on Nach",
+    "type": "ילקוט / אוסף",
+    "date_from": 1200,
+    "date_to": 1308,
+    "date_he": "המאה ה-13 (לפני כ\"י אוקספורד משנת 1308)",
+    "region": "אשכנז",
+    "region_note": "אותו חיבור כמו ילקוט שמעוני על התורה; מיוחס לר' שמעון הדרשן (פרנקפורט?)",
+    "confidence": "medium",
+    "dispute": "Same as Yalkut Shimoni on Torah: 13th century is the majority view (Zunz, Epstein), with outlier datings from the 11th to the 14th century; no source seen dates the Nach part separately.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Yalkut Shimoni', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/yalkut-shimoni",
+        "says": "The whole Yalkut (Torah and Nach) is dated to the 13th century; Oxford manuscript copied 1308; author Simeon ha-Darshan, possibly of Frankfurt."
+      },
+      {
+        "title": "Wikipedia (English), 'Yalkut Shimoni'",
+        "url": "https://en.wikipedia.org/wiki/Yalkut_Shimoni",
+        "says": "Early 13th century per Zunz/Epstein; manuscript known to Azariah dei Rossi existed in 1310."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_HaGadol",
+    "name_he": "מדרש הגדול",
+    "name_en": "Midrash HaGadol",
+    "type": "ילקוט / אוסף",
+    "date_from": 1300,
+    "date_to": 1399,
+    "date_he": "המאה ה-14 (יש המקדימים למאה ה-13)",
+    "region": "תימן",
+    "region_note": "דוד בן עמרם העדני מעדן; כל כתבי היד ממוצא תימני",
+    "confidence": "medium",
+    "dispute": "Most recent scholarship (Higger; Strack & Stemberger; Ratzaby, who has Adani corresponding in 1346/1352) puts it in the 14th century, but the EJ entry 'Midrash ha-Gadol' calls it a 13th-century work; Fisch's attribution to Abraham Maimonides (Egypt) is considered weakly attested.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Midrash HaGadol' (cites Higger 1934 JQR; Strack & Stemberger 1991; Fisch 1940)",
+        "url": "https://en.wikipedia.org/wiki/Midrash_HaGadol",
+        "says": "Written by David ben Amram Adani of Yemen (14th century), dated to the late 14th century by Higger; via Strack & Stemberger, 'modern scholars almost uniformly attribute the work in its entirety to David bar Amram al-Adani' and the attribution to Abraham Maimonides is 'only extremely weakly attested'."
+      },
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrash ha-Gadol', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/midrash-ha-gadol",
+        "says": "'A 13th-century rabbinic work on the Pentateuch, emanating from Yemen'; 'now certain that it was written by a native of Aden, David b. Amram Adani.'"
+      },
+      {
+        "title": "Wikipedia (English), 'David ben Amram Adani' (cites Ratzaby, EJ 1971 and 1989)",
+        "url": "https://en.wikipedia.org/wiki/David_ben_Amram_Adani",
+        "says": "Adani is a 14th-century figure; Yehoshua ha-Nagid corresponded with him in 1346, and he asked about a calendar cycle beginning 1352."
+      }
+    ]
+  },
+  {
+    "key": "Bereshit_Rabbati",
+    "name_he": "בראשית רבתי",
+    "name_en": "Bereshit Rabbati",
+    "type": "ילקוט / אוסף",
+    "date_from": 1000,
+    "date_to": 1199,
+    "date_he": "המאה ה-11 (ר' משה הדרשן) – עריכה מאוחרת יותר, כנראה המאה ה-11/12",
+    "region": "פרובנס",
+    "region_note": "נרבונה – בית מדרשו של ר' משה הדרשן (מחצית ראשונה של המאה ה-11)",
+    "confidence": "low",
+    "dispute": "Zunz attributed it to Moses ha-Darshan himself, while Epstein and Albeck see it as an abridgment by a later anonymous compiler who used Moses' work (no firm date for that final compilation was found in the sources seen).",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Genesis Rabbati' (J. Elbaum), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/genesis-rabbati",
+        "says": "Usually ascribed to Moses ha-Darshan of Narbonne (first half of the 11th century); published from the only extant manuscript by Albeck (Jerusalem, 1940); Epstein (followed by Albeck) held it is an abridgment of 'the large Genesis Rabbah', which was the work of an anthologist who used some of Moses' work."
+      },
+      {
+        "title": "Wikipedia (English), 'Moshe ha-Darshan'",
+        "url": "https://en.wikipedia.org/wiki/Moshe_ha-Darshan",
+        "says": "Moses ha-Darshan c. early 11th century, head of the yeshiva of Narbonne; Zunz holds the midrash was his work, Epstein that its final compiler was 'certainly not Moses ha-Darshan'."
+      },
+      {
+        "title": "Sefaria, 'Bereshit Rabbati' (About this text)",
+        "url": "https://www.sefaria.org/Bereshit_Rabbati",
+        "says": "Often attributed to 11th-century R. Moshe HaDarshan; may have been compiled by a later editor."
+      }
+    ]
+  },
+  {
+    "key": "Otzar_Midrashim",
+    "name_he": "אוצר מדרשים (מהדורת י\"ד אייזנשטיין)",
+    "name_en": "Otzar Midrashim (ed. J.D. Eisenstein)",
+    "type": "ילקוט / אוסף",
+    "date_from": 1915,
+    "date_to": 1915,
+    "date_he": "1915 (תרע\"ה), ניו יורק",
+    "region": "ארצות הברית",
+    "region_note": "אוסף מודפס בהוצאת י\"ד אייזנשטיין, ניו יורק; המדרשים הקטנים שבו עצמם מתקופות ומקומות שונים",
+    "confidence": "high",
+    "dispute": "No dispute over the year 1915 (a 1928 reissue exists); the place New York is implied by Eisenstein's New York activity but none of the pages consulted states the imprint place explicitly.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Julius Eisenstein'",
+        "url": "https://en.wikipedia.org/wiki/Julius_Eisenstein",
+        "says": "Lists 'Otzar Midrashim (1915)', an anthology / library of 200 minor midrashim."
+      },
+      {
+        "title": "The Online Books Page (UPenn), J.D. Eisenstein",
+        "url": "https://onlinebooks.library.upenn.edu/webbin/who/Eisenstein%2c%20Judah%20David%2c%201854%2d1956",
+        "says": "Catalog entries 'Ozar midrashim. A library of two hundred minor midrashim' (1915), publisher J.D. Eisenstein; also a 1928 Reznick, Menshel edition."
+      },
+      {
+        "title": "Sefaria, 'Otzar Midrashim'",
+        "url": "https://prod.sefaria.org.il/Otzar_Midrashim",
+        "says": "Composed: 1915 CE."
+      }
+    ]
+  },
+  {
+    "key": "Ein_Yaakov_Glick_Edition",
+    "name_he": "עין יעקב (ר' יעקב ן' חביב)",
+    "name_en": "Ein Yaakov (Jacob ibn Habib)",
+    "type": "ילקוט / אוסף",
+    "date_from": 1500,
+    "date_to": 1516,
+    "date_he": "ראשית המאה ה-16; דפוס ראשון 1516",
+    "region": "יוון",
+    "region_note": "סלוניקי (האימפריה העות'מאנית); המחבר יליד זמורה שבספרד; הודפס בבית דפוס יהודה גדליה; בנו ר' לוי השלים",
+    "confidence": "high",
+    "dispute": "No real dispute: printing began in 1516 and the author died as the first two orders appeared, so his son Levi completed the remaining orders; the compilation itself rests on the Babylonian Talmud.",
+    "sources": [
+      {
+        "title": "Jewish Encyclopedia (1906), 'Ḥabib, Jacob (ben Solomon) ibn'",
+        "url": "https://www.jewishencyclopedia.com/articles/6984",
+        "says": "Born at Zamora c. 1460, died at Salonica 1516; publication began in 1516 in the press of Judah Gedaliah; his son R. Levi completed it."
+      },
+      {
+        "title": "Wikipedia (English), 'Jacob ibn Habib'",
+        "url": "https://en.wikipedia.org/wiki/Jacob_ibn_Habib",
+        "says": "c. 1460–1516; publication began in 1516 at the press of Judah Gedaliah; he died in Salonica as the first two orders came off the press; his son Levi completed it."
+      },
+      {
+        "title": "Chabad.org, 'What Is Ein Yaakov'",
+        "url": "https://www.chabad.org/library/article_cdo/aid/4737627/jewish/What-Is-Ein-Yaakov.htm",
+        "says": "Compiled by the Spanish-born R. Yaakov ibn Habib (d. 1516), completed by his son R. Levi; first printed in Salonica and Venice."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Lekach_Tov",
+    "name_he": "לקח טוב (פסיקתא זוטרתא)",
+    "name_en": "Midrash Lekach Tov (Pesikta Zutarta)",
+    "type": "ילקוט / אוסף",
+    "date_from": 1097,
+    "date_to": 1115,
+    "date_he": "סוף המאה ה-11 – ראשית המאה ה-12 (1097, תוקן 1107/8)",
+    "region": "ביזנטיון",
+    "region_note": "ר' טוביה בן אליעזר, יליד קסטוריה שבבלקן (בובר); יש שהציעו אשכנז (מגנצא)",
+    "confidence": "high",
+    "dispute": "The date is anchored by the work's own allusions to 1096/1097 and a revision of 1107/8 (Sefaria gives c. 1105–1115); the author's place (Kastoria/Balkans vs. Mainz) has been disputed.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrash Lekaḥ Tov', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/midrash-leka-x1e25-tov",
+        "says": "A late 11th-century work by Tobias b. Eliezer, who lived in the Balkans (Buber); refers to the martyrs of the 1096 Crusade."
+      },
+      {
+        "title": "Wikipedia (English), 'Tobiah ben Eliezer' (incorporating the Jewish Encyclopedia)",
+        "url": "https://en.wikipedia.org/wiki/Tobiah_ben_Eliezer",
+        "says": "Written in 1097 and revised in 1107 or 1108; covers the Pentateuch and the Five Megillot; Buber proved the author a native of Kastoria."
+      },
+      {
+        "title": "Seforim Blog, 'Lekah Tov – What's in a Name?'",
+        "url": "https://seforimblog.com/?p=6482",
+        "says": "Written after 1097 (refers to Crusade tribulations); author's residence variously given as Kastoria or Ashkenaz (Mainz suggested by Singer and Seligsohn)."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Lekach_Tov_on_Lamentations",
+    "name_he": "לקח טוב לאיכה",
+    "name_en": "Midrash Lekach Tov on Lamentations",
+    "type": "ילקוט / אוסף",
+    "date_from": 1097,
+    "date_to": 1115,
+    "date_he": "סוף המאה ה-11 – ראשית המאה ה-12 (חלק מלקח טוב)",
+    "region": "ביזנטיון",
+    "region_note": "חלק מחיבורו של ר' טוביה בן אליעזר (קסטוריה/בלקן); לא נמצא תיארוך נפרד",
+    "confidence": "medium",
+    "dispute": "None of the sources seen dates the Lamentations section separately; it is treated as part of the same work (Pentateuch and Five Megillot), and Sefaria gives c. 1105–1115 for it.",
+    "sources": [
+      {
+        "title": "Sefaria, 'Midrash Lekach Tov on Lamentations' (About this text)",
+        "url": "https://www.sefaria.org/Midrash_Lekach_Tov_on_Lamentations",
+        "says": "Composed c. 1105 – c. 1115 CE."
+      },
+      {
+        "title": "Wikipedia (English), 'Tobiah ben Eliezer'",
+        "url": "https://en.wikipedia.org/wiki/Tobiah_ben_Eliezer",
+        "says": "Lekach Tov covers the Pentateuch and the Five Megillot (Lamentations edited by Nacht); written 1097, revised 1107/8."
+      },
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrash Lekaḥ Tov', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/midrash-leka-x1e25-tov",
+        "says": "Late 11th century; the Lamentations part was published by J. Nacht (1895) and Greenup (1908)."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Sekhel_Tov",
+    "name_he": "שכל טוב (ר' מנחם בן שלמה)",
+    "name_en": "Midrash Sekhel Tov",
+    "type": "ילקוט / אוסף",
+    "date_from": 1139,
+    "date_to": 1139,
+    "date_he": "1139",
+    "region": "איטליה",
+    "region_note": "לפי JE נכתב ברומא; הגהות איטלקיות בחיבור; Posen: מקום מגוריו אינו ידוע",
+    "confidence": "high",
+    "dispute": "The year 1139 comes from the work itself and is not in dispute; the place (Rome/Italy) rests on internal evidence such as Italian glosses, and some sources say it is unknown.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Menahem ben Solomon' (based on the Jewish Encyclopedia)",
+        "url": "https://en.wikipedia.org/wiki/Menahem_ben_Solomon",
+        "says": "'The Sekel Ṭob, written in 1139 at Rome, is a midrashic compilation on the Pentateuch'; 25 Italian glosses indicate he lived in Italy."
+      },
+      {
+        "title": "Sefaria, 'Midrash Sekhel Tov' (About this text)",
+        "url": "https://prod.sefaria.org.il/Midrash_Sekhel_Tov",
+        "says": "Composed: Middle-Age Italy, 1139 CE."
+      },
+      {
+        "title": "Posen Library, 'Menaḥem ben Solomon'",
+        "url": "https://www.posenlibrary.com/node/12295",
+        "says": "12th century; 'It is not even known where he lived.'"
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Derekh_Eretz_Rabbah",
+    "name_he": "מסכת דרך ארץ רבה",
+    "name_en": "Tractate Derekh Eretz Rabbah",
+    "type": "מסכת קטנה",
+    "date_from": 200,
+    "date_to": 900,
+    "date_he": "גרעין תנאי (המאה ה-3 לערך); עריכה סופית בתקופת הגאונים",
+    "region": "ארץ ישראל",
+    "region_note": "גרעין תנאי ארץ-ישראלי (לפי היגר רוב המסכתות הקטנות ארץ-ישראליות ועובדו בבבל); תוספות מאוחרות",
+    "confidence": "low",
+    "dispute": "The core may be tannaitic (a contemporary of Rabbi Judah ha-Nasi), but the opening chapters were added much later and van Loopik puts the final editing of the Derekh Eretz tractates in the Geonic period; some older scholars date all the minor tractates to the end of the Geonic period.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Derekh Eretz Rabbah' (based on the Jewish Encyclopedia)",
+        "url": "https://en.wikipedia.org/wiki/Derekh_Eretz_Rabbah",
+        "says": "A contemporary of Rebbi (c. 160–220) may have been the author; sections 1–3 added much later; the Gemara in Coronel's version is very late, probably 10th century."
+      },
+      {
+        "title": "M. van Loopik, The Ways of the Sages and the Way of the World (1991), preface/introduction (Mohr Siebeck PDF)",
+        "url": "https://cdn.mohrsiebeck.com/4c,741fbd8ee64de7bae902d0a38339e6.pdf",
+        "says": "Early Derekh Eretz literature dates back to the Tannaitic period, but 'presumably, the final editing did not take place until Gaonitic times'."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Minor Tractates' (A. Rothkoff), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/minor-tractates",
+        "says": "Some assign the minor tractates to the end of the Geonic period, but recent scholarship favors a much earlier date; Higger: mostly Palestinian, later modified in Babylonia."
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Derekh_Eretz_Zuta",
+    "name_he": "מסכת דרך ארץ זוטא",
+    "name_en": "Tractate Derekh Eretz Zuta",
+    "type": "מסכת קטנה",
+    "date_from": 600,
+    "date_to": 900,
+    "date_he": "עריכה לאחר חתימת הבבלי, כנראה המאה ה-9 (פרקים א-ד קדומים)",
+    "region": "לא ידוע",
+    "region_note": "פרקים א-ד אולי תנאיים; פרקים ה-ח מעורך אחד שהכיר את הבבלי; 'פרק השלום' מאוחר מאוד",
+    "confidence": "low",
+    "dispute": "Chapters 1–4 may be a tannaitic collection while chapters 5–8 were edited after the Bavli; the 9th-century dating is inferred from Halakhot Gedolot, and van Loopik puts the final editing in the Geonic period.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Derekh Eretz Zutta' (based on the Jewish Encyclopedia)",
+        "url": "https://en.wikipedia.org/wiki/Derekh_Eretz_Zutta",
+        "says": "Sections 5–8 are by one editor after the completion of the Babylonian Talmud; 'one would not be far wrong in setting the 9th century as the date of composition'; sections 1–4 much earlier; Perek ha-Shalom very late."
+      },
+      {
+        "title": "M. van Loopik, The Ways of the Sages and the Way of the World (1991), preface/introduction (Mohr Siebeck PDF)",
+        "url": "https://cdn.mohrsiebeck.com/4c,741fbd8ee64de7bae902d0a38339e6.pdf",
+        "says": "DEZ I–III(IV) roughly dates to Tannaitic times, but the final editing presumably took place in Gaonitic times."
+      },
+      {
+        "title": "Sefaria, 'Tractate Derekh Eretz Zuta' (About this text)",
+        "url": "https://prod.sefaria.org.il/Tractate_Derekh_Eretz_Zuta",
+        "says": "Composed c. 100 BCE – c. 900 CE."
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Kutim",
+    "name_he": "מסכת כותים",
+    "name_en": "Tractate Kutim",
+    "type": "מסכת קטנה",
+    "date_from": 200,
+    "date_to": 800,
+    "date_he": "גרעין מן המאה ה-3 (?); עריכה סופית לא ידועה, אולי המאה ה-8",
+    "region": "ארץ ישראל",
+    "region_note": "קירכהיים והיגר: מקור ארץ-ישראלי (\"שבע מסכתות קטנות ירושלמיות\"); לנהרדט אינו קובע מקום",
+    "confidence": "low",
+    "dispute": "Stemberger dates a friendly core to before the final break with the Samaritans at the end of the 3rd century, while Lehnardt argues that the present text must come from after that break and calls the early dating problematic; Sefaria gives 750 CE.",
+    "sources": [
+      {
+        "title": "A. Lehnardt, 'Das außerkanonische Talmud-Traktat Kutim (Samaritaner) in der innerrabbinischen Überlieferung' (Tübingen repository PDF)",
+        "url": "https://publikationen.uni-tuebingen.de/xmlui/bitstream/handle/10900/156115/Lehnardt_033.pdf?sequence=1&isAllowed=y",
+        "says": "Via Stemberger (Einleitung in Talmud und Midrasch, 8th ed. 1992, p. 230): the core 'must have originated before the final break (with the Samaritans) at the end of the 3rd century'; Lehnardt holds that the present form must come from after the final break and rejects the early tannaitic dating of Higger and others."
+      },
+      {
+        "title": "Sefaria, 'Tractate Kutim' (About this text)",
+        "url": "https://prod.sefaria.org.il/Tractate_Kutim",
+        "says": "Composed: Talmudic Israel/Babylon, 750 CE; dating and place are debated."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 'Minor Tractates' (A. Rothkoff), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/minor-tractates",
+        "says": "Kutim is one of seven brief treatises; Higger: mostly Palestinian, original composition possibly completed by 400 CE; others date them to the end of the Geonic period."
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Semachot",
+    "name_he": "מסכת שמחות (אבל רבתי)",
+    "name_en": "Tractate Semachot (Evel Rabbati)",
+    "type": "מסכת קטנה",
+    "date_from": 250,
+    "date_to": 800,
+    "date_he": "המאה ה-3 (זלוטניק) או אמצע המאה ה-8 (ברי\"ל)",
+    "region": "ארץ ישראל",
+    "region_note": "נוצרה בארץ ישראל (קרבה לברייתות הירושלמי); הורחבה בבבל בתקופת הגאונים",
+    "confidence": "medium",
+    "dispute": "Zlotnick (Yale Judaica) dates it probably to the 3rd century, while Brüll (followed by the Jewish Encyclopedia) holds it took its present form in the mid-8th century or later and was further expanded in Babylonia.",
+    "sources": [
+      {
+        "title": "Yale University Press, D. Zlotnick, The Tractate 'Mourning' (Semahot) – book description",
+        "url": "https://yalebooks.yale.edu/9780300219005/the-tractate-mourning-semahot",
+        "says": "The tractate is 'dating probably from the third century'."
+      },
+      {
+        "title": "Wikipedia (English), 'Evel Rabbati' (citing Brüll)",
+        "url": "https://en.wikipedia.org/wiki/Evel_Rabbati",
+        "says": "Originated in the Land of Israel; took its present form probably in the mid-8th century, if not later; expanded in Babylonia in the Geonic period."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Semaḥot' / 'Ebel Rabbati'",
+        "url": "https://jewishencyclopedia.com/articles/5404-ebel-rabbati",
+        "says": "Originated in Palestine; took its present form probably in the middle of the 8th century (Brüll), if not later."
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Gerim",
+    "name_he": "מסכת גרים",
+    "name_en": "Tractate Gerim",
+    "type": "מסכת קטנה",
+    "date_from": 300,
+    "date_to": 900,
+    "date_he": "תקופת התלמוד או אחריה (לא ברור; עד תקופת הגאונים)",
+    "region": "ארץ ישראל",
+    "region_note": "לפי היגר רוב המסכתות הקטנות ארץ-ישראליות (עובדו מאוחר יותר בבבל); נכללה ב'שבע מסכתות קטנות ירושלמיות'",
+    "confidence": "low",
+    "dispute": "No specific scholarly dating of Gerim was found; for the minor tractates in general, Higger argues for Palestinian origin possibly completed by about 400 CE, while others place them at the end of the Geonic period.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Minor Tractates' (A. Rothkoff), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/minor-tractates",
+        "says": "Gerim is one of seven brief treatises; 'Some scholars assign them to the end of the geonic period, but recent scholarship favors a much earlier date'; Higger: Palestinian, possibly completed by 400 CE, later modified in Babylonia."
+      },
+      {
+        "title": "Sefaria, 'Tractate Gerim' (About this text)",
+        "url": "https://prod.sefaria.org.il/Tractate_Gerim",
+        "says": "Composed: Talmudic Israel/Babylon, c. 100 BCE – c. 900 CE; dating and place are debated."
+      }
+    ]
+  },
+  {
+    "key": "Babylonian_Talmud",
+    "name_he": "התלמוד הבבלי",
+    "name_en": "Babylonian Talmud",
+    "type": "תלמוד",
+    "date_from": 500,
+    "date_to": 650,
+    "date_he": "המאה ה-6 (מסורתית רב אשי ורבינא, כ-500; תוספות סבוראיות עד אמצע המאה ה-7)",
+    "region": "בבל",
+    "region_note": "ישיבות בבל (סורא, פומבדיתא)",
+    "confidence": "high",
+    "dispute": "Tradition sets the close at Ravina II's death (475) or about 500, but most scholars favor completion in the 6th century with Savoraic/Stammaitic editing that may extend into the 7th century.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Babylonian Talmud'",
+        "url": "https://en.wikipedia.org/wiki/Babylonian_Talmud",
+        "says": "Traditionally compiled by Rav Ashi and Ravina II around 500 CE; most likely completed in the 6th century, before the Muslim conquests of the mid-7th century at the latest; final Savoraic editing in the 6th century."
+      },
+      {
+        "title": "NJOP, 'The Babylonian Talmud Completed'",
+        "url": "https://njop.org/the-babylonian-talmud-completed",
+        "says": "Traditional date of completion: 13 Kislev 4236 (475 CE), the death of Ravina II."
+      }
+    ]
+  },
+  {
+    "key": "Jerusalem_Talmud",
+    "name_he": "התלמוד הירושלמי",
+    "name_en": "Jerusalem Talmud",
+    "type": "תלמוד",
+    "date_from": 370,
+    "date_to": 450,
+    "date_he": "סוף המאה ה-4 – מחצית ראשונה של המאה ה-5 (כ-400)",
+    "region": "ארץ ישראל",
+    "region_note": "כנראה טבריה (עם חומר מציפורי וקיסריה); נזיקין אולי בקיסריה, אמצע המאה ה-4 (ליברמן)",
+    "confidence": "high",
+    "dispute": "Redaction is generally put c. 400 in Tiberias, but Lieberman argued that tractate Nezikin was compiled in Caesarea about 350; Sussmann sees it instead as an earlier stage of the same tradition.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Talmud, Jerusalem', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/talmud-jerusalem",
+        "says": "Redacted at about the time of the latest amoraim, about 400 CE, usually assumed in Tiberias; Lieberman: Nezikin compiled in Caesarea c. mid-4th century; the Tiberias school ended with the patriarchate in 421."
+      },
+      {
+        "title": "Wikipedia (English), 'Jerusalem Talmud'",
+        "url": "https://en.wikipedia.org/wiki/Jerusalem_Talmud",
+        "says": "Compiled between the late fourth century and the first half of the fifth century, probably in Tiberias, with teachings of the schools of Tiberias, Caesarea and Sepphoris."
+      }
+    ]
+  }
+]
