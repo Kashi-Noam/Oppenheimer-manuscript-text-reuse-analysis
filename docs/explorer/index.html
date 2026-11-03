@@ -469,14 +469,39 @@ $('#qrun').addEventListener('click',async()=>{const tb=$('#qres');tb.innerHTML='
 // ---------- routing (#tab/item) ----------
 const enc=encodeURIComponent,dec=decodeURIComponent;
 function setHash(h){if(location.hash.slice(1)!==h)history.replaceState(null,'','#'+h)}
-function route(){const parts=location.hash.slice(1).split('/').map(dec);const t=TABS.includes(parts[0])?parts[0]:'overview';tab(t,true);
- if(t==='overview'&&parts[1]&&W[parts[1]])selectWork(parts[1]);
+const curPath=()=>location.hash.slice(1).split('?')[0]||'overview';
+// The full screen state: path + filters, graph selection, table search/sort/page and scroll position.
+function viewState(){const path=curPath(),t=path.split('/')[0],q=new URLSearchParams();
+ const v=id=>{const el=$(id);return el.type==='checkbox'?(el.checked?'1':'0'):el.value};
+ const put=(k,val,def)=>{if(val!==undefined&&val!==null&&String(val)!==String(def))q.set(k,val)};
+ if(t==='overview'){put('opp',v('#gOpp'),'1');put('ww',v('#gWW'),'1');put('min',v('#gMin'),'6');if(SEL&&SELP!==null)put('path',SELP,'')}
+ if(t==='works'){put('wq',v('#wq'),'');put('wtype',v('#wtype'),'');put('wrel',v('#wrel'),'');put('wsort',v('#wsort'),'units')}
+ if(t==='passages'){put('pq',v('#pq'),'');put('pf',v('#pf'),'')}
+ if(t==='verify'){['vv','vo','vn','vs'].forEach(k=>put(k,v('#'+k),''));put('vc',v('#vc'),'0')}
+ if(t==='matches'){['mt','ml','mrel','mq'].forEach(k=>put(k,v('#'+k),''));put('mp',MP,0)}
+ if(t==='tables'){put('tq',TQ,'');if(TSORT)q.set('ts',TSORT.join(','));put('tp',TPAGE,0)}
+ if(t==='sparql'){put('qex',v('#qex'),'0');const ex=EX[+v('#qex')];if(!ex||$('#qtext').value!==ex[1])q.set('q',$('#qtext').value)}
+ if(t==='comments'){['cfs','cft','cfq'].forEach(k=>put(k,v('#'+k),''))}
+ put('y',Math.round(scrollY),0);const str=q.toString();return path+(str?'?'+str:'')}
+function applyState(t,q){const set=(id,k)=>{if(!q.has(k))return;const el=$(id);if(el.type==='checkbox')el.checked=q.get(k)==='1';else el.value=q.get(k)};
+ if(t==='overview'){set('#gOpp','opp');set('#gWW','ww');set('#gMin','min');$('#gMinV').textContent=$('#gMin').value}
+ if(t==='works'){['wq','wtype','wrel','wsort'].forEach(k=>set('#'+k,k));renderWList()}
+ if(t==='passages'){['pq','pf'].forEach(k=>set('#'+k,k));renderPList()}
+ if(t==='verify'){['vv','vo','vn','vs','vc'].forEach(k=>set('#'+k,k))}
+ if(t==='matches'){['mt','ml','mrel','mq'].forEach(k=>set('#'+k,k));MP=+(q.get('mp')||0)}
+ if(t==='sparql'){set('#qex','qex');$('#qtext').value=q.has('q')?q.get('q'):(EX[+$('#qex').value]||EX[0])[1]}
+ if(t==='comments'){['cfs','cft','cfq'].forEach(k=>set('#'+k,k))}}
+async function route(){const raw=location.hash.slice(1),qi=raw.indexOf('?');const q=new URLSearchParams(qi>=0?raw.slice(qi+1):'');
+ const parts=(qi>=0?raw.slice(0,qi):raw).split('/').map(dec);const t=TABS.includes(parts[0])?parts[0]:'overview';
+ applyState(t,q);tab(t,true);
+ if(t==='overview'){if(parts[1]&&W[parts[1]]){selectWork(parts[1]);if(q.has('path')&&PATS[+q.get('path')]){SELP=+q.get('path');drawGraph();pathPanel()}}else if(SEL)selectWork(null)}
  if(t==='works'&&parts[1]&&W[parts[1]])showWork(parts[1]);
- if(t==='passages'&&P[parts[1]]){const o={};if(parts[2]==='c')o.cand=parts[1]+'|'+parts[3];if(parts[2]==='u')o.unit=parts[3];showPassage(parts[1],o)}
- if(t==='verify'){if(parts[1]==='pair'){$('#vo').value=parts[2]||'';$('#vn').value=parts[3]||'';$('#vv').value='';$('#vs').value='';renderVList()}else if(parts[1]!==undefined&&D.comps[+parts[1]])showComp(+parts[1])}
- if(t==='tables'&&parts[1])openTable(parts[1],parts[2]!==undefined?+parts[2]:null);
- if(t==='comments'&&parts[1])CM.focus=parts[1],renderComments();
- setHash(parts.join('/'))}
+ if(t==='passages'&&P[parts[1]]){const o={};if(parts[2]==='c')o.cand=parts[1]+'|'+parts[3];if(parts[2]==='u')o.unit=parts[3];await showPassage(parts[1],o)}
+ if(t==='verify'){if(parts[1]==='pair'){$('#vo').value=parts[2]||'';$('#vn').value=parts[3]||'';if(!q.has('vv'))$('#vv').value='';if(!q.has('vs'))$('#vs').value='';renderVList()}else if(parts[1]!==undefined&&D.comps[+parts[1]])await showComp(+parts[1])}
+ if(t==='tables'&&parts[1])await openTable(parts[1],parts[2]!==undefined&&parts[2]!==''?+parts[2]:null,{q:q.get('tq')||'',sort:q.get('ts'),page:+(q.get('tp')||0)});
+ if(t==='comments'){if(parts[1])CM.focus=parts[1];renderComments()}
+ setHash(parts.join('/'));
+ if(q.has('y')){const y=+q.get('y');requestAnimationFrame(()=>setTimeout(()=>scrollTo(0,y),60))}}
 addEventListener('hashchange',route);
 function go(g){if(!g)return;const [k,a,b]=g;
  if(k==='p'){tab('passages');showPassage(a,{})}
@@ -492,7 +517,8 @@ async function tablesData(){if(!TB){$('#tdetail').innerHTML='<div class="card pa
 async function renderTList(){const T=await tablesData();
  $('#tlist').innerHTML=T.groups.map(g=>`<div class="tg">${esc(g.title)}</div>`+g.tables.map(id=>{const t=T.byId[id];return `<div class="it ${TCUR===id?'on':''}" data-tid="${id}"><span>${esc(t.title)}</span><span class="muted num small">${nf(t.rows.length)}${cbadge('table',id)}</span></div>`}).join('')).join('');
  if(!TCUR)openTable('src_work',null)}
-async function openTable(id,row){const T=await tablesData();if(!T.byId[id])return;if(TCUR!==id){TCUR=id;TQ='';TSORT=null;TPAGE=0;$('#tq').value=''}
+async function openTable(id,row,st){const T=await tablesData();if(!T.byId[id])return;if(TCUR!==id||st){TCUR=id;TQ='';TSORT=null;TPAGE=0;$('#tq').value=''}
+ if(st){TQ=st.q||'';$('#tq').value=TQ;TSORT=st.sort?st.sort.split(',').map(Number):null;TPAGE=st.page||0}
  if(row!==null&&row!==undefined){const idx=tOrder();const pos=idx.indexOf(row);if(pos>=0)TPAGE=Math.floor(pos/TPS)}
  renderTList();renderTable(row);setHash(`tables/${id}`+(row!==null&&row!==undefined?`/${row}`:''))}
 function tOrder(){const t=TB.byId[TCUR];let idx=t.rows.map((r,i)=>i);const q=TQ.trim().toLowerCase();
@@ -507,7 +533,7 @@ function renderTable(hl){const t=TB.byId[TCUR],g=TB.gById[t.group];const idx=tOr
   ${g.note.length?`<details class="small"><summary class="lnk">על הקובץ</summary>${g.note.map(([a,b])=>row(esc(a),esc(b))).join('')}</details>`:''}
   <div class="filters" style="margin-top:8px"><span class="muted small">${nf(idx.length)} שורות${t.go.some(Boolean)?' · לחיצה על שורה פותחת את הפריט בסייר':''}</span></div>
   <div class="tscroll"><table class="dt"><thead><tr><th></th>${t.cols.map((c,i)=>`<th class="srt" data-c="${i}">${esc(c)}${TSORT&&TSORT[0]===i?(TSORT[1]>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody>
-  ${rows.map(i=>`<tr class="${t.go[i]?'click':''} ${hl===i?'hl':''}" data-r="${i}" id="tr-${i}"><td>${cb('row',t.id+':'+i,t.title+': '+t.rows[i].filter(v=>v!==''&&!/^Oppenheimer_128_/.test(v)).slice(0,2).join(' · '))}</td>${t.rows[i].map(cell).map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+  ${rows.map(i=>`<tr class="${t.go[i]?'click':''} ${hl===i?'hl':''}" data-r="${i}" id="tr-${i}"><td>${cb('row',t.id+':'+i,t.title+': '+t.rows[i].filter(v=>v!==''&&!/^Oppenheimer_128_/.test(v)).slice(0,3).join(' · '))}</td>${t.rows[i].map(cell).map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
   ${pages>1?`<div class="filters" style="margin-top:8px"><button class="b" data-tp="-1" ${TPAGE?'':'disabled'}>→ הקודם</button><span class="small num">${TPAGE+1} / ${pages}</span><button class="b" data-tp="1" ${TPAGE<pages-1?'':'disabled'}>הבא ←</button></div>`:''}</div>`;
  if(hl!==null&&hl!==undefined){const el=document.getElementById('tr-'+hl);el&&el.scrollIntoView({block:'center'})}}
 $('#tlist').addEventListener('click',e=>{const it=e.target.closest('[data-tid]');if(it&&!e.target.closest('.cb'))openTable(it.dataset.tid,null)});
@@ -523,13 +549,14 @@ const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:
 const CM={list:[],loaded:false,err:'',focus:null,ctx:null};
 const ICON='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></svg>';
 const ckey=(k,i)=>k+'|'+i;
+const screenUrl=()=>location.origin+location.pathname+'#'+viewState();
 function ccount(k,i){return CM.list.filter(c=>ckey(c.kind,c.item)===ckey(k,i)).length}
 function cb(kind,item,label){const n=ccount(kind,item);return `<button class="cb${n?' has':''}" data-ck="${esc(kind)}" data-ci="${esc(item)}" data-cl="${esc(label)}" title="הערה על: ${esc(label)}" aria-label="הערה">${ICON}<span class="cn">${n||''}</span></button>`}
 function cbadge(kind,item){const n=ccount(kind,item);return n?` <span class="pill p-overlap">${n}</span>`:''}
 function refreshBadges(){document.querySelectorAll('.cb').forEach(b=>{const n=ccount(b.dataset.ck,b.dataset.ci);b.classList.toggle('has',n>0);b.querySelector('.cn').textContent=n||''});
  const open=CM.list.filter(c=>c.status==='פתוחה'||!c.status).length;$('#ncount').textContent=open?String(open):'';$('#ncount').classList.toggle('hidden',!open)}
 const TABNAME={overview:'סקירה',works:'חיבורים',passages:'קטעים',verify:'בדיקת השוואות',matches:'התאמות',tables:'טבלאות',sparql:'SPARQL',comments:'הערות'};
-function viewLabel(){const p=location.hash.slice(1).split('/').map(dec);const t=TABNAME[p[0]]||'סקירה';
+function viewLabel(){const p=curPath().split('/').map(dec);const t=TABNAME[p[0]]||'סקירה';
  if(p[0]==='works'&&W[p[1]])return `${t}: ${W[p[1]].name_he}`;
  if(p[0]==='passages'&&P[p[1]])return `${t}: ${P[p[1]].folio}`+(p[2]==='c'&&C[p[1]+'|'+p[3]]?` · ${C[p[1]+'|'+p[3]].work}`:'');
  if(p[0]==='verify'&&D.comps[+p[1]]){const c=D.comps[+p[1]];return `${t}: ${P[U[c.uid].pid].folio} · ${wn(c.o)} ← ${wn(c.n)}`}
@@ -539,8 +566,8 @@ function viewLabel(){const p=location.hash.slice(1).split('/').map(dec);const t=
 function openModal(ctx){CM.ctx=ctx;$('#mctx').textContent=ctx.label;$('#mtext').value=ls.get('opp128.draft')||'';$('#mname').value=ls.get('opp128.name')||'';$('#mstat').textContent=CURL?'':'שמירת ההערות עוד לא הוגדרה באתר. ההערה תישמר בדפדפן הזה בלבד עד שהחיבור יוגדר.';
  $('#modal').classList.remove('hidden');setTimeout(()=>$('#mtext').focus(),30)}
 function closeModal(){$('#modal').classList.add('hidden');CM.ctx=null}
-document.addEventListener('click',e=>{const b=e.target.closest('.cb');if(b){e.stopPropagation();e.preventDefault();openModal({kind:b.dataset.ck,item:b.dataset.ci,label:b.dataset.cl,tab:location.hash.slice(1).split('/')[0]||'overview',url:location.href});return}
- if(e.target.closest('#fab')){openModal({kind:'view',item:location.hash.slice(1)||'overview',label:viewLabel(),tab:location.hash.slice(1).split('/')[0]||'overview',url:location.href})}},true);
+document.addEventListener('click',e=>{const b=e.target.closest('.cb');if(b){e.stopPropagation();e.preventDefault();openModal({kind:b.dataset.ck,item:b.dataset.ci,label:b.dataset.cl,tab:curPath().split('/')[0],url:screenUrl()});return}
+ if(e.target.closest('#fab')){openModal({kind:'view',item:viewState(),label:viewLabel(),tab:curPath().split('/')[0],url:screenUrl()})}},true);
 $('#mcancel').addEventListener('click',closeModal);$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').classList.contains('hidden'))closeModal()});
 $('#mtext').addEventListener('input',()=>ls.set('opp128.draft',$('#mtext').value));
@@ -571,7 +598,7 @@ function renderComments(){const isAdmin=!!ls.get('opp128.admin');const fs=$('#cf
  $('#cstat').textContent=(CURL?'':'השמירה המשותפת עוד לא הוגדרה; מוצגות רק הערות מהדפדפן הזה. ')+(CM.err||'')+(CM.loaded?` ${nf(L.length)} הערות מוצגות.`:' טוען…');
  $('#clist').innerHTML=L.map(c=>{const h=cGoHash(c);const st=c.status||'פתוחה';const done=st==='טופלה'||st==='לא רלוונטי';
   return `<div class="card pad cm ${CM.focus===String(c.id)?'hl':''}" id="cm-${esc(c.id)}"><div class="colh"><span><span class="pill ${c.type==='error'?'p-after':c.type==='question'?'p-overlap':'p-up'}">${esc(CTYPES[c.type]||c.type||'הערה')}</span> <b>${esc(c.author||'ללא שם')}</b> <span class="muted small">${c.created?new Date(c.created).toLocaleString('he-IL'):''}${c.local?' · שמור בדפדפן בלבד':''}</span></span><span class="pill ${done?'p-up':'p-down'}">${esc(st)}</span></div>
-   <p class="small" style="margin:4px 0">על: <b>${esc(c.label||'')}</b> ${h?`<a class="lnk" href="#${esc(h)}">מעבר לפריט ←</a>`:''}</p>
+   <p class="small" style="margin:4px 0">על: <b>${esc(c.label||'')}</b> ${h&&c.kind!=='view'?`<a class="lnk" href="#${esc(h)}">מעבר לפריט ←</a> · `:''}${c.url?`<a class="lnk" href="${esc(c.url)}">המסך כפי שנראה בזמן ההערה ←</a>`:''}</p>
    <p style="white-space:pre-wrap;margin:6px 0">${esc(c.text)}</p>
    ${c.reply?`<p class="small reply"><b>תשובה:</b> ${esc(c.reply)}</p>`:''}
    ${isAdmin&&!c.local?`<div class="filters" style="margin-top:6px"><select data-cs="${esc(c.id)}">${CSTAT.map(s=>`<option ${s===st?'selected':''}>${s}</option>`).join('')}</select><input type="text" data-cr="${esc(c.id)}" value="${esc(c.reply||'')}" placeholder="תשובה" style="flex:1;min-width:200px"><button class="b" data-csave="${esc(c.id)}">שמירה</button></div>`:''}</div>`}).join('')||'<p class="muted">אין הערות עדיין.</p>';
@@ -584,7 +611,7 @@ $('#clist').addEventListener('click',async e=>{const b=e.target.closest('[data-c
  b.disabled=true;b.textContent='שומר…';try{await api({action:'update',key:ls.get('opp128.admin'),id,status,reply});const c=CM.list.find(x=>String(x.id)===id);Object.assign(c,{status,reply});refreshBadges();renderComments();toast('נשמר.')}
  catch(err){b.disabled=false;b.textContent='שמירה';toast(err.message==='key'?'סיסמת העורך שגויה.':'השמירה נכשלה.')}});
 $('#cexport').addEventListener('click',()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
- const lines=['id,created,author,type,status,about,link,text,reply'].concat(CM.list.map(c=>[c.id,c.created,c.author,CTYPES[c.type]||c.type,c.status,c.label,location.origin+location.pathname+'#'+cGoHash(c),c.text,c.reply].map(q).join(',')));
+ const lines=['id,created,author,type,status,about,screen_link,item_link,text,reply'].concat(CM.list.map(c=>[c.id,c.created,c.author,CTYPES[c.type]||c.type,c.status,c.label,c.url||'',location.origin+location.pathname+'#'+cGoHash(c),c.text,c.reply].map(q).join(',')));
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv'}));a.download='oppenheim128_comments.csv';a.click()});
 
 renderWList();renderPList();drawGraph();
