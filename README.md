@@ -13,6 +13,7 @@ https://kashi-noam.github.io/Oppenheimer-manuscript-text-reuse-analysis/
 | `pipeline/` | הקוד והנתונים בשלבי הביניים. `pipeline/` = סבב תיוג 1, `r2/` = סבב 2 והמודל, `r3/` = תיארוך, יחידות טקסט, השוואות, RDF |
 | `data/raw/` | דוח ACT המקורי (`tr_report_288c1011….json.gz`, דחוס) |
 | `outputs/excel/` | קובצי Excel: התיוג, המקורות מעל הסף, התיארוכים והפיילוט, המטריושקה |
+| `comments/` | שרת ההערות של האתר (Google Apps Script) והוראות ההגדרה |
 | `outputs/rdf/` | RDF: המטריושקה (TTL, JSON-LD, SHACL) וההתאמות (`oppenheim128-matches.ttl`) |
 
 ## השלבים
@@ -24,6 +25,7 @@ https://kashi-noam.github.io/Oppenheimer-manuscript-text-reuse-analysis/
 5. **מטריושקה.** `r3/units.py` → `r3/run_tests.py` → `r3/aggregate.py` מייצרים 538 יחידות טקסט ו־1,226 השוואות בין עדים.
 6. **RDF והממשק.** `r3/build_rdf.py`, `r3/gui_data.py`, `r3/build_matches_rdf.py` (מריצים מתוך `r3/`).
 7. **דוח התיוג.** `build_report2.py`.
+8. **טבלאות לאתר ו־Excel המטריושקה.** `r3/build_matryoshka_xlsx.py`, `r3/build_tables.py`.
 
 ### הרצה
 
@@ -37,13 +39,17 @@ python3 units.py && python3 run_tests.py && python3 aggregate.py && python3 buil
 - את דוח ACT הם קוראים מ־`data/raw`. אפשר להחליף אותו בעזרת `OPP_ACT_REPORT`.
 - קובצי הביניים (`*.pkl`) כלולים, כך שאפשר להריץ שלב בודד בלי לחזור על הקודמים.
 
-**הערה:** כמה תוצרים נבנו בפקודות חד־פעמיות שלא נשמרו כסקריפט. אלה קובצי ה־Excel, `docs/graph/graph.json` ו־`pipeline/r2/allc_scored.pkl` (החלת המודל על כל 2,650 המועמדים). התוצרים עצמם כלולים.
+**הערה:** כמה תוצרים נבנו בפקודות חד־פעמיות שלא נשמרו כסקריפט. אלה קובצי ה־Excel (חוץ מקובץ המטריושקה), `docs/graph/graph.json` ו־`pipeline/r2/allc_scored.pkl` (החלת המודל על כל 2,650 המועמדים). התוצרים עצמם כלולים.
 
 ## הפעלת האתר (GitHub Pages)
 
 Settings → Pages → Build and deployment → Source: *Deploy from a branch* → Branch: `main`, תיקייה `/docs` → Save.
 
 בלשונית "בדיקת השוואות" ההכרעות הידניות נשמרות בדפדפן (localStorage). לגיבוי או לשיתוף משתמשים בכפתור "ייצוא הבדיקות (CSV)".
+
+## הערות על האתר
+
+בסייר אפשר להעיר על כל מסך, פריט ושורה בטבלה, וכל ההערות מרוכזות בלשונית "הערות". ההערות נשמרות בגיליון Google דרך Apps Script; ההגדרה ב־[`comments/SETUP.md`](comments/SETUP.md). כתובת השרת ב־`docs/explorer/config.js`.
 
 ## הסתייגויות
 

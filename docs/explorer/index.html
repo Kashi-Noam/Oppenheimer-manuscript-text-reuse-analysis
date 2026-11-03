@@ -89,19 +89,33 @@ textarea.q{width:100%;min-height:180px;direction:ltr;text-align:left;font-family
 svg text{fill:var(--ink-2);font-size:12px}svg .wl{fill:var(--ink);font-size:12px;font-weight:600}svg .node{cursor:pointer}svg .edge{fill:none}
 .graphbox{overflow-x:auto}
 @media (max-width:980px){.split{grid-template-columns:minmax(0,1fr)}.list{max-height:320px}.cols{grid-template-columns:minmax(0,1fr)}.cols2{grid-template-columns:minmax(0,1fr)}}
+.cb{display:inline-flex;align-items:center;gap:3px;border:1px solid var(--line);background:var(--surface);color:var(--ink-3);border-radius:999px;padding:2px 6px;cursor:pointer;vertical-align:middle;font:600 11px/1 inherit;margin-inline-start:6px}
+.cb:hover,.cb:focus-visible{color:var(--accent);border-color:var(--accent)}.cb.has{color:var(--accent);background:var(--accent-soft);border-color:var(--accent)}.cb .cn:empty{display:none}
+#fab{position:fixed;left:16px;bottom:16px;z-index:30;display:inline-flex;gap:6px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:40;display:flex;align-items:center;justify-content:center;padding:16px}
+#modal .box{background:var(--surface);color:var(--ink);border-radius:12px;max-width:560px;width:100%;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+#modal textarea,#modal input,#modal select{font:inherit}
+#toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;z-index:50;font-size:14px}
+.tg{font-size:12px;font-weight:700;color:var(--ink-3);padding:10px 12px 4px;border-bottom:1px solid var(--line)}
+table.dt td{max-width:380px;vertical-align:top}table.dt th.srt{cursor:pointer;white-space:nowrap}
+tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px solid var(--accent)}
+.reply{border-inline-start:3px solid var(--ok);padding-inline-start:8px}
+#ncount{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;background:var(--bad);color:#fff;font-size:11px;line-height:18px;text-align:center;margin-inline-start:4px}
 </style>
+<script src="config.js"></script>
 </head>
 <body>
 <div class="top"><div class="topin"><div class="brand">סייר אופנהיימר 128</div>
 <nav id="nav" role="tablist">
  <button data-t="overview" aria-selected="true">סקירה</button><button data-t="works">חיבורים</button><button data-t="passages">קטעים</button>
- <button data-t="verify">בדיקת השוואות</button><button data-t="matches">התאמות</button><button data-t="sparql">SPARQL</button>
+ <button data-t="verify">בדיקת השוואות</button><button data-t="matches">התאמות</button><button data-t="tables">טבלאות</button><button data-t="sparql">SPARQL</button><button data-t="comments">הערות<span id="ncount" class="hidden"></span></button>
 </nav></div></div>
 <main>
 <section id="t-overview">
  <h1>אופנהיימר 128: התאמות, ציונים ומטריושקה של ציטוטים</h1>
  <p class="muted" style="max-width:900px">כל הנתונים במקום אחד: הקטעים וההתאמות של ACT, הציון המשוכלל והתיוג הידני, החיבורים ותיארוכיהם, יחידות הטקסט וההשוואות בין העדים. בלשונית "בדיקת השוואות" אפשר לעבור על ההשוואות ולסמן הכרעה ידנית. הסימונים נשמרים כאן.</p>
  <div class="kpis" id="kpis"></div>
+ <div class="callout small"><b>איך להעיר:</b> הכפתור "הערה על מה שמוצג" בפינה מעיר על המסך הנוכחי. הכפתור הקטן <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></svg> שליד חיבור, קטע, השוואה או שורה בטבלה מעיר על הפריט עצמו. כל ההערות מרוכזות בלשונית "הערות", עם קישור חזרה לפריט.</div>
  <div class="callout small"><b>הסתייגות:</b> הנתונים מבוססים על המועמדים שדוח ACT החזיר (עד 30 לקטע) וקיבלו יישור מלא. יחידות הטקסט וההשוואות מבוססות רק על התאמות מעל הסף (S ≥ 21.14). היעדר עד אינו ראיה להיעדר הטקסט. ההכרעה בהשוואה היא קרבה טקסטואלית ולא הוכחת העתקה.</div>
  <h2>החיבורים על ציר הזמן</h2>
  <div class="filters small"><label><input type="checkbox" id="gOpp" checked> קשתות לאופנהיימר</label><label><input type="checkbox" id="gWW" checked> קשתות בין חיבורים</label>
@@ -148,7 +162,26 @@ svg text{fill:var(--ink-2);font-size:12px}svg .wl{fill:var(--ink);font-size:12px
  <textarea class="q" id="qtext" spellcheck="false"></textarea>
  <div class="card pad tscroll" style="margin-top:10px"><table id="qres"></table></div>
 </section>
+<section id="t-tables" class="hidden"><div class="split">
+ <div class="card"><div class="pad" style="padding-bottom:6px"><input type="search" id="tq" placeholder="חיפוש בטבלה הפתוחה" style="width:100%"></div><div class="list" id="tlist"></div></div>
+ <div id="tdetail"></div></div></section>
+
+<section id="t-comments" class="hidden">
+ <p class="muted small" style="max-width:900px">כל ההערות על הממשק ועל התוצרים. "מעבר לפריט" פותח בדיוק את מה שההערה מתייחסת אליו. במצב עורך אפשר לסמן סטטוס ולכתוב תשובה.</p>
+ <div class="filters"><select id="cfs"><option value="">כל ההערות</option><option value="open">פתוחות</option><option value="done">טופלו</option></select>
+  <select id="cft"><option value="">כל הסוגים</option><option value="question">שאלה</option><option value="error">טעות</option><option value="idea">הצעה</option><option value="other">הערה</option></select>
+  <input type="search" id="cfq" placeholder="חיפוש בהערות"><button class="b" id="crefresh">רענון</button><button class="b" id="cexport">ייצוא CSV</button><button class="b" id="cadmin">מצב עורך</button></div>
+ <p class="muted small" id="cstat"></p><div id="clist"></div>
+</section>
 </main>
+<div id="modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="mh"><div class="box">
+ <h3 id="mh" style="margin-top:0">הערה</h3><p class="small muted" style="margin-top:0">על: <b id="mctx"></b></p>
+ <div class="filters"><select id="mtype" aria-label="סוג"><option value="other">הערה</option><option value="question">שאלה</option><option value="error">טעות</option><option value="idea">הצעה</option></select><input id="mname" placeholder="שם" aria-label="שם" style="flex:1;min-width:140px"></div>
+ <textarea id="mtext" rows="6" style="width:100%;margin-top:8px" placeholder="מה כדאי לבדוק, לתקן או להסביר?" aria-label="ההערה"></textarea>
+ <p class="small" id="mstat" style="min-height:18px;color:var(--ink-2)"></p>
+ <div class="filters"><button class="b pri" id="msend">שליחה</button><button class="b" id="mcancel">ביטול</button></div></div></div>
+<button id="fab" class="b pri" title="הערה על המסך הנוכחי"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></svg> הערה על מה שמוצג</button>
+<div id="toast" class="hidden" role="status"></div>
 
 <script type="module">
 const $=s=>document.querySelector(s);
@@ -169,9 +202,9 @@ const row=(a,b)=>`<div class="row"><span>${a}</span><span>${b}</span></div>`;
 const nf=n=>Number(n).toLocaleString();
 
 // ---------- tabs ----------
-const TABS=['overview','works','passages','verify','matches','sparql'];
-function tab(t){TABS.forEach(x=>{$('#t-'+x).classList.toggle('hidden',x!==t);document.querySelector(`nav button[data-t="${x}"]`).setAttribute('aria-selected',x===t)});
- if(t==='overview')drawGraph();if(t==='matches')renderMatches();if(t==='sparql')initSparql();if(t==='verify')renderVList();scrollTo(0,0)}
+const TABS=['overview','works','passages','verify','matches','tables','sparql','comments'];
+function tab(t,noHash){TABS.forEach(x=>{$('#t-'+x).classList.toggle('hidden',x!==t);document.querySelector(`nav button[data-t="${x}"]`).setAttribute('aria-selected',x===t)});
+ if(t==='overview')drawGraph();if(t==='matches')renderMatches();if(t==='sparql')initSparql();if(t==='verify')renderVList();if(t==='tables')renderTList();if(t==='comments'){renderComments();if(!CM.loaded)loadComments()}if(!noHash)setHash(t);scrollTo(0,0)}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)tab(b.dataset.t)});
 
 // ---------- overview ----------
@@ -227,14 +260,14 @@ function drawGraph(){const box=$('#gbox');GW=Math.max(900,box.clientWidth);layou
  box.innerHTML=s+'</svg>'}
 function pathPanel(){const el=$('#gpath');if(!SEL){el.innerHTML='';el.classList.add('hidden');return}el.classList.remove('hidden');
  const w=W[SEL],tot=PATS.reduce((n,p)=>n+p.units.length,0),nm=k=>`<span ${k===SEL?'style="font-weight:700"':''}>${esc(wn(k))}</span>`;
- el.innerHTML=`<div class="colh"><h3 style="margin:0">המסלולים של ${esc(w.name_he)}</h3><span class="verd"><span class="lnk small" data-work="${SEL}">לפרטי החיבור ←</span><button class="b" id="gclear">ניקוי הבחירה</button></span></div>
+ el.innerHTML=`<div class="colh"><h3 style="margin:0">המסלולים של ${esc(w.name_he)} ${cb('work',SEL,w.name_he)}</h3><span class="verd"><span class="lnk small" data-work="${SEL}">לפרטי החיבור ←</span><button class="b" id="gclear">ניקוי הבחירה</button></span></div>
   <p class="muted small">כל יחידת טקסט שהחיבור מעיד עליה היא מסלול: העדים מסודרים לפי תיארוך (מוקדם מימין), ואופנהיימר מחובר לעד שנמצא הקרוב אליו ביותר. כשהקרוב ביותר לא הוכרע, הקשת לאופנהיימר יוצאת מהעד המאוחר והיא מקווקוות. קשת אדומה רציפה מובילה לאופנהיימר; עדים מאוחרים לאופנהיימר מחוברים בקו אדום מקווקו. צבע הקשתות בין חיבורים לפי הכרעת ההשוואות ביחידות האלה. עובי הקשת = מספר היחידות. במצב בחירה מוצגות כל הקשתות של המסלולים, בלי קשר לסינון "מינימום יחידות".</p>
   <p class="small"><b class="num">${tot}</b> יחידות ב־<b class="num">${PATS.length}</b> מסלולים שונים. לחיצה על מסלול מבודדת אותו בגרף.</p>
   <div class="list" style="max-height:340px;border:1px solid var(--line);border-radius:8px">${PATS.map((p,i)=>`<div class="it ${SELP===i?'on':''}" data-pat="${i}" style="display:block">
    <div style="display:flex;justify-content:space-between;gap:8px"><span>${p.early.map(nm).join(' ← ')}${p.early.length?' ← ':''}<span style="color:var(--opp);font-weight:600">אופנהיימר</span>${p.late.length?` <span class="pill p-after">+ ${p.late.map(k=>esc(wn(k))).join(', ')}</span>`:''}</span><span class="num muted small">${p.units.length} יח'</span></div>
    <div class="muted small">${p.early.length>1?(p.sure?`אופנהיימר קרוב ביותר ל: ${p.att.map(k=>esc(wn(k))).join(', ')}`:'הקרוב ביותר לא הוכרע'):p.early.length?'עד יחיד':'רק עדים מאוחרים'}</div>
    ${SELP===i?`<div class="small" style="margin-top:4px">${p.units.map(u=>`<span class="lnk" data-unit="${esc(u.uid)}">${esc(P[u.pid].folio)} ${esc(u.uid.split('#')[1])}</span>`).join(' · ')}</div>`:''}</div>`).join('')}</div>`}
-function selectWork(k){SEL=k;SELP=null;PATS=k?pathsOf(k):[];drawGraph();pathPanel()}
+function selectWork(k){SEL=k;SELP=null;PATS=k?pathsOf(k):[];drawGraph();pathPanel();setHash(k?'overview/'+enc(k):'overview')}
 ['#gOpp','#gWW'].forEach(s=>$(s).addEventListener('change',drawGraph));$('#gMin').addEventListener('input',()=>{$('#gMinV').textContent=$('#gMin').value;drawGraph()});
 $('#gbox').addEventListener('click',e=>{const n=e.target.closest('.node');if(n){selectWork(n.dataset.k===SEL?null:n.dataset.k);return}if(e.target.closest('.bg'))selectWork(null)});
 $('#gpath').addEventListener('click',e=>{if(e.target.closest('#gclear')){selectWork(null);return}if(e.target.closest('[data-unit],[data-work]'))return;const it=e.target.closest('[data-pat]');if(it){const i=+it.dataset.pat;SELP=SELP===i?null:i;drawGraph();pathPanel()}});
@@ -248,10 +281,10 @@ function renderWList(){const q=$('#wq').value.trim(),t=$('#wtype').value,r=$('#w
 ['#wq','#wtype','#wrel','#wsort'].forEach(s=>$(s).addEventListener('input',renderWList));
 $('#wlist').addEventListener('click',e=>{const it=e.target.closest('.it');if(it)showWork(it.dataset.k)});
 const CUR={};
-function showWork(k){CUR.work=k;renderWList();const w=W[k];if(!w)return;
+function showWork(k){CUR.work=k;renderWList();const w=W[k];if(!w)return;setHash('works/'+enc(k));
  const ed=D.edges.filter(e=>e.older===k||e.newer===k).sort((a,b)=>b.units-a.units);
  const us=D.units.filter(u=>u.wit.some(x=>x.k===k));
- $('#wdetail').innerHTML=`<h2 style="margin-top:0">${esc(w.name_he)}</h2><p class="muted small">${esc(w.name_en)}</p>
+ $('#wdetail').innerHTML=`<h2 style="margin-top:0">${esc(w.name_he)} ${cb('work',k,w.name_he)}</h2><p class="muted small">${esc(w.name_en)}</p>
   <div class="cols2"><div>${row('תיארוך',`<span class="num">${yr(w)}</span> · ${esc(w.date_he)}`)}${row('ביחס לאופנהיימר',`<span class="pill ${REL[w.rel][1]}">${REL[w.rel][0]}</span>`)}${row('סוג',esc(w.type))}${row('אזור',esc(w.region))}${row('ודאות התיארוך',CONF[w.confidence]||esc(w.confidence))}</div>
   <div>${row('יחידות שהוא מעיד עליהן',w.n_units)}${row('מהן העד היחיד',w.n_only)}${row('הקרוב ביותר מבין כמה',w.n_closest-w.n_only)}${row('המוקדם מבין כמה',w.n_earliest)}${row('קבצים',`<span class="small">${w.files.map(esc).join(', ')}</span>`)}</div></div>
   ${w.dispute?`<p class="small" style="margin-top:8px"><b>מחלוקת:</b> ${esc(w.dispute)}</p>`:''}
@@ -262,7 +295,7 @@ function showWork(k){CUR.work=k;renderWList();const w=W[k];if(!w)return;
   ${us.map(u=>`<tr class="click" data-unit="${esc(u.uid)}"><td>${esc(P[u.pid].folio)}</td><td class="num">${esc(u.uid.split('#')[1])}</td><td class="small">${u.wit.map(x=>esc(wn(x.k))).join(' · ')}</td><td class="small">${u.closest.map(x=>esc(wn(x))).join(', ')||'<span class="muted">—</span>'}</td></tr>`).join('')}</tbody></table></div>`}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-work]');if(a){tab('works');showWork(a.dataset.work);return}
  const u=e.target.closest('[data-unit]');if(u){const x=U[u.dataset.unit];tab('passages');showPassage(x.pid,{unit:x.uid});return}
- const vp=e.target.closest('[data-vpair]');if(vp){const [o,n]=vp.dataset.vpair.split('|');$('#vo').value=o;$('#vn').value=n;$('#vv').value='';$('#vs').value='';tab('verify');return}
+ const vp=e.target.closest('[data-vpair]');if(vp){const [o,n]=vp.dataset.vpair.split('|');$('#vo').value=o;$('#vn').value=n;$('#vv').value='';$('#vs').value='';tab('verify');setHash(`verify/pair/${enc(o)}/${enc(n)}`);return}
  const vi=e.target.closest('[data-comp]');if(vi){tab('verify');showComp(+vi.dataset.comp);return}
  const cd=e.target.closest('[data-cand]');if(cd){const c=C[cd.dataset.cand];tab('passages');showPassage(c.pid,{cand:c.id});return}});
 
@@ -276,18 +309,18 @@ function tokSpan(tokens,lo,hi,cls,tags){let h='';if(lo>0)h+='<span class="ell">�
 async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await texts();const p=P[pid];const toks=(T.p[pid]||'').split(' ');
  const us=unitsByPid[pid]||[],cs=(candsByPid[pid]||[]).slice().sort((a,b)=>b.S-a.S);
  const ucls=new Array(toks.length).fill(''),tags={};us.forEach((u,k)=>{for(let i=u.lo;i<=u.hi;i++)if(!ucls[i])ucls[i]='u'+(k%5);tags[u.lo]=(tags[u.lo]||'')+`<span class="utag">${esc(u.uid.split('#')[1])}</span>`});
- let al=null,cand=opt.cand?C[opt.cand]:null;if(cand){al={};T.c[cand.id].al.forEach(([i,j,x])=>al[i]=[j,x])}
+ let al=null,cand=opt.cand?C[opt.cand]:null;setHash(`passages/${enc(pid)}`+(cand?`/c/${cand.rank}`:opt.unit?`/u/${enc(opt.unit)}`:''));if(cand){al={};T.c[cand.id].al.forEach(([i,j,x])=>al[i]=[j,x])}
  const cls=i=>[ucls[i],al&&al[i]?('a-x'+(al[i][1]?'':' f')):''].filter(Boolean).join(' ');
- let html=`<div class="card pad"><h2 style="margin-top:0">${esc(p.folio)}</h2><p class="muted small">${p.n_cand} מועמדים · ${p.n_full} ביישור מלא · ${cs.filter(c=>c.above).length} מעל הסף · ${us.length} יחידות טקסט</p>
+ let html=`<div class="card pad"><h2 style="margin-top:0">${esc(p.folio)} ${cb('passage',pid,p.folio)}</h2><p class="muted small">${p.n_cand} מועמדים · ${p.n_full} ביישור מלא · ${cs.filter(c=>c.above).length} מעל הסף · ${us.length} יחידות טקסט</p>
   <div class="txt">${toks.length>1?tokSpan(toks,0,toks.length,cls,tags):'<span class="muted">אין טקסט לקטע הזה בדוח.</span>'}</div>
   <div class="legend">${us.map((u,k)=>`<span><i class="u${k%5}"></i>${esc(u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(', ')}</span>`).join('')}${cand?'<span><i style="border-bottom:2px solid var(--accent);height:8px"></i>מיושר למועמד הנבחר (מנוקד: התאמה לא מדויקת)</span>':''}</div></div>`;
  if(cand){const src=T.c[cand.id].src.split(' ');const sj={};T.c[cand.id].al.forEach(([i,j,x])=>sj[j]=x);const js=Object.keys(sj).map(Number);const s0=Math.max(0,Math.min(...js)-25),s1=Math.min(src.length,Math.max(...js)+26);
-  html+=`<div class="card pad" style="margin-top:10px"><div class="colh"><h3>${esc(cand.work)} <span class="muted small" dir="ltr">${esc(cand.ref)}</span></h3><span class="pill ${cand.above?'p-up':'p-down'}">S ${cand.S} · p ${cand.p}</span></div>
+  html+=`<div class="card pad" style="margin-top:10px"><div class="colh"><h3>${esc(cand.work)} <span class="muted small" dir="ltr">${esc(cand.ref)}</span> ${cb('match',cand.id,p.folio+' · '+cand.work+' '+cand.ref)}</h3><span class="pill ${cand.above?'p-up':'p-down'}">S ${cand.S} · p ${cand.p}</span></div>
    <div class="txt">${tokSpan(src,s0,s1,j=>sj[j]!==undefined?('a-x'+(sj[j]?'':' f')):'')}</div>
    <div class="small muted">${row('ציון ACT',cand.score)}${row('norm / align',`${cand.norm} / ${cand.align}`)}${row('N / C / Cp',`${cand.N} / ${cand.C} / ${cand.Cp}`)}${cand.tid?row('תיוג ידני',`${esc(cand.tid)} · <b>${esc(cand.rel)}</b> (${esc(cand.conf)}) · ${esc(cand.note)}`):''}<span dir="ltr" class="small">${esc(cand.loc)}</span></div></div>`}
  html+=`<div class="card pad tscroll" style="margin-top:10px"><h3>המועמדים ביישור מלא</h3><table><thead><tr><th>rank</th><th>חיבור</th><th>מראה מקום</th><th>S</th><th>p</th><th>תיוג ידני</th></tr></thead><tbody>
   ${cs.map(c=>`<tr class="click" data-cand="${esc(c.id)}" ${cand&&cand.id===c.id?'style="background:var(--accent-soft)"':''}><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="small">${c.tid?esc(c.rel):''}</td></tr>`).join('')}</tbody></table></div>`;
- if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
+ if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>${cb('unit',u.uid,p.folio+' · יחידה '+u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
   ${(compsByUnit[u.uid]||[]).map(c=>`<br><span class="lnk" data-comp="${c.i}">${esc(wn(c.o))} ← ${esc(wn(c.n))}</span>: <span class="v-${c.v}">${VER[c.v]}</span>`).join('')}</p>`).join('')}</div>`;
  $('#pdetail').innerHTML=html;
  if(opt.unit){const el=document.querySelector('.utag');el&&el.scrollIntoView({block:'center'})}}
@@ -307,7 +340,7 @@ function renderVList(){const v=$('#vv').value,o=$('#vo').value,n=$('#vn').value,
 $('#vlist').addEventListener('click',e=>{const it=e.target.closest('.it');if(it)showComp(+it.dataset.c)});
 function merged(T,unit,k){const w=unit.wit.find(x=>x.k===k);let src=[],am={},off=0;
  w.ids.forEach(id=>{const t=T.c[id];t.al.forEach(([i,j,x])=>{if(am[i]===undefined||(x&&!am[i][1]))am[i]=[j+off,x]});const s=t.src.split(' ');src=src.concat(s);off+=s.length});return {src,am,ids:w.ids}}
-async function showComp(i){CI=i;const c=D.comps[i],u=U[c.uid],T=await texts();renderVList();
+async function showComp(i){CI=i;setHash('verify/'+i);const c=D.comps[i],u=U[c.uid],T=await texts();renderVList();
  const toks=(T.p[u.pid]||'').split(' ');const O=merged(T,u,c.o),N=merged(T,u,c.n);
  const eo=new Set((c.b.opp_O_notM||[]).flat()),en=new Set((c.b.opp_M_notO||[]).flat()),om=new Set((c.b.shared_omission||[]).flat());
  const lo=Math.max(0,u.lo-12),hi=Math.min(toks.length,u.hi+13);
@@ -317,7 +350,7 @@ async function showComp(i){CI=i;const c=D.comps[i],u=U[c.uid],T=await texts();re
  const [o0,o1]=win(O),[n0,n1]=win(N);const r=REV[did(c)]||{};const wO=W[c.o],wN=W[c.n];const e=c.ev;
  const ref=M=>M.ids.map(id=>C[id].ref).join(' + ');
  $('#vdetail').innerHTML=`<div class="card pad">
-  <div class="colh"><h2 style="margin:0">${esc(P[u.pid].folio)} <span class="muted small">${esc(u.uid.split('#')[1])}</span></h2><span class="small">הכרעת הכלי: <span class="v-${c.v}">${VER[c.v]}</span> <span class="muted num">(ישיר ${c.sd} · דרך החדש ${c.sv})</span></span></div>
+  <div class="colh"><h2 style="margin:0">${esc(P[u.pid].folio)} <span class="muted small">${esc(u.uid.split('#')[1])}</span> ${cb('comparison',String(i),P[u.pid].folio+' '+u.uid.split('#')[1]+' · '+wn(c.o)+' ← '+wn(c.n))}</h2><span class="small">הכרעת הכלי: <span class="v-${c.v}">${VER[c.v]}</span> <span class="muted num">(ישיר ${c.sd} · דרך החדש ${c.sv})</span></span></div>
   <p class="small">ישן: <b>${esc(wO.name_he)}</b> <span class="num">${yr(wO)}</span> · חדש: <b>${esc(wN.name_he)}</b> <span class="num">${yr(wN)}</span>${c.oc?'':' · <span class="pill p-overlap">טווחי תיארוך חופפים</span>'}${c.nl?' · <span class="pill p-after">החדש מאוחר לאופנהיימר</span>':''}</p>
   <table class="evt"><thead><tr><th>ראיה</th><th>תומך בישיר</th><th>תומך בדרך החדש</th></tr></thead><tbody>
    <tr><td>מילים באופנהיימר שיש רק בעד אחד</td><td class="num v-direct">${e.opp_O_notM||0}</td><td class="num v-via">${e.opp_M_notO||0}</td></tr>
@@ -362,8 +395,8 @@ let MP=0;const MPS=100;
 function renderMatches(){const t=$('#mt').value,l=$('#ml').value,rl=$('#mrel').value,q=$('#mq').value.trim();const A=c=>c.tier==='A';
  const rows=D.cands.filter(c=>(!t||(t==='up'?c.above:!c.above))&&(!l||(l==='lab'&&c.tid)||(l==='miss'&&c.tid&&A(c)&&!c.above)||(l==='fp'&&c.tid&&!A(c)&&c.above))&&(!rl||c.rel===rl)&&(!q||c.work.includes(q)||P[c.pid].folio.includes(q)||c.k.toLowerCase().includes(q.toLowerCase())));
  const pages=Math.ceil(rows.length/MPS);MP=Math.min(MP,Math.max(0,pages-1));$('#mcount').textContent=`${nf(rows.length)} התאמות`;
- $('#mtable').innerHTML=`<thead><tr><th>קטע</th><th>rank</th><th>חיבור</th><th>מראה מקום</th><th>S</th><th>p</th><th>N</th><th>C</th><th>score</th><th>תיוג</th><th>הערה</th></tr></thead><tbody>`+
-  rows.slice(MP*MPS,(MP+1)*MPS).map(c=>`<tr class="click" data-cand="${esc(c.id)}"><td>${esc(P[c.pid].folio)}</td><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="num">${c.N}</td><td class="num">${c.C}</td><td class="num">${c.score}</td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small muted">${c.tid?esc(c.note).slice(0,90):''}</td></tr>`).join('')+'</tbody>';
+ $('#mtable').innerHTML=`<thead><tr><th></th><th>קטע</th><th>rank</th><th>חיבור</th><th>מראה מקום</th><th>S</th><th>p</th><th>N</th><th>C</th><th>score</th><th>תיוג</th><th>הערה</th></tr></thead><tbody>`+
+  rows.slice(MP*MPS,(MP+1)*MPS).map(c=>`<tr class="click" data-cand="${esc(c.id)}"><td>${cb('match',c.id,P[c.pid].folio+' · '+c.work+' '+c.ref)}</td><td>${esc(P[c.pid].folio)}</td><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="num">${c.N}</td><td class="num">${c.C}</td><td class="num">${c.score}</td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small muted">${c.tid?esc(c.note).slice(0,90):''}</td></tr>`).join('')+'</tbody>';
  $('#mpage').innerHTML=pages>1?`<button class="b" id="mprev" ${MP?'':'disabled'}>→ הקודם</button><span class="small num">${MP+1} / ${pages}</span><button class="b" id="mnext" ${MP<pages-1?'':'disabled'}>הבא ←</button>`:''}
 ['#mt','#ml','#mrel','#mq'].forEach(s=>$(s).addEventListener('input',()=>{MP=0;renderMatches()}));
 $('#mpage').addEventListener('click',e=>{if(e.target.id==='mprev'){MP--;renderMatches()}if(e.target.id==='mnext'){MP++;renderMatches()}});
@@ -433,9 +466,131 @@ $('#qrun').addEventListener('click',async()=>{const tb=$('#qres');tb.innerHTML='
  catch(e){$('#qstat').textContent='שגיאה: '+(e&&e.message||e)}});
 
 // ---------- db ----------
+// ---------- routing (#tab/item) ----------
+const enc=encodeURIComponent,dec=decodeURIComponent;
+function setHash(h){if(location.hash.slice(1)!==h)history.replaceState(null,'','#'+h)}
+function route(){const parts=location.hash.slice(1).split('/').map(dec);const t=TABS.includes(parts[0])?parts[0]:'overview';tab(t,true);
+ if(t==='overview'&&parts[1]&&W[parts[1]])selectWork(parts[1]);
+ if(t==='works'&&parts[1]&&W[parts[1]])showWork(parts[1]);
+ if(t==='passages'&&P[parts[1]]){const o={};if(parts[2]==='c')o.cand=parts[1]+'|'+parts[3];if(parts[2]==='u')o.unit=parts[3];showPassage(parts[1],o)}
+ if(t==='verify'){if(parts[1]==='pair'){$('#vo').value=parts[2]||'';$('#vn').value=parts[3]||'';$('#vv').value='';$('#vs').value='';renderVList()}else if(parts[1]!==undefined&&D.comps[+parts[1]])showComp(+parts[1])}
+ if(t==='tables'&&parts[1])openTable(parts[1],parts[2]!==undefined?+parts[2]:null);
+ if(t==='comments'&&parts[1])CM.focus=parts[1],renderComments();
+ setHash(parts.join('/'))}
+addEventListener('hashchange',route);
+function go(g){if(!g)return;const [k,a,b]=g;
+ if(k==='p'){tab('passages');showPassage(a,{})}
+ else if(k==='c'){tab('passages');showPassage(C[a].pid,{cand:a})}
+ else if(k==='u'){tab('passages');showPassage(U[a].pid,{unit:a})}
+ else if(k==='w'){tab('works');showWork(a)}
+ else if(k==='v'){tab('verify');showComp(a)}
+ else if(k==='vp'){$('#vo').value=a;$('#vn').value=b;$('#vv').value='';$('#vs').value='';tab('verify');setHash(`verify/pair/${enc(a)}/${enc(b)}`)}}
+
+// ---------- tables ----------
+let TB=null,TCUR=null,TQ='',TSORT=null,TPAGE=0;const TPS=100;
+async function tablesData(){if(!TB){$('#tdetail').innerHTML='<div class="card pad"><p class="muted">טוען את הטבלאות…</p></div>';TB=await (await fetch('tables.json')).json();TB.byId=Object.fromEntries(TB.tables.map(t=>[t.id,t]));TB.gById=Object.fromEntries(TB.groups.map(g=>[g.id,g]))}return TB}
+async function renderTList(){const T=await tablesData();
+ $('#tlist').innerHTML=T.groups.map(g=>`<div class="tg">${esc(g.title)}</div>`+g.tables.map(id=>{const t=T.byId[id];return `<div class="it ${TCUR===id?'on':''}" data-tid="${id}"><span>${esc(t.title)}</span><span class="muted num small">${nf(t.rows.length)}${cbadge('table',id)}</span></div>`}).join('')).join('');
+ if(!TCUR)openTable('src_work',null)}
+async function openTable(id,row){const T=await tablesData();if(!T.byId[id])return;if(TCUR!==id){TCUR=id;TQ='';TSORT=null;TPAGE=0;$('#tq').value=''}
+ if(row!==null&&row!==undefined){const idx=tOrder();const pos=idx.indexOf(row);if(pos>=0)TPAGE=Math.floor(pos/TPS)}
+ renderTList();renderTable(row);setHash(`tables/${id}`+(row!==null&&row!==undefined?`/${row}`:''))}
+function tOrder(){const t=TB.byId[TCUR];let idx=t.rows.map((r,i)=>i);const q=TQ.trim().toLowerCase();
+ if(q)idx=idx.filter(i=>t.rows[i].some(v=>String(v).toLowerCase().includes(q)));
+ if(TSORT){const [c,d]=TSORT;idx.sort((a,b)=>{const x=t.rows[a][c],y=t.rows[b][c];const n=typeof x==='number'&&typeof y==='number';return (n?x-y:String(x).localeCompare(String(y),'he'))*d})}
+ return idx}
+function cell(v){if(v===''||v===null)return '';if(typeof v==='number')return `<span class="num">${v}</span>`;const s=String(v);return s.length>160?`<span title="${esc(s)}">${esc(s.slice(0,160))}…</span>`:esc(s)}
+function renderTable(hl){const t=TB.byId[TCUR],g=TB.gById[t.group];const idx=tOrder();const pages=Math.max(1,Math.ceil(idx.length/TPS));TPAGE=Math.min(TPAGE,pages-1);
+ const rows=idx.slice(TPAGE*TPS,(TPAGE+1)*TPS);
+ $('#tdetail').innerHTML=`<div class="card pad"><div class="colh"><h2 style="margin:0">${esc(t.title)} ${cb('table',t.id,'טבלה: '+t.title)}</h2><a class="b" href="${esc(g.url)}" target="_blank" rel="noopener">הורדת ה־Excel ↓</a></div>
+  <p class="small" style="margin:6px 0">${esc(t.desc)} <span class="muted">· מתוך ${esc(g.file)}</span></p>
+  ${g.note.length?`<details class="small"><summary class="lnk">על הקובץ</summary>${g.note.map(([a,b])=>row(esc(a),esc(b))).join('')}</details>`:''}
+  <div class="filters" style="margin-top:8px"><span class="muted small">${nf(idx.length)} שורות${t.go.some(Boolean)?' · לחיצה על שורה פותחת את הפריט בסייר':''}</span></div>
+  <div class="tscroll"><table class="dt"><thead><tr><th></th>${t.cols.map((c,i)=>`<th class="srt" data-c="${i}">${esc(c)}${TSORT&&TSORT[0]===i?(TSORT[1]>0?' ▲':' ▼'):''}</th>`).join('')}</tr></thead><tbody>
+  ${rows.map(i=>`<tr class="${t.go[i]?'click':''} ${hl===i?'hl':''}" data-r="${i}" id="tr-${i}"><td>${cb('row',t.id+':'+i,t.title+': '+t.rows[i].filter(v=>v!==''&&!/^Oppenheimer_128_/.test(v)).slice(0,2).join(' · '))}</td>${t.rows[i].map(cell).map(v=>`<td>${v}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+  ${pages>1?`<div class="filters" style="margin-top:8px"><button class="b" data-tp="-1" ${TPAGE?'':'disabled'}>→ הקודם</button><span class="small num">${TPAGE+1} / ${pages}</span><button class="b" data-tp="1" ${TPAGE<pages-1?'':'disabled'}>הבא ←</button></div>`:''}</div>`;
+ if(hl!==null&&hl!==undefined){const el=document.getElementById('tr-'+hl);el&&el.scrollIntoView({block:'center'})}}
+$('#tlist').addEventListener('click',e=>{const it=e.target.closest('[data-tid]');if(it&&!e.target.closest('.cb'))openTable(it.dataset.tid,null)});
+$('#tq').addEventListener('input',()=>{TQ=$('#tq').value;TPAGE=0;renderTable()});
+$('#tdetail').addEventListener('click',e=>{if(e.target.closest('.cb'))return;const s=e.target.closest('.srt');if(s){const c=+s.dataset.c;TSORT=TSORT&&TSORT[0]===c?(TSORT[1]>0?[c,-1]:null):[c,1];TPAGE=0;renderTable();return}
+ const p=e.target.closest('[data-tp]');if(p){TPAGE+=+p.dataset.tp;renderTable();scrollTo(0,0);return}
+ const tr=e.target.closest('tr[data-r]');if(tr){const i=+tr.dataset.r,g=TB.byId[TCUR].go[i];if(g){setHash(`tables/${TCUR}/${i}`);go(g)}}});
+
+// ---------- comments ----------
+const CFG=window.OPP_CFG||{};const CURL=(CFG.commentsUrl||'').trim();
+const CTYPES={question:'שאלה',error:'טעות',idea:'הצעה',other:'הערה'};const CSTAT=['פתוחה','בטיפול','טופלה','לא רלוונטי'];
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const CM={list:[],loaded:false,err:'',focus:null,ctx:null};
+const ICON='<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></svg>';
+const ckey=(k,i)=>k+'|'+i;
+function ccount(k,i){return CM.list.filter(c=>ckey(c.kind,c.item)===ckey(k,i)).length}
+function cb(kind,item,label){const n=ccount(kind,item);return `<button class="cb${n?' has':''}" data-ck="${esc(kind)}" data-ci="${esc(item)}" data-cl="${esc(label)}" title="הערה על: ${esc(label)}" aria-label="הערה">${ICON}<span class="cn">${n||''}</span></button>`}
+function cbadge(kind,item){const n=ccount(kind,item);return n?` <span class="pill p-overlap">${n}</span>`:''}
+function refreshBadges(){document.querySelectorAll('.cb').forEach(b=>{const n=ccount(b.dataset.ck,b.dataset.ci);b.classList.toggle('has',n>0);b.querySelector('.cn').textContent=n||''});
+ const open=CM.list.filter(c=>c.status==='פתוחה'||!c.status).length;$('#ncount').textContent=open?String(open):'';$('#ncount').classList.toggle('hidden',!open)}
+const TABNAME={overview:'סקירה',works:'חיבורים',passages:'קטעים',verify:'בדיקת השוואות',matches:'התאמות',tables:'טבלאות',sparql:'SPARQL',comments:'הערות'};
+function viewLabel(){const p=location.hash.slice(1).split('/').map(dec);const t=TABNAME[p[0]]||'סקירה';
+ if(p[0]==='works'&&W[p[1]])return `${t}: ${W[p[1]].name_he}`;
+ if(p[0]==='passages'&&P[p[1]])return `${t}: ${P[p[1]].folio}`+(p[2]==='c'&&C[p[1]+'|'+p[3]]?` · ${C[p[1]+'|'+p[3]].work}`:'');
+ if(p[0]==='verify'&&D.comps[+p[1]]){const c=D.comps[+p[1]];return `${t}: ${P[U[c.uid].pid].folio} · ${wn(c.o)} ← ${wn(c.n)}`}
+ if(p[0]==='overview'&&W[p[1]])return `${t}: המסלולים של ${W[p[1]].name_he}`;
+ if(p[0]==='tables'&&TB&&TB.byId[p[1]])return `${t}: ${TB.byId[p[1]].title}`;
+ return `לשונית ${t}`}
+function openModal(ctx){CM.ctx=ctx;$('#mctx').textContent=ctx.label;$('#mtext').value=ls.get('opp128.draft')||'';$('#mname').value=ls.get('opp128.name')||'';$('#mstat').textContent=CURL?'':'שמירת ההערות עוד לא הוגדרה באתר. ההערה תישמר בדפדפן הזה בלבד עד שהחיבור יוגדר.';
+ $('#modal').classList.remove('hidden');setTimeout(()=>$('#mtext').focus(),30)}
+function closeModal(){$('#modal').classList.add('hidden');CM.ctx=null}
+document.addEventListener('click',e=>{const b=e.target.closest('.cb');if(b){e.stopPropagation();e.preventDefault();openModal({kind:b.dataset.ck,item:b.dataset.ci,label:b.dataset.cl,tab:location.hash.slice(1).split('/')[0]||'overview',url:location.href});return}
+ if(e.target.closest('#fab')){openModal({kind:'view',item:location.hash.slice(1)||'overview',label:viewLabel(),tab:location.hash.slice(1).split('/')[0]||'overview',url:location.href})}},true);
+$('#mcancel').addEventListener('click',closeModal);$('#modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#modal').classList.contains('hidden'))closeModal()});
+$('#mtext').addEventListener('input',()=>ls.set('opp128.draft',$('#mtext').value));
+async function api(body){const r=await fetch(CURL,{method:'POST',body:JSON.stringify(body)});const j=await r.json();if(!j.ok)throw new Error(j.error||'error');return j}
+const pending=()=>{try{return JSON.parse(ls.get('opp128.pending')||'[]')}catch(e){return []}};
+$('#msend').addEventListener('click',async()=>{const text=$('#mtext').value.trim();if(!text){$('#mstat').textContent='כתבו את ההערה.';return}
+ const author=$('#mname').value.trim();ls.set('opp128.name',author);
+ const c=Object.assign({},CM.ctx,{text,author,type:$('#mtype').value,created:new Date().toISOString(),status:'פתוחה'});
+ if(!CURL){const q=pending();q.push(c);ls.set('opp128.pending',JSON.stringify(q));ls.set('opp128.draft','');closeModal();CM.list.push(Object.assign({id:'local-'+q.length,local:true},c));refreshBadges();toast('ההערה נשמרה בדפדפן הזה (השמירה המשותפת עוד לא הוגדרה).');return}
+ $('#msend').disabled=true;$('#mstat').textContent='שולח…';
+ try{const j=await api(Object.assign({action:'add'},c));CM.list.push(Object.assign({id:j.id},c));ls.set('opp128.draft','');closeModal();refreshBadges();toast('ההערה נשמרה. תודה!');if(!$('#t-comments').classList.contains('hidden'))renderComments()}
+ catch(err){$('#mstat').textContent='השליחה נכשלה. הטקסט נשמר כטיוטה; נסו שוב בעוד רגע.'}finally{$('#msend').disabled=false}});
+function toast(s){const t=$('#toast');t.textContent=s;t.classList.remove('hidden');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.add('hidden'),3500)}
+async function loadComments(){const local=pending().map((c,i)=>Object.assign({id:'local-'+(i+1),local:true},c));
+ if(!CURL){CM.list=local;CM.loaded=true;refreshBadges();return}
+ try{const key=ls.get('opp128.key')||'';const r=await fetch(CURL+(CURL.includes('?')?'&':'?')+'action=list'+(key?'&key='+enc(key):''));const j=await r.json();
+  if(!j.ok)throw new Error(j.error);CM.list=j.comments.concat(local);CM.err=''}catch(e){CM.err=e.message==='key'?'צריך סיסמה כדי לראות את ההערות.':'טעינת ההערות נכשלה.';CM.list=local}
+ CM.loaded=true;refreshBadges();if(!$('#t-comments').classList.contains('hidden'))renderComments()}
+function cGoHash(c){if(c.kind==='row'){const [t,i]=String(c.item).split(':');return `tables/${t}/${i}`}if(c.kind==='table')return `tables/${c.item}`;
+ if(c.kind==='work')return `works/${enc(c.item)}`;if(c.kind==='passage')return `passages/${enc(c.item)}`;
+ if(c.kind==='match'){const [p,r]=String(c.item).split('|');return `passages/${enc(p)}/c/${r}`}
+ if(c.kind==='unit'&&U[c.item])return `passages/${enc(U[c.item].pid)}/u/${enc(c.item)}`;
+ if(c.kind==='comparison')return `verify/${c.item}`;if(c.kind==='view')return c.item;return ''}
+function renderComments(){const isAdmin=!!ls.get('opp128.admin');const fs=$('#cfs').value,ft=$('#cft').value,fq=$('#cfq').value.trim();
+ let L=CM.list.slice().sort((a,b)=>String(b.created).localeCompare(String(a.created)));
+ if(fs==='open')L=L.filter(c=>!c.status||c.status==='פתוחה'||c.status==='בטיפול');if(fs==='done')L=L.filter(c=>c.status==='טופלה'||c.status==='לא רלוונטי');
+ if(ft)L=L.filter(c=>c.type===ft);if(fq)L=L.filter(c=>[c.text,c.label,c.author,c.reply].join(' ').includes(fq));
+ $('#cstat').textContent=(CURL?'':'השמירה המשותפת עוד לא הוגדרה; מוצגות רק הערות מהדפדפן הזה. ')+(CM.err||'')+(CM.loaded?` ${nf(L.length)} הערות מוצגות.`:' טוען…');
+ $('#clist').innerHTML=L.map(c=>{const h=cGoHash(c);const st=c.status||'פתוחה';const done=st==='טופלה'||st==='לא רלוונטי';
+  return `<div class="card pad cm ${CM.focus===String(c.id)?'hl':''}" id="cm-${esc(c.id)}"><div class="colh"><span><span class="pill ${c.type==='error'?'p-after':c.type==='question'?'p-overlap':'p-up'}">${esc(CTYPES[c.type]||c.type||'הערה')}</span> <b>${esc(c.author||'ללא שם')}</b> <span class="muted small">${c.created?new Date(c.created).toLocaleString('he-IL'):''}${c.local?' · שמור בדפדפן בלבד':''}</span></span><span class="pill ${done?'p-up':'p-down'}">${esc(st)}</span></div>
+   <p class="small" style="margin:4px 0">על: <b>${esc(c.label||'')}</b> ${h?`<a class="lnk" href="#${esc(h)}">מעבר לפריט ←</a>`:''}</p>
+   <p style="white-space:pre-wrap;margin:6px 0">${esc(c.text)}</p>
+   ${c.reply?`<p class="small reply"><b>תשובה:</b> ${esc(c.reply)}</p>`:''}
+   ${isAdmin&&!c.local?`<div class="filters" style="margin-top:6px"><select data-cs="${esc(c.id)}">${CSTAT.map(s=>`<option ${s===st?'selected':''}>${s}</option>`).join('')}</select><input type="text" data-cr="${esc(c.id)}" value="${esc(c.reply||'')}" placeholder="תשובה" style="flex:1;min-width:200px"><button class="b" data-csave="${esc(c.id)}">שמירה</button></div>`:''}</div>`}).join('')||'<p class="muted">אין הערות עדיין.</p>';
+ if(CM.focus){const el=document.getElementById('cm-'+CM.focus);el&&el.scrollIntoView({block:'center'});CM.focus=null}}
+['#cfs','#cft','#cfq'].forEach(s=>$(s).addEventListener('input',renderComments));
+$('#crefresh').addEventListener('click',()=>{CM.loaded=false;renderComments();loadComments()});
+$('#cadmin').addEventListener('click',()=>{const k=prompt('סיסמת עורך (מוגדרת בקוד של Google Apps Script). השאירו ריק כדי לצאת ממצב עורך.',ls.get('opp128.admin')||'');if(k===null)return;ls.set('opp128.admin',k);if(k)ls.set('opp128.key',k);loadComments();renderComments()});
+$('#clist').addEventListener('click',async e=>{const b=e.target.closest('[data-csave]');if(!b)return;const id=b.dataset.csave;
+ const status=document.querySelector(`[data-cs="${CSS.escape(id)}"]`).value,reply=document.querySelector(`[data-cr="${CSS.escape(id)}"]`).value;
+ b.disabled=true;b.textContent='שומר…';try{await api({action:'update',key:ls.get('opp128.admin'),id,status,reply});const c=CM.list.find(x=>String(x.id)===id);Object.assign(c,{status,reply});refreshBadges();renderComments();toast('נשמר.')}
+ catch(err){b.disabled=false;b.textContent='שמירה';toast(err.message==='key'?'סיסמת העורך שגויה.':'השמירה נכשלה.')}});
+$('#cexport').addEventListener('click',()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const lines=['id,created,author,type,status,about,link,text,reply'].concat(CM.list.map(c=>[c.id,c.created,c.author,CTYPES[c.type]||c.type,c.status,c.label,location.origin+location.pathname+'#'+cGoHash(c),c.text,c.reply].map(q).join(',')));
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv'}));a.download='oppenheim128_comments.csv';a.click()});
+
 renderWList();renderPList();drawGraph();
 try{DB=window.claude?await window.claude.use('db'):null}catch(e){DB=null}
 if(!DB){try{REV=JSON.parse(localStorage.getItem(LSK)||'{}')||{}}catch(e){REV={}}}
+loadComments();route();
 if(DB){DB.collection('comparisonReviews').onSnapshot(s=>{REV={};s.docs.forEach(d=>REV[d.id]=d.data());if(!$('#t-verify').classList.contains('hidden')){renderVList()}},()=>{})}
 </script>
 </body>
