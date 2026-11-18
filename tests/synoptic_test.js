@@ -107,5 +107,21 @@ test('windows (Q6): fol 173r 1 c1 is flagged; its alignment starts at word 70 of
   const late = D.cands.filter(c => WN[c.id] && WN[c.id].late);
   console.log(`     flagged ${late.length} of ${Object.keys(WN).length}; ${late.filter(c => c.above).length} above the threshold`);
 });
+// 5. the model tab and the raw ACT tab (pipeline/r4)
+test('model report: out-of-fold precision and recall at p ≥ 0.8 match D5 (98.1%, 85.8%)', () => {
+  const R = JSON.parse(fs.readFileSync(path.join(E, 'model_report.json'))), r = R.oof.find(x => x.t === 0.8);
+  assert.strictEqual(R.n, 487); assert(Math.abs(r.precision - 0.981) < 0.0006 && Math.abs(r.recall - 0.858) < 0.0006);
+});
+test('model breakdown: the six contributions add up to S for every candidate (within rounding)', () => {
+  const m = D.model, bad = D.cands.filter(c => {
+    const v = { lN: Math.log1p(c.N), C: c.C, Cp: c.Cp, lscore: Math.log1p(+c.score || 0), align: c.align, tanakh: /^Tanakh/.test(c.loc) ? 1 : 0 };
+    return Math.abs(m.F.reduce((a, f, i) => a + v[f] * m.b[i], 0) - c.S) > 0.05; });
+  assert.strictEqual(bad.length, 0, bad.slice(0, 3).map(c => c.id).join(', '));
+});
+test('raw ACT data: every fully aligned candidate in the explorer is in act_raw.json, with the same location', () => {
+  const A = JSON.parse(fs.readFileSync(path.join(E, 'act_raw.json'))), li = A.cols.indexOf('loc'), fi = A.cols.indexOf('full');
+  const full = Object.values(A.p).flat().filter(r => r[fi]).length; assert.strictEqual(full, D.cands.length);
+  D.cands.forEach(c => { const r = A.p[c.pid][c.rank]; assert(r && r[li] === c.loc && r[fi] === 1, c.id); });
+});
 console.log(fails ? `\n${fails} failed` : '\nall passed');
 process.exit(fails ? 1 : 0);

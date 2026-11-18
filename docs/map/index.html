@@ -75,11 +75,17 @@ h1{margin:0 0 2px;font-size:20px}
   #plotWrap{width:100%}
 }
 </style>
+<style>
+.qm{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--muted);color:var(--muted);font:700 10px/1 "Segoe UI",Arial,sans-serif;cursor:help;margin-inline-start:4px;vertical-align:middle;user-select:none;flex:none}
+.qm:hover,.qm:focus{border-color:var(--ink);color:var(--ink);outline:none}
+#qtip{position:fixed;z-index:9999;max-width:340px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.18);padding:8px 10px;font-size:13px;line-height:1.55;pointer-events:none;display:none;direction:rtl;text-align:right}
+.embedded #standalone{display:none}
+</style>
 </head>
 <body>
 <header>
-  <p style="margin:0 0 4px;font-size:13px"><a href="../explorer/">← לסייר אופנהיימר 128</a> · אב־טיפוס של משה לביא (9.11.2026), משולב כמות שהוא. לחיצה על תא פותחת את הקטע בסייר.</p>
-  <h1>מפת-על: כתב יד אופנהיימר 128 ← התאמות ACT</h1>
+  <p id="standalone" style="margin:0 0 4px;font-size:13px"><a href="../explorer/">← לסייר אופנהיימר 128</a> · אב־טיפוס של משה לביא (9.11.2026), משולב כמות שהוא. לחיצה על תא פותחת את הקטע בסייר.</p>
+  <h1>מבט־על: כתב יד אופנהיימר 128 ← התאמות ACT <span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="המפה מראה איפה בכתב היד כל חיבור מופיע. ציר X: קטעי כתב היד לפי הסדר (מימין לשמאל: מתחילת כתב היד). רק התאמות מעל הסף. מעבר עם העכבר על תא מציג את ההתאמות שבו; לחיצה על תא פותחת את הקטע בלשונית קטעים. אב־טיפוס של משה לביא.">?</span></h1>
   <div class="sub">אב-טיפוס לבחינת מצבי תצוגה. התאמות שעברו את הסף (S ≥ 21.14), 1,272 התאמות מ-55 חיבורים. ציר X: קטעי כתב היד לפי סדרם.</div>
 </header>
 
@@ -87,26 +93,27 @@ h1{margin:0 0 2px;font-size:20px}
   <div class="tabs">
     <button class="tab on" id="tab1">מצב 1 · חיבורים × קטעים</button>
     <button class="tab" id="tab2">מצב 2 · מטריצה של חיבור אחד</button>
+    <span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="מצב 1: כל שורה היא חיבור, כל עמודה היא קטע בכתב היד, ותא צבוע אומר שלחיבור יש בקטע הזה התאמה מעל הסף. כך רואים אילו חיבורים מכסים איזה חלק של כתב היד. מצב 2: חיבור אחד בלבד, וכל שורה היא סעיף שלו (לפי מראה המקום, בסדר של החיבור). אלכסון מסודר אומר שהעורך עבר על החיבור לפי הסדר; פיזור אומר שליקט ממנו. לחיצה כפולה על שם חיבור במצב 1 פותחת אותו במצב 2.">?</span>
   </div>
-  <label>צבע התא
+  <label>צבע התא <span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="עוצמה (S): הגוון של כל תא נקבע לפי הציון המשוכלל S של ההתאמה החזקה בתא. כהה יותר = התאמה חזקה יותר (מ־21.14, הסף, עד 32.75). נוכחות בלבד: כל תא שיש בו התאמה מעל הסף צבוע באותו צבע, בלי להבחין בעוצמה; נוח כשרוצים לראות רק איפה יש התאמות, בלי שהעין תיגרר להתאמות החזקות.">?</span>
     <select id="colorMode">
       <option value="S">עוצמה (S)</option>
       <option value="presence">נוכחות בלבד</option>
     </select>
   </label>
-  <label id="sortWrap">סדר החיבורים (מהפופולרי)
+  <label id="sortWrap">סדר החיבורים (מהפופולרי) <span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="בראש: החיבור שמופיע בהכי הרבה קטעים של כתב היד, או בהכי הרבה התאמות. במצב 1 בלבד.">?</span>
     <select id="sortBy">
       <option value="segs">לפי מספר קטעים (כבגיליון)</option>
       <option value="matches">לפי מספר התאמות</option>
     </select>
   </label>
-  <label id="depthWrap" hidden>רמת פירוט של הסעיפים
+  <label id="depthWrap" hidden>רמת פירוט של הסעיפים <span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="כמה רמות של מראה המקום לשמור בשורות (מצב 2). 1 = גס, למשל פיסקה שלמה בפסיקתא; הרמה המלאה = כל מראה מקום בשורה משלו. המבנה מנוחש מתבנית מראה המקום, ולכן כדאי לבדוק אותו בחיבורים החשובים.">?</span>
     <select id="depth"></select>
   </label>
-  <label>רוחב עמודה
+  <label>רוחב עמודה <span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="רוחב כל קטע של כתב היד, בפיקסלים. צר = רואים את כל כתב היד בבת אחת; רחב = קל יותר לכוון לתא.">?</span>
     <input type="range" id="cellW" min="2" max="12" value="4">
   </label>
-  <label class="chk"><input type="checkbox" id="hideEmpty"> הסתר קטעים בלי התאמה</label>
+  <label class="chk"><input type="checkbox" id="hideEmpty"> הסתר קטעים בלי התאמה <span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="מסתיר את העמודות של קטעים שאין בהם אף התאמה בשורות המוצגות. בלי הסימון רואים גם את החורים (עמודות אפורות).">?</span></label>
 </div>
 
 <div class="layout">
@@ -471,13 +478,31 @@ setMode(1);
 </script>
 <script>
 /* integration (2026-11-18): click a cell to open that manuscript segment in the explorer, in a new tab */
+const EMBED = window.self !== window.top;
+if (EMBED) document.documentElement.classList.add('embedded');
 document.getElementById('gridbox').addEventListener('click', e => {
   if (!cur) return;
   const b = e.currentTarget.getBoundingClientRect(), c = Math.floor((e.clientX - b.left) / cur.cellW);
   if (c < 0 || c >= cur.cols.length) return;
   const seg = SEGS[cur.cols[c]]; if (!seg) return;
-  window.open('../explorer/#passages/' + encodeURIComponent(seg[1]), '_blank', 'noopener');
+  const h = '#passages/' + encodeURIComponent(seg[1]);
+  if (EMBED) { try { window.top.location.hash = h; return; } catch (err) {} }
+  window.open('../explorer/' + h, '_blank', 'noopener');
 });
+/* "?" help bubbles */
+(() => {
+  const tip = document.createElement('div'); tip.id = 'qtip'; tip.setAttribute('role', 'tooltip'); document.body.appendChild(tip);
+  let on = null;
+  const show = el => { on = el; tip.textContent = el.dataset.tip; tip.style.display = 'block';
+    const r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+    let x = r.left + r.width / 2 - w / 2, y = r.bottom + 8; if (y + h > innerHeight - 6) y = r.top - h - 8;
+    tip.style.left = Math.max(6, Math.min(x, innerWidth - w - 6)) + 'px'; tip.style.top = Math.max(6, y) + 'px'; };
+  const hide = () => { on = null; tip.style.display = 'none'; };
+  document.addEventListener('mouseover', e => { const q = e.target.closest('[data-tip]'); if (q) show(q); else if (on) hide(); });
+  document.addEventListener('focusin', e => { const q = e.target.closest('[data-tip]'); if (q) show(q); });
+  document.addEventListener('focusout', hide);
+  document.addEventListener('click', e => { const q = e.target.closest('.qm'); if (q) { e.preventDefault(); on === q ? hide() : show(q); } });
+})();
 document.getElementById('gridbox').style.cursor = 'pointer';
 </script>
 </body>

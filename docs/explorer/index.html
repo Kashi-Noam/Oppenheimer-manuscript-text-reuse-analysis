@@ -75,6 +75,17 @@ nav a.navlink{font-size:14px;color:var(--ink-2);padding:8px 12px;text-decoration
 .cont td{vertical-align:top}.cont .cx{max-height:150px;overflow:auto;font-size:14px;line-height:1.9;min-width:220px}
 .cont tr.here td{background:var(--accent-soft)}.cont .gap{color:var(--ink-3);font-size:12px}
 .ktiv{font-size:13px;margin:4px 0 0}
+.qm{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--ink-3);color:var(--ink-3);font:700 10px/1 system-ui,sans-serif;cursor:help;margin-inline-start:5px;vertical-align:middle;user-select:none;flex:none;background:var(--surface)}
+.qm:hover,.qm:focus{border-color:var(--accent);color:var(--accent);outline:none}
+#qtip{position:fixed;z-index:9999;max-width:360px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.18);padding:8px 10px;font-size:13px;line-height:1.55;pointer-events:none;display:none;text-align:right;white-space:normal;font-weight:400}
+.mbar{display:inline-block;height:10px;border-radius:3px;vertical-align:middle}
+.mtab td,.mtab th{white-space:nowrap}.mtab tr.on td{background:var(--accent-soft);font-weight:600}
+details.rawd{margin-top:8px}details.rawd summary{cursor:pointer;font-size:13px;color:var(--accent)}
+.kbar{display:flex;height:40px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.kbar .kseg{min-width:3px;border-inline-start:1px solid var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:11px;white-space:nowrap;padding:0 2px}
+.k-hi{background:var(--ok-soft)}.k-mid{background:var(--u1)}.k-lo{background:var(--bad-soft)}
+#ktable td{vertical-align:top}#ktable tr.lvl2 td:nth-child(2){padding-inline-start:22px}#ktable tr.flash td{background:var(--accent-soft)}
+#ktable .mine{background:var(--accent-soft);border-radius:4px;padding:0 3px}
 .wflag{font-size:11px;color:var(--bad);border:1px solid var(--bad);border-radius:4px;padding:0 4px;margin-inline-start:4px;cursor:help;white-space:nowrap}
 .lnk{color:var(--accent);cursor:pointer}
 .txt{font-size:16px;line-height:2.05;text-align:justify}
@@ -120,19 +131,32 @@ tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px
 <body>
 <div class="top"><div class="topin"><div class="brand">סייר אופנהיימר 128</div>
 <nav id="nav" role="tablist">
- <button data-t="overview" aria-selected="true">סקירה</button><button data-t="works">חיבורים</button><button data-t="passages">קטעים</button>
- <button data-t="verify">בדיקת השוואות</button><button data-t="matches">התאמות</button><button data-t="tables">טבלאות</button><button data-t="sparql">SPARQL</button><button data-t="comments">הערות<span id="ncount" class="hidden"></span></button><a class="navlink" href="../map/" target="_blank" rel="noopener" title="מפת־על של ההתאמות: חיבורים × קטעים (אב־טיפוס של משה לביא)">מפת־על ↗</a><a class="navlink" href="../catalog/" target="_blank" rel="noopener" title="קטלוג כתב היד מתוך כתיב (טיוטה של משה לביא)">קטלוג כתיב ↗</a>
+ <button data-t="map" aria-selected="true">מבט־על</button><button data-t="overview">סקירה</button><button data-t="works">חיבורים</button><button data-t="passages">קטעים</button><button data-t="catalog">קטלוג כתיב</button>
+ <button data-t="verify">בדיקת השוואות</button><button data-t="matches">התאמות</button><button data-t="model">המודל</button><button data-t="act">נתוני ACT</button><button data-t="tables">טבלאות</button><button data-t="sparql">SPARQL</button><button data-t="comments">הערות<span id="ncount" class="hidden"></span></button>
 </nav></div></div>
 <main>
-<section id="t-overview">
+<section id="t-map">
+ <p class="muted small" style="margin:0 0 8px">איפה בכתב היד מופיע כל חיבור: שורה לכל חיבור, עמודה לכל קטע של כתב היד לפי הסדר. לחיצה על תא פותחת את הקטע.<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="מבט־העל הוא אב־טיפוס של משה לביא (9.11.2026), משולב כאן כמות שהוא. הוא מציג רק התאמות מעל הסף (S ≥ 21.14). מצב 1: כל החיבורים; מצב 2: חיבור אחד, לפי סעיפיו. לכל פקד במפה יש סימן שאלה משלו.">?</span></p>
+ <iframe id="mapframe" title="מבט־על: חיבורים × קטעים" style="width:100%;height:calc(100vh - 140px);min-height:520px;border:1px solid var(--line);border-radius:10px;background:var(--surface)"></iframe>
+</section>
+
+<section id="t-catalog" class="hidden">
+ <h2 style="margin-top:0">קטלוג כתיב: מה יש בכתב היד לפי הספרייה הלאומית<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="כתיב הוא אתר כתבי היד של הספרייה הלאומית. משה לביא חילץ מהרשומה של כתב היד (שם: ms_01) טבלה של היחידות שבו: באילו דפים, איזה חיבור, ומה כתיב אומר עליו. ודאות = עד כמה הזיהוי והטווח מפורשים בכתיב. זו טיוטה (v0): השלב שמפרש את לשון הרשומה נעשה בעזרת מודל שפה. המספור הוא של כתיב: א = עמוד ימין (r), ב = עמוד שמאל (v).">?</span></h2>
+ <p class="muted small" style="max-width:1000px">היחידות של כתב היד לפי רשומות כתיב, מהדף הראשון עד האחרון, לצד מה ש־ACT מצא באותם דפים. כך אפשר להצליב את הזיהוי של הקטלוג עם ההתאמות. לחיצה על מיקום פותחת את הקטע הראשון בטווח.</p>
+ <div id="kbar"></div>
+ <div class="card pad tscroll" style="margin-top:10px"><table id="ktable"></table></div>
+ <div class="cols2" style="margin-top:10px"><div class="card pad" id="kchecks"></div><div class="card pad" id="knotes"></div></div>
+</section>
+
+<section id="t-overview" class="hidden">
  <h1>אופנהיימר 128: התאמות, ציונים ומטריושקה של ציטוטים</h1>
  <p class="muted" style="max-width:900px">כל הנתונים במקום אחד: הקטעים וההתאמות של ACT, הציון המשוכלל והתיוג הידני, החיבורים ותיארוכיהם, יחידות הטקסט וההשוואות בין העדים. בלשונית "בדיקת השוואות" אפשר לעבור על ההשוואות ולסמן הכרעה ידנית. הסימונים נשמרים כאן.</p>
  <div class="kpis" id="kpis"></div>
  <div class="callout small"><b>איך להעיר:</b> הכפתור "הערה על מה שמוצג" בפינה מעיר על המסך הנוכחי. הכפתור הקטן <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></svg> שליד חיבור, קטע, השוואה או שורה בטבלה מעיר על הפריט עצמו. כל ההערות מרוכזות בלשונית "הערות", עם קישור חזרה לפריט.</div>
  <div class="callout small"><b>הסתייגות:</b> הנתונים מבוססים על המועמדים שדוח ACT החזיר (עד 30 לקטע) וקיבלו יישור מלא. יחידות הטקסט וההשוואות מבוססות רק על התאמות מעל הסף (S ≥ 21.14). היעדר עד אינו ראיה להיעדר הטקסט. ההכרעה בהשוואה היא קרבה טקסטואלית ולא הוכחת העתקה.</div>
- <h2>החיבורים על ציר הזמן</h2>
+ <h2>החיבורים על ציר הזמן<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="כל חיבור הוא עיגול במקום התיארוך שלו (מוקדם מימין); גודל העיגול = מספר יחידות הטקסט שהוא עד להן. קשת בין שני חיבורים: הם עדים לאותן יחידות; הצבע לפי הכרעות ההשוואות (כתום: אופנהיימר קרוב יותר לישן, כחול: לחדש). קשת לאופנהיימר יוצאת מהעד הקרוב ביותר. עובי = מספר היחידות.">?</span></h2>
  <div class="filters small"><label><input type="checkbox" id="gOpp" checked> קשתות לאופנהיימר</label><label><input type="checkbox" id="gWW" checked> קשתות בין חיבורים</label>
-  <label>מינימום יחידות <input type="range" id="gMin" min="1" max="20" value="6"> <span id="gMinV" class="num">6</span></label></div>
+  <label>מינימום יחידות<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="מציג רק קשתות של חיבורים שחולקים לפחות כמה יחידות טקסט, כדי שהגרף לא יהיה צפוף.">?</span> <input type="range" id="gMin" min="1" max="20" value="6"> <span id="gMinV" class="num">6</span></label></div>
  <div class="card pad"><div class="graphbox" id="gbox"></div>
   <div class="legend"><span><i style="background:var(--g-midrash)"></i>מדרש</span><span><i style="background:var(--g-anth)"></i>ילקוט / אוסף</span><span><i style="background:var(--g-talmud)"></i>תלמוד</span><span><i style="background:var(--g-minor)"></i>מסכת קטנה</span>
    <span><i style="background:var(--dir)"></i>אופנהיימר קרוב יותר לישן</span><span><i style="background:var(--via)"></i>קרוב יותר לחדש</span><span><i style="background:var(--und)"></i>מעורב</span><span><i style="background:var(--bad);opacity:.4"></i>מאוחר לאופנהיימר (מקווקו)</span></div>
@@ -142,20 +166,20 @@ tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px
 
 <section id="t-works" class="hidden"><div class="split">
  <div class="card"><div class="pad" style="padding-bottom:6px"><div class="filters"><input type="search" id="wq" placeholder="חיפוש חיבור"><select id="wtype"><option value="">כל הסוגים</option><option>מדרש</option><option>ילקוט / אוסף</option><option>תלמוד</option><option>מסכת קטנה</option></select>
-  <select id="wrel"><option value="">כל התקופות</option><option value="before">קודם לאופנהיימר</option><option value="overlap">חופף</option><option value="after">מאוחר</option></select>
+  <select id="wrel"><option value="">כל התקופות</option><option value="before">קודם לאופנהיימר</option><option value="overlap">חופף</option><option value="after">מאוחר</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="ביחס לתיארוך של אופנהיימר (בערך 1372–1400): קודם, חופף או מאוחר. התיארוכים של החיבורים נעשו בעזרת Claude ממקורות פתוחים, וטרם נבדקו.">?</span>
   <select id="wsort"><option value="units">לפי מספר יחידות</option><option value="date">לפי תיארוך</option></select></div></div><div class="list" id="wlist"></div></div>
  <div class="card pad" id="wdetail"><p class="muted">בחרו חיבור.</p></div></div></section>
 
 <section id="t-passages" class="hidden"><div class="split">
- <div class="card"><div class="pad" style="padding-bottom:6px"><div class="filters"><input type="search" id="pq" placeholder="חיפוש דף, למשל 85v"><select id="pf"><option value="">כל הקטעים</option><option value="units">עם יחידות טקסט</option><option value="none">בלי התאמה מעל הסף</option><option value="lab">עם זוגות מתויגים</option></select></div></div><div class="list" id="plist"></div></div>
+ <div class="card"><div class="pad" style="padding-bottom:6px"><div class="filters"><input type="search" id="pq" placeholder="חיפוש דף, למשל 85v"><select id="pf"><option value="">כל הקטעים</option><option value="units">עם יחידות טקסט</option><option value="none">בלי התאמה מעל הסף</option><option value="lab">עם זוגות מתויגים</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="עם יחידות טקסט: קטעים שיש בהם התאמה מעל הסף. בלי התאמה מעל הסף: קטעים ש־ACT לא מצא להם מקור חזק. עם זוגות מתויגים: קטעים שיש בהם תיוג ידני. כל קטע נקרא על שם הדף שבו הוא מתחיל.">?</span></div></div><div class="list" id="plist"></div></div>
  <div id="pdetail"><div class="card pad"><p class="muted">בחרו קטע.</p></div></div></div></section>
 
 <section id="t-verify" class="hidden">
  <div class="filters">
-  <select id="vv"><option value="">כל הכרעות הכלי</option><option value="direct">ישיר</option><option value="via">דרך החדש</option><option value="undetermined">לא מוכרע</option></select>
+  <select id="vv"><option value="">כל הכרעות הכלי</option><option value="direct">ישיר</option><option value="via">דרך החדש</option><option value="undetermined">לא מוכרע</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="ההכרעה של הכלי בכל השוואה: ישיר (אופנהיימר קרוב יותר לעד הישן), דרך החדש (קרוב יותר לחדש), או לא מוכרע.">?</span>
   <select id="vo"><option value="">כל העדים הישנים</option></select><select id="vn"><option value="">כל העדים החדשים</option></select>
-  <select id="vs"><option value="">כל הסטטוסים</option><option value="todo">טרם נבדק</option><option value="agree">מסכים עם הכלי</option><option value="disagree">לא מסכים</option></select>
-  <label class="small"><input type="checkbox" id="vc"> רק סדר תיארוך ודאי</label>
+  <select id="vs"><option value="">כל הסטטוסים</option><option value="todo">טרם נבדק</option><option value="agree">מסכים עם הכלי</option><option value="disagree">לא מסכים</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="טרם נבדק: עוד אין הכרעה שלך. מסכים / לא מסכים: ההכרעה שלך מול ההכרעה של הכלי.">?</span>
+  <label class="small"><input type="checkbox" id="vc"> רק סדר תיארוך ודאי<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="רק השוואות שבהן טווחי התיארוך של העד הישן והעד החדש לא חופפים, כך שברור מי מהם קדם.">?</span></label>
   <button class="b" id="vcsv">ייצוא הבדיקות (CSV)</button><span class="muted small" id="vcount"></span>
  </div>
  <div class="split"><div class="card"><div class="list" id="vlist"></div></div><div id="vdetail"><div class="card pad"><p class="muted">בחרו השוואה.</p></div></div></div>
@@ -164,13 +188,25 @@ tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px
 <section id="t-matches" class="hidden">
  <p class="muted small">כל 2,650 המועמדים שקיבלו יישור מלא ב־ACT, עם הציון המשוכלל, ההסתברות, ותיוג ידני אם קיים. לחיצה על שורה פותחת את היישור בלשונית "קטעים".</p>
  <div class="filters"><select id="mt"><option value="">מעל ומתחת לסף</option><option value="up">מעל הסף</option><option value="down">מתחת לסף</option></select>
-  <select id="ml"><option value="">מתויגים ולא מתויגים</option><option value="lab">רק מתויגים</option><option value="miss">זהים מתחת לסף</option><option value="fp">מעל הסף ולא זהים</option></select>
-  <select id="mrel"><option value="">כל הקשרים</option></select><select id="msig" title="אותות לקריאה, לא שינוי של הציון"><option value="">כל האותות</option><option value="rescue">מתחת לסף, והחיבור בקטע סמוך</option><option value="inrun">בתוך רצף של חיבור אחר</option><option value="noise">חשד לרעש</option><option value="clean">בלי חשד לרעש</option><option value="window">מראה מקום של תחילת החלון (⚠ חלון)</option></select><input type="search" id="mq" placeholder="חיבור או דף"><span class="muted small" id="mcount"></span></div>
+  <select id="ml"><option value="">מתויגים ולא מתויגים</option><option value="lab">רק מתויגים</option><option value="miss">זהים מתחת לסף</option><option value="fp">מעל הסף ולא זהים</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="זהים מתחת לסף: תויגו ביד &quot;אותו טקסט&quot;, אבל המודל שם אותם מתחת לסף (החמצות). מעל הסף ולא זהים: מעל הסף, אבל תויגו ביד כקשר אחר (טעויות של המודל).">?</span>
+  <select id="mrel"><option value="">כל הקשרים</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="קטגוריות התיוג הידני (D4), מהחזק לחלש: אותו טקסט; אותו טקסט חלקי; נוסח מקביל; דרשה על המקור; אותו חיבור, קטע אחר; ציטוט פסוק מהמקור; ציטוט משותף; אין קשר.">?</span><select id="msig" title="אותות לקריאה, לא שינוי של הציון"><option value="">כל האותות</option><option value="rescue">מתחת לסף, והחיבור בקטע סמוך</option><option value="inrun">בתוך רצף של חיבור אחר</option><option value="noise">חשד לרעש</option><option value="clean">בלי חשד לרעש</option><option value="window">מראה מקום של תחילת החלון (⚠ חלון)</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="אותות לקריאה, בלי לשנות את הציון: התאמה מתחת לסף כשאותו חיבור מעל הסף בקטע סמוך; התאמה בתוך רצף של חיבור אחר (כנראה מקבילה); חשד לרעש (מילים נפוצות או חוזרות); מראה מקום שהוא תחילת חלון של ACT.">?</span><input type="search" id="mq" placeholder="חיבור או דף"><span class="muted small" id="mcount"></span></div>
  <div class="card pad tscroll"><table id="mtable"></table></div><div class="filters" style="margin-top:8px" id="mpage"></div>
 </section>
 
+<section id="t-model" class="hidden">
+ <h2 style="margin-top:0">המודל: הרגרסיה הלוגיסטית שקובעת את S ואת p<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="המודל לומד מ־487 זוגות שתויגו ביד אילו התאמות של ACT הן אותו טקסט. הוא משקלל שישה מאפיינים של כל התאמה לציון אחד, S, וממיר אותו להסתברות p. הסף p ≥ 0.8 (S ≥ 21.14) קובע מה נחשב מעל הסף בכל הממשק (D5, D7).">?</span></h2>
+ <div id="mbody"><p class="muted">טוען…</p></div>
+</section>
+
+<section id="t-act" class="hidden">
+ <h2 style="margin-top:0">נתוני ACT: כל המועמדים כפי שהגיעו מהדוח<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="לכל קטע של כתב היד ACT החזיר עד 30 מועמדים ממאגר המקורות. כאן הם מוצגים כמו שהם בדוח, עם השדות המקוריים, בלי הציון המשוכלל. שאר הממשק מציג רק את 2,650 המועמדים שקיבלו יישור מלא (full_alignment_ind = 1).">?</span></h2>
+ <div class="filters"><input type="search" id="aq" placeholder="קטע, מראה מקום או מילים"><select id="af"><option value="">כל המועמדים</option><option value="1">רק ביישור מלא</option><option value="0">רק בלי יישור מלא</option></select><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="יישור מלא: ACT יישר את הטקסט מילה מול מילה (full_alignment_ind = 1). רק למועמדים כאלה יש יישור, ציון משוכלל והסתברות. בלי יישור מלא: ACT מצא את המועמד בחיפוש, אבל לא יישר אותו.">?</span><select id="as"><option value="">לפי סדר הקטעים ו־rank</option><option value="score">לפי score של ACT, מהגבוה</option><option value="norm">לפי norm_score, מהגבוה</option></select><span class="muted small" id="acount"></span></div>
+ <div class="card pad tscroll"><table id="atable"></table></div><div class="filters" style="margin-top:8px" id="apage"></div>
+ <p class="muted small" id="ameta"></p>
+</section>
+
 <section id="t-sparql" class="hidden">
- <p class="muted small">שאילתות SPARQL על כל ה־RDF: המטריושקה (חיבורים, תיארוכים, יחידות, עדויות, השוואות) וההתאמות עם התיוג. המנוע (Oxigraph) רץ בדפדפן, והקידומות נוספות אוטומטית. מרחב השמות <span class="num">opp:</span> זמני.</p>
+ <p class="muted small">שאילתות SPARQL על כל ה־RDF: המטריושקה (חיבורים, תיארוכים, יחידות, עדויות, השוואות) וההתאמות עם התיוג. המנוע (Oxigraph) רץ בדפדפן, והקידומות נוספות אוטומטית. מרחב השמות <span class="num">opp:</span> זמני.<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="SPARQL היא שפת שאילתות לנתונים מקושרים (RDF). כאן אפשר לשאול שאלות על כל הנתונים, למשל אילו יחידות יש לחיבור מסוים או אילו עדים מאוחרים לאופנהיימר. יש שאילתות לדוגמה ברשימה.">?</span></p>
  <div class="filters"><select id="qex"></select><button class="b pri" id="qrun">הרצה</button><span class="muted small" id="qstat">המנוע ייטען בהרצה הראשונה.</span></div>
  <textarea class="q" id="qtext" spellcheck="false"></textarea>
  <div class="card pad tscroll" style="margin-top:10px"><table id="qres"></table></div>
@@ -183,7 +219,7 @@ tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px
  <p class="muted small" style="max-width:900px">כל ההערות על הממשק ועל התוצרים. "מעבר לפריט" פותח בדיוק את מה שההערה מתייחסת אליו. במצב עורך אפשר לסמן סטטוס ולכתוב תשובה.</p>
  <div class="filters"><select id="cfs"><option value="">כל ההערות</option><option value="open">פתוחות</option><option value="done">טופלו</option></select>
   <select id="cft"><option value="">כל הסוגים</option><option value="question">שאלה</option><option value="error">טעות</option><option value="idea">הצעה</option><option value="insight">תובנה</option><option value="other">הערה</option></select>
-  <input type="search" id="cfq" placeholder="חיפוש בהערות"><button class="b" id="crefresh">רענון</button><button class="b" id="cexport">ייצוא CSV</button><button class="b" id="cadmin">מצב עורך</button></div>
+  <input type="search" id="cfq" placeholder="חיפוש בהערות"><button class="b" id="crefresh">רענון</button><button class="b" id="cexport">ייצוא CSV</button><button class="b" id="cadmin">מצב עורך</button><span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="מצב עורך: לסימון סטטוס לכל הערה (פתוחה, בטיפול, טופלה, לא רלוונטי) ולכתיבת תשובה. דורש מפתח עורך.">?</span></div>
  <p class="muted small" id="cstat"></p><div id="clist"></div>
 </section>
 </main>
@@ -207,37 +243,123 @@ const wn=k=>W[k]?.name_he||(D.cands.find(c=>c.k===k)?.work)||k;
 const REL={before:['קודם לאופנהיימר','p-before'],overlap:['חופף לתקופת אופנהיימר','p-overlap'],after:['מאוחר לאופנהיימר','p-after']};
 const VER={via:'דרך החדש',direct:'ישיר',undetermined:'לא מוכרע',unclear:'לא ניתן לקבוע',common:'מקור משותף',parallel:'ממקבילה של המקור'};
 const MINE=['direct','via','undetermined','unclear','common','parallel'];
-const ROLES=Signals.roles(D.works),roleOf=k=>{const r=ROLES[k];return r?{he:r.he,why:Signals.ROLE_RULE}:null},roleChip=k=>{const r=ROLES[k];return r?` <span class="role" title="${esc(Signals.ROLE_RULE)}">${r.he}</span>`:''};
+const ROLES=Signals.roles(D.works),roleOf=k=>{const r=ROLES[k];return r?{he:r.he,why:Signals.ROLE_RULE}:null},roleChip=k=>{const r=ROLES[k];return r?` <span class="role" tabindex="0" data-tip="${esc('תפקיד העד: '+Signals.ROLE_RULE)}">${r.he}</span>`:''};
 const CONF={high:'גבוהה',medium:'בינונית',low:'נמוכה'};
 const unitsByPid={};D.units.forEach(u=>(unitsByPid[u.pid]=unitsByPid[u.pid]||[]).push(u));
 const candsByPid={};D.cands.forEach(c=>(candsByPid[c.pid]=candsByPid[c.pid]||[]).push(c));
 D.comps.forEach((c,i)=>c.i=i);
 const compsByUnit={};D.comps.forEach(c=>(compsByUnit[c.uid]=compsByUnit[c.uid]||[]).push(c));
 const row=(a,b)=>`<div class="row"><span>${a}</span><span>${b}</span></div>`;
-const H=Signals.HELP,hl=(t,h)=>`<span class="hlp" title="${esc(h)}">${t}</span>`;
+const H=Signals.HELP;
+// "?" help bubbles: a small circle; hovering, focusing or tapping it shows a short explanation
+const qm=t=>`<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="${esc(t)}">?</span>`,hl=(t,h)=>`${t}${qm(h)}`;
+(()=>{const tip=document.createElement('div');tip.id='qtip';tip.setAttribute('role','tooltip');document.body.appendChild(tip);let on=null;
+ const show=el=>{on=el;tip.textContent=el.dataset.tip;tip.style.display='block';const r=el.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=r.left+r.width/2-w/2,y=r.bottom+8;if(y+h>innerHeight-6)y=r.top-h-8;tip.style.left=Math.max(6,Math.min(x,innerWidth-w-6))+'px';tip.style.top=Math.max(6,y)+'px'};
+ const hide=()=>{on=null;tip.style.display='none'};
+ document.addEventListener('mouseover',e=>{const q=e.target.closest('[data-tip]');if(q)show(q);else if(on)hide()});
+ document.addEventListener('focusin',e=>{const q=e.target.closest('[data-tip]');if(q)show(q)});document.addEventListener('focusout',hide);
+ document.addEventListener('scroll',hide,true);
+ document.addEventListener('click',e=>{const q=e.target.closest('.qm');if(q){e.preventDefault();e.stopPropagation();on===q?hide():show(q)}},true)})();
 const RUNS=Signals.runs(D);let NOISE=null,WIN=null;
 function needSignals(T){if(!NOISE)NOISE=Signals.noise(D,T);if(!WIN)WIN=Signals.windows(D,T)}
 // Q6: ACT's reference names the start of its source window; flag matches whose alignment starts late in it
-const wflag=id=>{const w=WIN&&WIN[id];return w&&w.late?` <span class="wflag" title="${esc(H.win+` (היישור מתחיל במילה ${w.j0+1} מתוך ${w.n})`)}">⚠ חלון</span>`:''};
-const wflagAny=ids=>ids.some(id=>WIN&&WIN[id]&&WIN[id].late)?` <span class="wflag" title="${esc(H.win)}">⚠ חלון</span>`:'';
+const wflag=id=>{const w=WIN&&WIN[id];return w&&w.late?` <span class="wflag" tabindex="0" data-tip="${esc(H.win+` (היישור מתחיל במילה ${w.j0+1} מתוך ${w.n})`)}">⚠ חלון</span>`:''};
+const wflagAny=ids=>ids.some(id=>WIN&&WIN[id]&&WIN[id].late)?` <span class="wflag" tabindex="0" data-tip="${esc(H.win)}">⚠ חלון</span>`:'';
 const CONT={w:'',b:3,a:3},PSYN={uid:''};
 // Ktiv catalog (Moshe's draft, ms_01 = this manuscript): which catalogue unit covers a folio page
 let KTIV=null;fetch('ktiv_catalog.json').then(r=>r.ok?r.json():null).then(j=>{KTIV=j}).catch(()=>{});
 const kpos=s=>{const m=String(s).match(/^(\d+)([ab])$/);return m?2*+m[1]+(m[2]==='b'?1:0):null};
+const pageOf=pid=>{const m=pid.match(/fol_(\d+)([rv])/);return m?2*+m[1]+(m[2]==='v'?1:0):null};
+const CERTCLS={'גבוהה':'k-hi','בינונית':'k-mid','נמוכה':'k-lo'};
+async function renderCatalog(flash){if(!KTIV){$('#ktable').innerHTML='<tr><td class="muted">טוען…</td></tr>';try{KTIV=await (await fetch('ktiv_catalog.json')).json()}catch(e){$('#ktable').innerHTML='<tr><td>טעינת הקטלוג נכשלה.</td></tr>';return}}
+ const inR=(e,x)=>(e.ranges||[]).some(r=>{const a=kpos(r.from),b=kpos(r.to);return a!=null&&b!=null&&x>=a&&x<=b});
+ const pas=e=>D.passages.filter(q=>{const x=pageOf(q.pid);return x!=null&&inR(e,x)});
+ const act=e=>{const ps=new Set(pas(e).map(q=>q.pid)),cnt={};D.cands.forEach(c=>{if(c.above&&ps.has(c.pid)){(cnt[c.k]=cnt[c.k]||new Set()).add(c.pid)}});
+  return {n:ps.size,top:Object.entries(cnt).map(([k,v])=>[k,v.size]).sort((a,b)=>b[1]-a[1]).slice(0,3)}};
+ const span=e=>(e.ranges||[]).reduce((n,r)=>n+(kpos(r.to)-kpos(r.from)+1),0);
+ $('#kbar').innerHTML=`<div class="kbar">${KTIV.entries.map((e,i)=>e.level===2||e.unplaced||!span(e)?'':`<div class="kseg ${CERTCLS[e.cert]||''}" style="flex:${span(e)}" data-krow="${i}" data-tip="${esc(e.loc+' · '+e.title+' · ודאות '+e.cert)}">${esc(e.title.replace(/\s*\(.*$/,'').slice(0,24))}</div>`).join('')}</div>
+  <div class="legend"><span><i class="k-hi"></i>ודאות גבוהה</span><span><i class="k-mid"></i>בינונית</span><span><i class="k-lo"></i>נמוכה / לא מזוהה</span><span class="muted">רוחב = מספר העמודים</span></div>`;
+ $('#ktable').innerHTML=`<thead><tr><th>מיקום${qm('טווח הדפים לפי כתיב: א = עמוד ימין (r), ב = עמוד שמאל (v). לחיצה פותחת את הקטע הראשון של כתב היד בטווח.')}</th><th>היחידה</th><th>ודאות${qm('עד כמה הזיהוי והטווח מפורשים בכתיב. גבוהה: כתיב אומר במפורש. בינונית: כתוב, אבל עם עמימות או הסקה (מסדר, מאורך, משם). נמוכה: אין זיהוי, אין שם או אין דפים.')}</th><th>מה כתיב אומר${qm('הפרטים כפי שהם ברשומה (מהדורות, פתיחה, מצב), בלי תוספות.')}</th><th>הערות${qm('עמימויות, סתירות ומה שהוסק ולא נאמר. טקסט מסומן = ידע של מי שהכין את הטיוטה, לא מכתיב.')}</th><th>מה ACT מצא בטווח${qm('החיבורים עם הכי הרבה קטעים בטווח הזה שיש להם התאמה מעל הסף, ומספר הקטעים. כך אפשר לבדוק אם ההתאמות מסכימות עם הזיהוי של הקטלוג. הקטעים משויכים לפי הדף שבו הם מתחילים.')}</th></tr></thead><tbody>${KTIV.entries.map((e,i)=>{const a=e.unplaced?null:act(e),first=e.unplaced?null:pas(e)[0];
+  const notes=esc(e.notes||'').replace(/\[ידיעתי, לא כתיב:\]/g,'<span class="mine">[ידיעתי, לא כתיב:]</span>');
+  return `<tr id="krow${i}" class="${e.level===2?'lvl2':''}"><td class="num" style="white-space:nowrap">${first?`<span class="lnk" data-ppid="${esc(first.pid)}">${esc(e.loc)}</span>`:esc(e.loc)}</td><td><b>${e.level===2?'↳ ':''}${esc(e.title)}</b></td><td><span class="pill ${CERTCLS[e.cert]||''}">${esc(e.cert)}</span></td><td class="small">${esc(e.details||'')}</td><td class="small">${notes}</td><td class="small">${a?(a.n?`${a.n} קטעים${a.top.length?': '+a.top.map(([k,n])=>`${esc(wn(k))} (${n})`).join(', '):', אין התאמה מעל הסף'}`:'<span class="muted">אין קטעים בטווח</span>'):'<span class="muted">לא צוינו דפים</span>'}</td></tr>`}).join('')}</tbody>`;
+ $('#kchecks').innerHTML=`<h3 style="margin-top:0">בדיקות ופערים${qm('בדיקות אוטומטיות של הטיוטה: האם כל דף מכוסה, אילו עמודים משותפים לשתי יחידות, ואילו אזורים לא מזוהים בכתיב.')}</h3><ul class="small">${(KTIV.checks||[]).map(c=>`<li><b>${esc(c.kind)}:</b> ${esc(c.text)}</li>`).join('')}</ul>`;
+ $('#knotes').innerHTML=`<h3 style="margin-top:0">הערות כלליות על כתב היד</h3>${(KTIV.general_notes||[]).map(n=>row(esc(n.key),`<span class="small">${esc(n.text)}</span>`)).join('')}`;
+ if(flash!=null){const r=document.getElementById('krow'+flash);if(r){r.scrollIntoView({block:'center'});r.classList.add('flash');setTimeout(()=>r.classList.remove('flash'),1800)}}}
+document.addEventListener('click',e=>{const k=e.target.closest('[data-krow]');if(k){if($('#t-catalog').classList.contains('hidden'))tab('catalog');renderCatalog(+k.dataset.krow)}});
+// ---------- the model (logistic regression) ----------
+let MREP=null;
+const FEAT={lN:['ln(1+N)','מספר המילים המיושרות בקטע אופנהיימר, בלוגריתם: כמה טקסט חופף.'],C:['C','כיסוי המקור: חלק המילים בחלון המקור של ACT שיושרו (0–1).'],Cp:['Cp','כיסוי הקטע: חלק המילים בקטע אופנהיימר שיושרו (0–1).'],lscore:['ln(1+score)','ציון היישור הגולמי של ACT, בלוגריתם.'],align:['align','alignment_score של ACT: איכות היישור (0–1).'],tanakh:['תנ״ך','1 אם המקור הוא פסוק מהתנ״ך, אחרת 0. המקדם שלילי: ציטוט של פסוק לבדו אינו "אותו טקסט".']};
+const featVals=c=>({lN:Math.log1p(c.N),C:c.C,Cp:c.Cp,lscore:Math.log1p(+c.score||0),align:c.align,tanakh:/^Tanakh/.test(c.loc)?1:0});
+function modelBreak(c){const m=D.model,v=featVals(c),rows=m.F.map((f,i)=>({f,x:v[f],b:m.b[i],y:v[f]*m.b[i]})),S=rows.reduce((a,r)=>a+r.y,0),p=1/(1+Math.exp(-(S+m.b0)));
+ return `<details class="rawd"><summary>איך חושב S להתאמה הזו</summary>${qm('S הוא סכום של שש תרומות: ערך כל מאפיין כפול המקדם שלו. מ־S מחשבים את p. כך רואים מה הרים או הוריד את הציון של ההתאמה הזו.')}
+  <table class="mtab small"><thead><tr><th>מאפיין</th><th>ערך</th><th>× מקדם</th><th>= תרומה ל־S</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${FEAT[r.f][0]}${qm(FEAT[r.f][1])}</td><td class="num">${r.x.toFixed(3)}</td><td class="num">${r.b.toFixed(3)}</td><td class="num">${r.y.toFixed(2)}</td></tr>`).join('')}<tr><td><b>S</b></td><td></td><td></td><td class="num"><b>${S.toFixed(2)}</b></td></tr></tbody></table>
+  <p class="small muted">p = 1/(1+e^−(S−${(-m.b0).toFixed(2)})) = ${p.toFixed(3)} · הסף: S ≥ ${m.thr_S}${Math.abs(S-c.S)>0.05?` · הערכים כאן מעוגלים, ולכן S שבנתונים (${c.S}) שונה מעט`:''}</p></details>`}
+function histSVG(){const cs=D.cands,lo=Math.floor(Math.min(...cs.map(c=>c.S))),hi=Math.ceil(Math.max(...cs.map(c=>c.S))),nb=hi-lo,bins=Array.from({length:nb},()=>[0,0,0]);
+ cs.forEach(c=>{const b=Math.min(nb-1,Math.floor(c.S-lo));bins[b][c.tier==='A'?0:c.tier?1:2]++});
+ const W=800,H=230,L=36,B=26,T=10,mx=Math.max(...bins.map(b=>b[0]+b[1]+b[2])),bw=(W-L-8)/nb,y=v=>H-B-(v/mx)*(H-B-T),col=['var(--ok)','var(--bad)','var(--line)'];
+ let g='';bins.forEach((b,i)=>{let acc=0;[2,1,0].forEach(k=>{if(!b[k])return;const y0=y(acc),y1=y(acc+b[k]);g+=`<rect x="${L+i*bw+1}" y="${y1}" width="${Math.max(1,bw-2)}" height="${y0-y1}" fill="${col[k]}"><title>S ${lo+i}–${lo+i+1}: ${b[0]} אותו טקסט, ${b[1]} מתויג אחר, ${b[2]} לא מתויג</title></rect>`;acc+=b[k]})});
+ const tx=L+(D.model.thr_S-lo)*bw;let ax='';for(let v=lo;v<=hi;v+=4)ax+=`<text x="${L+(v-lo)*bw}" y="${H-8}" font-size="11" text-anchor="middle" fill="var(--ink-3)">${v}</text>`;
+ for(let k=0;k<=4;k++){const v=Math.round(mx*k/4);ax+=`<text x="${L-6}" y="${y(v)+4}" font-size="11" text-anchor="end" fill="var(--ink-3)">${v}</text><line x1="${L}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width=".5"/>`}
+ return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:900px;direction:ltr" role="img" aria-label="התפלגות S">${ax}${g}<line x1="${tx}" x2="${tx}" y1="${T}" y2="${H-B}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3"/><text x="${tx+4}" y="${T+10}" font-size="11" fill="var(--accent)">סף 21.14</text></svg>
+  <div class="legend"><span><i style="background:var(--ok)"></i>תויג "אותו טקסט"</span><span><i style="background:var(--bad)"></i>תויג כקשר אחר</span><span><i style="background:var(--line)"></i>לא מתויג</span></div>`}
+async function renderModel(){if(!MREP){try{MREP=await (await fetch('model_report.json')).json()}catch(e){$('#mbody').innerHTML='<p>טעינת דוח המודל נכשלה.</p>';return}}
+ const m=D.model,R=MREP,mxs=Math.max(...R.std_coef.map(Math.abs)),byTid={};D.cands.forEach(c=>{if(c.tid)byTid[c.tid]=c});
+ const miss=R.labelled.filter(x=>x.y===1&&x.p_oof<0.8).sort((a,b)=>a.p_oof-b.p_oof),fp=R.labelled.filter(x=>x.y===0&&x.p_oof>=0.8).sort((a,b)=>b.p_oof-a.p_oof);
+ const pairRow=x=>{const c=byTid[x.tid];return c?`<tr class="click" data-cand="${esc(c.id)}"><td>${esc(P[c.pid].folio)}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="small">${esc(c.rel||'')}</td><td class="num">${x.p_oof.toFixed(2)}</td><td class="num">${c.S}</td></tr>`:''};
+ const nA=D.cands.filter(c=>c.above).length;
+ $('#mbody').innerHTML=`<div class="card pad"><h3 style="margin-top:0">הנוסחה</h3>
+  <p class="num" dir="ltr" style="text-align:left">S = ${m.F.map((f,i)=>`${m.b[i].toFixed(3)}·${FEAT[f][0]}`).join(' + ').replace(/\+ -/g,'− ')} &nbsp;·&nbsp; p = 1 / (1 + e<sup>−(S − ${(-m.b0).toFixed(3)})</sup>)</p>
+  <p class="small">מעל הסף: p ≥ 0.8, כלומר S ≥ ${m.thr_S}. בממשק: <b class="num">${nf(nA)}</b> מתוך <b class="num">${nf(D.cands.length)}</b> המועמדים ביישור מלא.${qm('כללי ההצלה מ־D7 (0.2 ≤ p < 0.8 עם oov ≥ 0.18, או Cp לחיבור ≥ 0.4 עם שני מקטעים לפחות) לא מופעלים כאן: "מעל הסף" בממשק הוא בדיוק S ≥ 21.14.')}</p></div>
+ <div class="card pad" style="margin-top:10px"><h3 style="margin-top:0">המאפיינים והמשקלים${qm('מקדם: כמה S עולה כשהמאפיין עולה ביחידה אחת. משקל יחסי: המקדם אחרי תקנון של המאפיינים, כלומר כמה כל מאפיין משפיע בפועל על הציון בנתונים שלנו. מקדם שלילי מוריד את הציון.')}</h3>
+  <table class="mtab"><thead><tr><th>מאפיין</th><th>מקדם</th><th>משקל יחסי</th><th></th></tr></thead><tbody>${m.F.map((f,i)=>`<tr><td>${FEAT[f][0]}${qm(FEAT[f][1])}</td><td class="num">${m.b[i].toFixed(3)}</td><td class="num">${R.std_coef[i].toFixed(2)}</td><td><span class="mbar" style="width:${Math.round(160*Math.abs(R.std_coef[i])/mxs)}px;background:${R.std_coef[i]<0?'var(--bad)':'var(--accent)'}"></span></td></tr>`).join('')}</tbody></table>
+  <p class="small muted">המקדמים: <span class="num" dir="ltr">pipeline/r2/model.json</span>. אומנו על ${R.n} זוגות מתויגים מ־${R.n_passages} קטעים, ${R.n_pos} מהם "אותו טקסט" (תיוג "אותו טקסט" או "אותו טקסט · חלקי").</p></div>
+ <div class="card pad" style="margin-top:10px"><h3 style="margin-top:0">כמה המודל צודק, לפי סף${qm('הערכה חוצה לפי קטעים: 20 חזרות של חלוקה ל־10 קבוצות. כל זוג נבדק במודל שלא ראה אף זוג מאותו קטע. דיוק: מתוך מה שמעל הסף, כמה הם באמת אותו טקסט. כיסוי: מתוך כל הזוגות שהם אותו טקסט, כמה עברו את הסף. הסף הנבחר, 0.8, מסומן.')}</h3>
+  <table class="mtab"><thead><tr><th>סף p</th><th>מעל הסף</th><th>מהם אותו טקסט</th><th>דיוק</th><th>כיסוי</th></tr></thead><tbody>${R.oof.map(r=>`<tr class="${r.t===0.8?'on':''}"><td class="num">${r.t}</td><td class="num">${r.n_above}</td><td class="num">${r.tp}</td><td class="num">${(r.precision*100).toFixed(1)}%</td><td class="num">${(r.recall*100).toFixed(1)}%</td></tr>`).join('')}</tbody></table>
+  <p class="small muted">חושב מחדש בלי scikit-learn (<span class="num" dir="ltr">pipeline/r4/model_report.py</span>). בסף 0.8 התוצאה זהה ל־D5: דיוק 98.1%, כיסוי 85.8%.</p></div>
+ <div class="card pad" style="margin-top:10px"><h3 style="margin-top:0">התפלגות S בכל ${nf(D.cands.length)} המועמדים${qm('כל עמודה היא טווח של נקודה אחת של S. ירוק: זוגות שתויגו ביד "אותו טקסט". אדום: זוגות שתויגו כקשר אחר. אפור: לא מתויגים. הקו המקווקו הוא הסף. מעבר עם העכבר על עמודה מציג את המספרים.')}</h3>${histSVG()}</div>
+ <div class="cols2" style="margin-top:10px"><div class="card pad tscroll"><h3 style="margin-top:0">החמצות: "אותו טקסט" מתחת לסף (${miss.length})${qm('זוגות שתויגו ביד "אותו טקסט", אבל בהערכה החוצה המודל נתן להם p < 0.8. לחיצה פותחת את ההתאמה.')}</h3><table class="small"><thead><tr><th>קטע</th><th>חיבור</th><th>מראה מקום</th><th>תיוג</th><th>p (חוצה)</th><th>S</th></tr></thead><tbody>${miss.map(pairRow).join('')}</tbody></table></div>
+  <div class="card pad tscroll"><h3 style="margin-top:0">טעויות: מעל הסף ולא אותו טקסט (${fp.length})${qm('זוגות שהמודל שם מעל הסף בהערכה החוצה, אבל תויגו ביד כקשר אחר.')}</h3><table class="small"><thead><tr><th>קטע</th><th>חיבור</th><th>מראה מקום</th><th>תיוג</th><th>p (חוצה)</th><th>S</th></tr></thead><tbody>${fp.map(pairRow).join('')}</tbody></table></div></div>`}
+
+// ---------- raw ACT data ----------
+let ACT=null,ACTROWS=null,AP=0;const APS=100;
+async function actData(){if(!ACT){ACT=await (await fetch('act_raw.json')).json();ACTROWS=[];for(const [pid,rs] of Object.entries(ACT.p))rs.forEach(r=>ACTROWS.push([pid,...r]))}return ACT}
+const AC=i=>ACT.cols.indexOf(i)+1;
+function actRowHTML(r,withPid){const pid=r[0],rank=r[AC('rank')],id=pid+'|'+rank,c=C[id],full=r[AC('full')];
+ return `<tr class="click" ${c?`data-cand="${esc(id)}"`:`data-ppid="${esc(pid)}"`}>${withPid?`<td>${esc(P[pid]?P[pid].folio:pid)}</td>`:''}<td class="num">${rank}</td><td dir="ltr" class="small">${esc(r[AC('loc')]||'')}</td><td class="num">${r[AC('score')]??''}</td><td class="num">${r[AC('norm')]??''}</td><td class="num">${r[AC('align')]??''}</td><td>${full?'✓':'–'}</td><td class="num">${r[AC('words')]}</td><td class="small">${esc(r[AC('snippet')]||'')}…</td><td class="num">${c?`<span class="pill ${c.above?'p-up':'p-down'}">S ${c.S}</span>`:''}</td></tr>`}
+const actHead=withPid=>`<thead><tr>${withPid?'<th>קטע</th>':''}<th>${hl('rank',H.rank)}</th><th>${hl('location',H.ref)}</th><th>${hl('score',H.score)}</th><th>${hl('norm_score',H.norm)}</th><th>${hl('alignment_score',H.align)}</th><th>${hl('יישור מלא','full_alignment_ind: 1 אם ACT יישר את המועמד מילה מול מילה. רק למועמדים כאלה יש יישור, S ו־p בממשק.')}</th><th>${hl('מילים','אורך חלון המקור שהחזיר ACT, במילים.')}</th><th>תחילת חלון המקור</th><th>${hl('בסייר','S של המועמד, אם קיבל יישור מלא. לחיצה על שורה פותחת את ההתאמה, או את הקטע אם אין יישור.')}</th></tr></thead>`;
+async function renderAct(){if(!ACT){$('#atable').innerHTML='<tr><td class="muted">טוען את נתוני ACT…</td></tr>';await actData()}
+ const q=$('#aq').value.trim(),f=$('#af').value,so=$('#as').value;
+ let rows=ACTROWS.filter(r=>(f===''||String(r[AC('full')])===f)&&(!q||(P[r[0]]&&P[r[0]].folio.includes(q))||(r[AC('loc')]||'').includes(q)||(r[AC('snippet')]||'').includes(q)));
+ if(so)rows=rows.slice().sort((a,b)=>(b[AC(so)]??-1)-(a[AC(so)]??-1));
+ const pages=Math.ceil(rows.length/APS);AP=Math.min(AP,Math.max(0,pages-1));$('#acount').textContent=`${nf(rows.length)} מועמדים`;
+ $('#atable').innerHTML=actHead(true)+'<tbody>'+rows.slice(AP*APS,(AP+1)*APS).map(r=>actRowHTML(r,true)).join('')+'</tbody>';
+ $('#apage').innerHTML=pages>1?`<button class="b" id="aprev" ${AP?'':'disabled'}>→ הקודם</button><span class="small num">${AP+1} / ${pages}</span><button class="b" id="anext" ${AP<pages-1?'':'disabled'}>הבא ←</button>`:'';
+ const m=Object.values(ACT.meta)[0]||{};$('#ameta').textContent=`מקור: ${ACT.source} · job ${m.job_id} · אוספים: ${(m.collection||[]).join(', ')} · אינדקס: ${m.search_index} · שדה חיפוש: ${(m.search_fields||[]).join(', ')} · שדה יישור: ${m.alignment_field}`}
+['#aq','#af','#as'].forEach(x=>$(x).addEventListener('input',()=>{AP=0;renderAct()}));
+$('#apage').addEventListener('click',e=>{if(e.target.id==='aprev'){AP--;renderAct()}if(e.target.id==='anext'){AP++;renderAct()}});
+// lazy <details>: the raw ACT rows of a passage, or the raw fields of one candidate
+document.addEventListener('toggle',async e=>{const d=e.target;if(!d.open||!d.matches||!d.matches('details[data-rawp],details[data-rawc]'))return;await actData();const box=d.querySelector('.rawbody');
+ if(d.dataset.rawp){const pid=d.dataset.rawp,rs=(ACT.p[pid]||[]).map(r=>[pid,...r]),m=ACT.meta[pid]||{};
+  box.innerHTML=`<div class="tscroll"><table class="small">${actHead(false)}<tbody>${rs.map(r=>actRowHTML(r,false)).join('')}</tbody></table></div><p class="small muted">job ${m.job_id} · Location: <span dir="ltr">${esc(m.Location||'')}</span> · אוספים: ${(m.collection||[]).join(', ')}</p>`}
+ else{const [pid,rank]=d.dataset.rawc.split('|'),r=(ACT.p[pid]||[])[+rank];if(!r){box.textContent='לא נמצא בדוח.';return}
+  box.innerHTML=ACT.cols.map((k,i)=>row(`<span dir="ltr">${esc(k)}</span>`,`<span dir="ltr" class="small">${esc(String(r[i]??''))}</span>`)).join('')}},true);
+
 function ktivFor(pid){if(!KTIV)return [];const m=pid.match(/fol_(\d+)([rv])/);if(!m)return [];const x=2*+m[1]+(m[2]==='v'?1:0);
  return KTIV.entries.filter(e=>!e.unplaced&&(e.ranges||[]).some(r=>{const a=kpos(r.from),b=kpos(r.to);return a!=null&&b!=null&&x>=a&&x<=b}))}
 const nf=n=>Number(n).toLocaleString();
 
 // ---------- tabs ----------
-const TABS=['overview','works','passages','verify','matches','tables','sparql','comments'];
+const TABS=['map','overview','works','passages','catalog','verify','matches','model','act','tables','sparql','comments'];
 function tab(t,noHash){TABS.forEach(x=>{$('#t-'+x).classList.toggle('hidden',x!==t);document.querySelector(`nav button[data-t="${x}"]`).setAttribute('aria-selected',x===t)});
- if(t==='overview')drawGraph();if(t==='matches')renderMatches();if(t==='sparql')initSparql();if(t==='verify')renderVList();if(t==='tables')renderTList();if(t==='comments'){renderComments();if(!CM.loaded)loadComments()}if(!noHash)setHash(t);scrollTo(0,0)}
+ if(t==='map'){const f=$('#mapframe');if(!f.getAttribute('src'))f.setAttribute('src','../map/?embed=1')}if(t==='catalog')renderCatalog();if(t==='model')renderModel();if(t==='act')renderAct();if(t==='overview')drawGraph();if(t==='matches')renderMatches();if(t==='sparql')initSparql();if(t==='verify')renderVList();if(t==='tables')renderTList();if(t==='comments'){renderComments();if(!CM.loaded)loadComments()}if(!noHash)setHash(t);scrollTo(0,0)}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)tab(b.dataset.t)});
 
 // ---------- overview ----------
+const KTIP={'קטעים':'קטעי כתב היד כפי ש־ACT חתך אותם (בערך 150–200 מילים). כל קטע נקרא על שם הדף שבו הוא מתחיל.','התאמות ביישור מלא':'מועמדים מבין 30 ש־ACT החזיר לכל קטע, שקיבלו יישור מלא, מילה מול מילה.','מעל הסף':'התאמות עם S ≥ 21.14 (p ≥ 0.8). על 487 זוגות מתויגים, כ־98% מהן הן אותו טקסט.','מתויגות ידנית':'זוגות שתויגו ביד לפי קטגוריות התיוג (D4). רבים תויגו בעזרת Claude, ולא כולם נבדקו.','חיבורים מתוארכים':'החיבורים שתוארכו לצורך המטריושקה. התיארוכים נעשו בעזרת Claude ממקורות פתוחים, וטרם נבדקו.','יחידות טקסט':'קטע רציף בכתב היד שיש לו התאמה מעל הסף לחיבור אחד או יותר. כל חיבור כזה הוא עד של היחידה.','השוואות בין עדים':'בכל יחידה עם שני עדים או יותר: זוג של עד ישן ועד חדש, והכרעה של הכלי אם אופנהיימר קרוב יותר לישן (ישיר) או לחדש (דרך החדש).'};
 const st=D.stats,vc=st.verdicts,nAbove=D.cands.filter(c=>c.above).length,nLab=D.cands.filter(c=>c.tid).length;
 $('#kpis').innerHTML=[[D.passages.length,'קטעים'],[D.cands.length,'התאמות ביישור מלא'],[nAbove,'מעל הסף'],[nLab,'מתויגות ידנית'],[D.works.length,'חיבורים מתוארכים'],[st.units,'יחידות טקסט'],[st.hyps,'השוואות בין עדים']]
- .map(([b,s])=>`<div class="kpi"><b class="num">${nf(b)}</b><span>${s}</span></div>`).join('');
+ .map(([b,s])=>`<div class="kpi"><b class="num">${nf(b)}</b><span>${s}${qm(KTIP[s]||'')}</span></div>`).join('');
 const GCOL={'מדרש':'--g-midrash','ילקוט / אוסף':'--g-anth','תלמוד':'--g-talmud','מסכת קטנה':'--g-minor'};
 let GW=1100,LAY={},GH=0;
 function X(y){const L=24,R=GW-24,f=.86,span=R-L;let t;if(y<=1550)t=(y-200)/1350*f;else if(y<1900)t=f+.01;else t=f+.03+(y-1900)/50*(1-f-.03);return R-t*span}
@@ -312,13 +434,13 @@ function showWork(k){CUR.work=k;renderWList();const w=W[k];if(!w)return;setHash(
  const ed=D.edges.filter(e=>e.older===k||e.newer===k).sort((a,b)=>b.units-a.units);
  const us=D.units.filter(u=>u.wit.some(x=>x.k===k));
  $('#wdetail').innerHTML=`<h2 style="margin-top:0">${esc(w.name_he)} ${cb('work',k,w.name_he)}</h2><p class="muted small">${esc(w.name_en)}</p>
-  <div class="cols2"><div>${row('תיארוך',`<span class="num">${yr(w)}</span> · ${esc(w.date_he)}`)}${row('ביחס לאופנהיימר',`<span class="pill ${REL[w.rel][1]}">${REL[w.rel][0]}</span>`)}${row('סוג',esc(w.type))}${row('אזור',esc(w.region))}${row('ודאות התיארוך',CONF[w.confidence]||esc(w.confidence))}</div>
-  <div>${row('יחידות שהוא מעיד עליהן',w.n_units)}${row('מהן העד היחיד',w.n_only)}${row('הקרוב ביותר מבין כמה',w.n_closest-w.n_only)}${row('המוקדם מבין כמה',w.n_earliest)}${row('קבצים',`<span class="small">${w.files.map(esc).join(', ')}</span>`)}</div></div>
+  <div class="cols2"><div>${row('תיארוך',`<span class="num">${yr(w)}</span> · ${esc(w.date_he)}`)}${row(hl('ביחס לאופנהיימר','לפי התיארוך: קודם לאופנהיימר (בערך 1372–1400), חופף או מאוחר. חיבור מאוחר לא יכול להיות המקור, אבל יכול לשמר נוסח קדום.'),`<span class="pill ${REL[w.rel][1]}">${REL[w.rel][0]}</span>`)}${row('סוג',esc(w.type))}${row('אזור',esc(w.region))}${row(hl('ודאות התיארוך','עד כמה המקורות מסכימים על התיארוך. נקבע בעזרת Claude, וטרם נבדק.'),CONF[w.confidence]||esc(w.confidence))}</div>
+  <div>${row(hl('יחידות שהוא מעיד עליהן','בכמה יחידות טקסט של כתב היד החיבור הזה הוא עד (יש לו התאמה מעל הסף).'),w.n_units)}${row(hl('מהן העד היחיד','יחידות שאין בהן אף עד אחר.'),w.n_only)}${row(hl('הקרוב ביותר מבין כמה','יחידות עם כמה עדים, שבהן ההשוואות הכריעו שאופנהיימר קרוב לחיבור הזה יותר מלשאר העדים.'),w.n_closest-w.n_only)}${row(hl('המוקדם מבין כמה','יחידות עם כמה עדים, שבהן החיבור הזה הוא המוקדם לפי התיארוך.'),w.n_earliest)}${row('קבצים',`<span class="small">${w.files.map(esc).join(', ')}</span>`)}</div></div>
   ${w.dispute?`<p class="small" style="margin-top:8px"><b>מחלוקת:</b> ${esc(w.dispute)}</p>`:''}
   <p class="small"><b>מקורות לתיארוך:</b></p><ul class="small">${w.sources.map(s=>`<li>${s.url?`<a class="lnk" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`:esc(s.title)}: ${esc(s.says)}</li>`).join('')}</ul>
-  <h3 style="margin-top:14px">טקסט משותף עם חיבורים אחרים</h3><div class="tscroll"><table><thead><tr><th>חיבור</th><th>יחידות</th><th>ישיר</th><th>דרך החדש</th><th>לא מוכרע</th><th></th></tr></thead><tbody>
+  <h3 style="margin-top:14px">טקסט משותף עם חיבורים אחרים</h3><div class="tscroll"><table><thead><tr><th>חיבור</th><th>יחידות</th><th>ישיר${qm('בכמה מהיחידות המשותפות הכלי הכריע: ישיר = אופנהיימר קרוב יותר לעד הישן; דרך החדש = קרוב יותר לעד החדש; לא מוכרע = אין הכרעה (D6).')}</th><th>דרך החדש</th><th>לא מוכרע</th><th></th></tr></thead><tbody>
   ${ed.map(e=>{const o=e.older===k?e.newer:e.older;return `<tr><td><span class="lnk" data-work="${o}">${esc(wn(o))}</span> <span class="muted small">(${e.older===k?'חדש':'ישן'})</span></td><td class="num">${e.units}</td><td class="num v-direct">${e.direct}</td><td class="num v-via">${e.via}</td><td class="num">${e.undetermined}</td><td><span class="lnk small" data-vpair="${e.older}|${e.newer}">לבדיקה ←</span></td></tr>`}).join('')}</tbody></table></div>
-  <h3 style="margin-top:14px">יחידות טקסט (${us.length})</h3><div class="tscroll"><table><thead><tr><th>קטע</th><th>יחידה</th><th>עדים</th><th>הקרוב ביותר</th></tr></thead><tbody>
+  <h3 style="margin-top:14px">יחידות טקסט (${us.length})</h3><div class="tscroll"><table><thead><tr><th>קטע</th><th>יחידה</th><th>עדים</th><th>הקרוב ביותר${qm('העד שאופנהיימר הכי קרוב אליו ביחידה, לפי ההשוואות.')}</th></tr></thead><tbody>
   ${us.map(u=>`<tr class="click" data-unit="${esc(u.uid)}"><td>${esc(P[u.pid].folio)}</td><td class="num">${esc(u.uid.split('#')[1])}</td><td class="small">${u.wit.map(x=>esc(wn(x.k))).join(' · ')}</td><td class="small">${u.closest.map(x=>esc(wn(x))).join(', ')||'<span class="muted">—</span>'}</td></tr>`).join('')}</tbody></table></div>`}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-work]');if(a){tab('works');showWork(a.dataset.work);return}
  const u=e.target.closest('[data-unit]');if(u){const x=U[u.dataset.unit];tab('passages');showPassage(x.pid,{unit:x.uid});return}
@@ -342,20 +464,21 @@ async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await text
  if(PSYN.uid&&!us.some(x=>x.uid===PSYN.uid))PSYN.uid='';
  const cls=i=>[ucls[i],al&&al[i]?('a-x'+(al[i][1]?'':' f')):'',rr&&i>=rr.from&&i<=rr.to?'rr':''].filter(Boolean).join(' ');
  const kt=ktivFor(pid);
- let html=`<div class="card pad"><h2 style="margin-top:0">${esc(p.folio)} ${cb('passage',pid,p.folio)}</h2><p class="muted small">${p.n_cand} מועמדים · ${p.n_full} ביישור מלא · ${cs.filter(c=>c.above).length} מעל הסף · ${us.length} יחידות טקסט</p>${kt.length?`<p class="ktiv">${hl('קטלוג כתיב',' לפי הדף שבו הקטע מתחיל; קטעים גולשים לדף הבא (Q5). מקור: הטיוטה של משה לביא מתוך רשומות כתיב.')}: ${kt.map(e=>`<a href="../catalog/" target="_blank" rel="noopener">${esc(e.title)}</a> <span class="muted small">(${esc(e.loc)}, ודאות ${esc(e.cert)})</span>`).join(' · ')}</p>`:''}
+ let html=`<div class="card pad"><h2 style="margin-top:0">${esc(p.folio)} ${cb('passage',pid,p.folio)}</h2><p class="muted small">${p.n_cand} מועמדים · ${p.n_full} ביישור מלא · ${cs.filter(c=>c.above).length} מעל הסף · ${us.length} יחידות טקסט${qm('מועמדים: כמה מקורות ACT החזיר לקטע (עד 30). ביישור מלא: כמה מהם יושרו מילה מול מילה. מעל הסף: S ≥ 21.14. יחידות טקסט: קטעים רציפים בתוך הקטע שיש להם עד אחד או יותר מעל הסף; הם צבועים בטקסט.')}</p>${kt.length?`<p class="ktiv">${hl('קטלוג כתיב','היחידה בקטלוג של הספרייה הלאומית (כתיב) שמכסה את הדף שבו הקטע מתחיל. קטעים גולשים לפעמים לדף הבא (Q5). לחיצה פותחת את השורה בלשונית קטלוג כתיב.')}: ${kt.map(e=>`<span class="lnk" data-krow="${KTIV.entries.indexOf(e)}">${esc(e.title)}</span> <span class="muted small">(${esc(e.loc)}, ודאות ${esc(e.cert)})</span>`).join(' · ')}</p>`:''}
   <div class="txt">${toks.length>1?tokSpan(toks,0,toks.length,cls,tags):'<span class="muted">אין טקסט לקטע הזה בדוח.</span>'}</div>
   <div class="legend">${us.map((u,k)=>`<span><i class="u${k%5}"></i>${esc(u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(', ')}</span>`).join('')}${cand?'<span><i style="border-bottom:2px solid var(--accent);height:8px"></i>מיושר למועמד הנבחר (מנוקד: התאמה לא מדויקת)</span>':''}</div></div>`;
  if(cand){const src=T.c[cand.id].src.split(' ');const sj={};T.c[cand.id].al.forEach(([i,j,x])=>sj[j]=x);const js=Object.keys(sj).map(Number);const s0=Math.max(0,Math.min(...js)-25),s1=Math.min(src.length,Math.max(...js)+26);
-  html+=`<div class="card pad" style="margin-top:10px"><div class="colh"><h3>${esc(cand.work)} <span class="muted small hlp" dir="ltr" title="${esc(H.ref)}">${esc(cand.ref)}</span>${wflag(cand.id)} ${cb('match',cand.id,p.folio+' · '+cand.work+' '+cand.ref)}</h3><span class="pill ${cand.above?'p-up':'p-down'}" title="${esc(H.S+' '+H.p)}">S ${cand.S} · p ${cand.p}</span></div>
+  html+=`<div class="card pad" style="margin-top:10px"><div class="colh"><h3>${esc(cand.work)} <span class="muted small" dir="ltr">${esc(cand.ref)}</span>${qm(H.ref)}${wflag(cand.id)} ${cb('match',cand.id,p.folio+' · '+cand.work+' '+cand.ref)}</h3><span><span class="pill ${cand.above?'p-up':'p-down'}">S ${cand.S} · p ${cand.p}</span>${qm(H.S+' '+H.p)}</span></div>
    <div class="txt">${tokSpan(src,s0,s1,j=>sj[j]!==undefined?('a-x'+(sj[j]?'':' f')):'')}</div>
-   <div class="small muted">${row(hl('ציון ACT',H.score),cand.score)}${row(hl('norm / align',H.norm+' '+H.align),`${cand.norm} / ${cand.align}`)}${row(hl('N / C / Cp',H.N+' '+H.C+' '+H.Cp),`${cand.N} / ${cand.C} / ${cand.Cp}`)}${sigLine(cand)}${cand.tid?row('תיוג ידני',`${esc(cand.tid)} · <b>${esc(cand.rel)}</b> (${esc(cand.conf)}) · ${esc(cand.note)}`):''}<span dir="ltr" class="small">${esc(cand.loc)}</span></div></div>`}
+   <div class="small muted">${row(hl('ציון ACT',H.score),cand.score)}${row(hl('norm / align',H.norm+' '+H.align),`${cand.norm} / ${cand.align}`)}${row(hl('N / C / Cp',H.N+' '+H.C+' '+H.Cp),`${cand.N} / ${cand.C} / ${cand.Cp}`)}${sigLine(cand)}${modelBreak(cand)}<details class="rawd" data-rawc="${esc(cand.id)}"><summary>נתונים גולמיים מ־ACT</summary>${qm('השדות של המועמד הזה כפי שהם בדוח של ACT, בלי עיבוד.')}<div class="rawbody small muted">טוען…</div></details>${cand.tid?row('תיוג ידני',`${esc(cand.tid)} · <b>${esc(cand.rel)}</b> (${esc(cand.conf)}) · ${esc(cand.note)}`):''}<span dir="ltr" class="small">${esc(cand.loc)}</span></div></div>`}
  html+=`<div class="card pad tscroll" style="margin-top:10px"><h3>המועמדים ביישור מלא</h3><table><thead><tr><th>${hl('rank',H.rank)}</th><th>חיבור</th><th>${hl('מראה מקום',H.ref)}</th><th>${hl('S',H.S)}</th><th>${hl('p',H.p)}</th><th>${hl('תיוג ידני',H.tag)}</th><th>${hl('אותות',H.run+' '+H.inrun+' '+H.noise)}</th></tr></thead><tbody>
   ${cs.map(c=>`<tr class="click" data-cand="${esc(c.id)}" ${cand&&cand.id===c.id?'style="background:var(--accent-soft)"':''}><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}${wflag(c.id)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small">${sigShort(c)}</td></tr>`).join('')}</tbody></table></div>`;
- if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>${cb('unit',u.uid,p.folio+' · יחידה '+u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
+ if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות${qm('לכל יחידה: העדים שלה (חיבורים עם התאמה מעל הסף), העד הקרוב ביותר, וההשוואות בין זוגות העדים עם הכרעת הכלי. לחיצה על השוואה פותחת אותה בלשונית בדיקת השוואות.')}</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>${cb('unit',u.uid,p.folio+' · יחידה '+u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
   ${(compsByUnit[u.uid]||[]).map(c=>`<br><span class="lnk" data-comp="${c.i}">${esc(wn(c.o))} ← ${esc(wn(c.n))}</span>: <span class="v-${c.v}">${VER[c.v]}</span>`).join('')}</p>`).join('')}</div>`;
- if(us.length)html+=`<div class="card pad" style="margin-top:10px" id="psyncard"><h3>סינופסיס בטורים</h3><p class="muted small">כל העדים החזקים של יחידת טקסט, זה לצד זה ומחולקים לשורות (לפי התיארוך).</p>
+ if(us.length)html+=`<div class="card pad" style="margin-top:10px" id="psyncard"><h3>סינופסיס בטורים${qm('כל העדים החזקים של יחידה, זה לצד זה, מחולקים אוטומטית לשורות של רצפים מקבילים. העמודות לפי התיארוך. תא ריק = אין רצף מקביל בחלון המוצג. הנוסח לא שונה.')}</h3><p class="muted small">כל העדים החזקים של יחידת טקסט, זה לצד זה ומחולקים לשורות (לפי התיארוך).</p>
   <div class="verd">${us.map(u=>`<button class="b" data-psyn="${esc(u.uid)}" aria-pressed="${PSYN.uid===u.uid}">${esc(u.uid.split('#')[1])} · ${u.wit.length+1} עדים</button>`).join('')}${PSYN.uid?synDlButtons:''}</div>
   ${PSYN.uid?unitSynBlock(PSYN.uid,T):''}</div>`;
+ html+=`<details class="card pad rawd" style="margin-top:10px" data-rawp="${esc(pid)}"><summary><b>כל המועמדים שהחזיר ACT לקטע (נתונים גולמיים)</b></summary>${qm('עד 30 מועמדים כפי שהם בדוח של ACT, כולל אלה שלא קיבלו יישור מלא ולכן לא מופיעים בשאר הממשק.')}<div class="rawbody small muted">טוען…</div></details>`;
  html+=contCard(pid,T,cand,cs);
  $('#pdetail').innerHTML=html;
  if(opt.unit){const el=document.querySelector('.utag');el&&el.scrollIntoView({block:'center'})}}
@@ -375,7 +498,7 @@ function contCard(pid,T,cand,cs){const i=PIDX[pid];let w=CONT.w||(cand?cand.k:(c
    <td class="small">${m.length?m.map(c=>`<div><span class="pill ${c.above?'p-up':'p-down'} num">S ${c.S}</span> <span class="lnk" data-cand="${esc(c.id)}" dir="ltr">${esc(c.ref)}</span>${wflag(c.id)}</div>`).join(''):'<span class="gap">אין מועמד מהחיבור הזה בין המועמדים של ACT</span>'}</td>
    <td><div class="cx txt">${ot.length>1?tokSpan(ot,0,ot.length,a=>oal[a]?'a-x':''):''}</div></td>
    <td><div class="cx txt">${src?tokSpan(src,0,src.length,j=>sal[j]?'a-x':''):`<span class="gap">פער ברצף. לפני: ${near(k,-1)||'—'} · אחרי: ${near(k,1)||'—'}</span>`}</div></td></tr>`}
- return `<div class="card pad tscroll" style="margin-top:10px" id="contcard"><div class="colh"><h3>המשכיות מול חיבור</h3><select id="contw">${[...keys].sort((a,b)=>wn(a).localeCompare(wn(b),'he')).map(k=>`<option value="${esc(k)}" ${k===w?'selected':''}>${esc(wn(k))}</option>`).join('')}</select></div>
+ return `<div class="card pad tscroll" style="margin-top:10px" id="contcard"><div class="colh"><h3>המשכיות מול חיבור${qm('קטעי כתב היד ברצף מול חיבור אחד, כולל מועמדים מתחת לסף. נועד לבדוק דפים שבהם לא נמצאה התאמה: אם X מתאים ל־Y ו־X+2 ל־Y+2, כדאי לבדוק את X+1 מול Y+1.')}</h3><select id="contw">${[...keys].sort((a,b)=>wn(a).localeCompare(wn(b),'he')).map(k=>`<option value="${esc(k)}" ${k===w?'selected':''}>${esc(wn(k))}</option>`).join('')}</select></div>
   <p class="muted small">קטעי כתב היד ברצף מול החיבור הנבחר. לכל קטע מוצגים המועמדים מהחיבור הזה, גם מתחת לסף, ולצדו הטקסט של המועמד החזק. בקטע בלי מועמד מוצגים מראי המקום של הקטעים השכנים, כדי לבדוק X+1 מול Y+1. כל תא נגלל בפני עצמו.</p>
   <div class="verd"><button class="b" data-cmore="b">↑ עוד 3 קטעים לפני</button><button class="b" data-cmore="a">↓ עוד 3 קטעים אחרי</button></div>
   <table class="cont"><thead><tr><th>קטע</th><th>מועמדים מהחיבור</th><th>אופנהיימר 128</th><th>טקסט המקור (המועמד החזק)</th></tr></thead><tbody>${rows}</tbody></table></div>`}
@@ -441,23 +564,23 @@ async function showComp(i){if(OPPX.i!==i)OPPX={i,prev:0,next:0};CI=i;setHash('ve
  const [o0,o1]=win(O),[n0,n1]=win(N);const r=REV[did(c)]||{};const wO=W[c.o],wN=W[c.n];const e=c.ev;
  const ref=M=>M.ids.map(id=>C[id].ref).join(' + ');
  $('#vdetail').innerHTML=`<div class="card pad">
-  <div class="colh"><h2 style="margin:0">${esc(P[u.pid].folio)} <span class="muted small">${esc(u.uid.split('#')[1])}</span> ${cb('comparison',String(i),P[u.pid].folio+' '+u.uid.split('#')[1]+' · '+wn(c.o)+' ← '+wn(c.n))}</h2><span class="small">הכרעת הכלי: <span class="v-${c.v}">${VER[c.v]}</span> <span class="muted num">(ישיר ${c.sd} · דרך החדש ${c.sv})</span></span></div>
-  <p class="small">ישן: <b>${esc(wO.name_he)}</b>${roleChip(c.o)} <span class="num">${yr(wO)}</span> · חדש: <b>${esc(wN.name_he)}</b>${roleChip(c.n)} <span class="num">${yr(wN)}</span> · המשכיות מול: <span class="lnk" data-cont="${esc(c.o)}" data-pid="${esc(u.pid)}">הישן</span> / <span class="lnk" data-cont="${esc(c.n)}" data-pid="${esc(u.pid)}">החדש</span>${c.oc?'':' · <span class="pill p-overlap">טווחי תיארוך חופפים</span>'}${c.nl?' · <span class="pill p-after">החדש מאוחר לאופנהיימר</span>':''}</p>
+  <div class="colh"><h2 style="margin:0">${esc(P[u.pid].folio)} <span class="muted small">${esc(u.uid.split('#')[1])}</span> ${cb('comparison',String(i),P[u.pid].folio+' '+u.uid.split('#')[1]+' · '+wn(c.o)+' ← '+wn(c.n))}</h2><span class="small">הכרעת הכלי: <span class="v-${c.v}">${VER[c.v]}</span> <span class="muted num">(ישיר ${c.sd} · דרך החדש ${c.sv})</span>${qm('הכלי משווה את אופנהיימר לעד ישן ולעד חדש בכמה מבחנים (ראו הטבלה). ישיר = אופנהיימר קרוב יותר לישן, ולכן כנראה לא הגיע דרך החדש. דרך החדש = קרוב יותר לחדש. הכרעה ניתנת רק אם ציון אחד לפחות 4, לפחות כפול מהשני, ויש לו ראיה חיובית (D6). זו קרבה טקסטואלית, לא הוכחה של העתקה.')}</span></div>
+  <p class="small">ישן: <b>${esc(wO.name_he)}</b>${roleChip(c.o)} <span class="num">${yr(wO)}</span> · חדש: <b>${esc(wN.name_he)}</b>${roleChip(c.n)} <span class="num">${yr(wN)}</span> · המשכיות מול: <span class="lnk" data-cont="${esc(c.o)}" data-pid="${esc(u.pid)}">הישן</span> / <span class="lnk" data-cont="${esc(c.n)}" data-pid="${esc(u.pid)}">החדש</span>${qm('פותח בלשונית קטעים את "המשכיות מול חיבור": הקטעים הסמוכים בכתב היד מול העד הזה, כולל מתחת לסף.')}${c.oc?'':' · <span class="pill p-overlap">טווחי תיארוך חופפים</span>'}${c.nl?' · <span class="pill p-after">החדש מאוחר לאופנהיימר</span>':''}</p>
   <table class="evt"><thead><tr><th>ראיה</th><th>תומך בישיר</th><th>תומך בדרך החדש</th></tr></thead><tbody>
-   <tr><td>מילים באופנהיימר שיש רק בעד אחד</td><td class="num v-direct">${e.opp_O_notM||0}</td><td class="num v-via">${e.opp_M_notO||0}</td></tr>
-   <tr><td>השמטה משותפת לאופנהיימר ולחדש (משקל ¼)</td><td></td><td class="num">${e.shared_omission||0}</td></tr>
-   <tr><td>נוסחאות</td><td class="num">${e.reading_O||0}</td><td class="num">${e.reading_M||0}</td></tr>
-   <tr><td>סדר יחידות סמוכות</td><td class="num">${e.order_O||0}</td><td class="num">${e.order_M||0}</td></tr>
-   <tr><td>גבולות</td><td class="num">${e.boundary_O||0}</td><td class="num">${e.boundary_M||0}</td></tr></tbody></table>
-  <div class="legend"><span><i style="border-bottom:2px solid var(--dir);height:8px"></i>מיושר לישן</span><span><i style="border-bottom:2px solid var(--via);height:8px"></i>מיושר לחדש</span><span><i style="background:var(--dir-soft)"></i>באופנהיימר ובישן, חסר בחדש</span><span><i style="background:var(--via-soft)"></i>באופנהיימר ובחדש, חסר בישן</span><span><i style="background:var(--om)"></i>בישן בלבד (השמטה משותפת)</span></div>
-  <div class="verd syn-bar"><button class="b" id="vsyn" aria-pressed="${SYN}" title="חלוקה אוטומטית לשורות של רצפים מקבילים; הנוסח אינו משתנה">${SYN?'↩ תצוגה רציפה':'▤ תצוגה סינופטית בשורות'}</button>${SYN&&u.wit.length>2?`<button class="b" id="vsyna" aria-pressed="${SYNALL}" title="סינופסיס של כל העדים החזקים של היחידה, לפי התיארוך">${SYNALL?'רק הישן והחדש':`כל עדי היחידה (${u.wit.length})`}</button>`:''}${SYN?synDlButtons:''}</div>
+   <tr><td>מילים באופנהיימר שיש רק בעד אחד${qm('מילים באופנהיימר שמופיעות רק בישן (תומך בישיר) או רק בחדש (תומך בדרך החדש). כל השמטה נבדקת שוב בהשוואה עמומה מול הטקסט המלא.')}</td><td class="num v-direct">${e.opp_O_notM||0}</td><td class="num v-via">${e.opp_M_notO||0}</td></tr>
+   <tr><td>השמטה משותפת לאופנהיימר ולחדש (משקל ¼)${qm('מילים שיש בישן וחסרות גם באופנהיימר וגם בחדש: רמז שאופנהיימר הלך אחרי החדש. המשקל רבע, כי פערים ביישור של ACT נראים לפעמים כמו השמטות.')}</td><td></td><td class="num">${e.shared_omission||0}</td></tr>
+   <tr><td>נוסחאות${qm('חילופי נוסח באותו מקום: האם אופנהיימר מסכים עם הישן או עם החדש.')}</td><td class="num">${e.reading_O||0}</td><td class="num">${e.reading_M||0}</td></tr>
+   <tr><td>סדר יחידות סמוכות${qm('האם אופנהיימר שומר על סדר היחידות הסמוכות של הישן או של החדש.')}</td><td class="num">${e.order_O||0}</td><td class="num">${e.order_M||0}</td></tr>
+   <tr><td>גבולות${qm('איפה היחידה מתחילה ונגמרת: האם הגבולות באופנהיימר תואמים לישן או לחדש.')}</td><td class="num">${e.boundary_O||0}</td><td class="num">${e.boundary_M||0}</td></tr></tbody></table>
+  <div class="legend"><span><i style="border-bottom:2px solid var(--dir);height:8px"></i>מיושר לישן</span><span><i style="border-bottom:2px solid var(--via);height:8px"></i>מיושר לחדש</span><span><i style="background:var(--dir-soft)"></i>באופנהיימר ובישן, חסר בחדש</span><span><i style="background:var(--via-soft)"></i>באופנהיימר ובחדש, חסר בישן</span><span><i style="background:var(--om)"></i>בישן בלבד (השמטה משותפת)</span>${qm('קו תחתון: מילה שיושרה לעד הישן (כתום) או לחדש (כחול). רקע צבעוני: מילה באופנהיימר שיש רק באחד העדים. קו חוצה בעמודת הישן: מילה שחסרה גם באופנהיימר וגם בחדש.')}</div>
+  <div class="verd syn-bar"><button class="b" id="vsyn" aria-pressed="${SYN}" title="חלוקה אוטומטית לשורות של רצפים מקבילים; הנוסח אינו משתנה">${SYN?'↩ תצוגה רציפה':'▤ תצוגה סינופטית בשורות'}</button>${SYN&&u.wit.length>2?`<button class="b" id="vsyna" aria-pressed="${SYNALL}" title="סינופסיס של כל העדים החזקים של היחידה, לפי התיארוך">${SYNALL?'רק הישן והחדש':`כל עדי היחידה (${u.wit.length})`}</button>`:''}${SYN?synDlButtons:''}${qm('תצוגה סינופטית: הטקסטים מחולקים אוטומטית לשורות של רצפים מקבילים, עם תא ריק במקום שאין מקבילה; הנוסח לא משתנה. כל עדי היחידה: כל העדים החזקים, לא רק הישן והחדש. ההורדה שומרת את הטבלה כקובץ HTML או TSV ל־Excel.')}</div>
   ${SYN?synBlock(i,T):`<div class="cols">
-   <div><div class="colh"><h3>אופנהיימר 128</h3><span class="muted small">HTR · <button class="b" data-pg="-1" title="הוספת הקטע הקודם בכתב היד">+ קודם</button> <button class="b" data-pg="1" title="הוספת הקטע הבא בכתב היד">+ הבא</button></span></div><div class="txt">${OPPX.prev?pagesAround(T,u.pid,-1,OPPX.prev)+' ':''}${tokSpan(toks,0,toks.length,oppCls)}${OPPX.next?' '+pagesAround(T,u.pid,1,OPPX.next):''}</div></div>
-   <div><div class="colh"><h3 class="v-direct">${esc(wO.name_he)}</h3><span class="muted small hlp" dir="ltr" title="${esc(H.ref)}">${esc(ref(O))}</span>${wflagAny(O.ids)}</div><div class="txt">${tokSpan(O.src,0,O.src.length,j=>[oj.has(j)?'a-o':'',om.has(j)?'om':''].filter(Boolean).join(' '))}</div></div>
-   <div><div class="colh"><h3 class="v-via">${esc(wN.name_he)}</h3><span class="muted small hlp" dir="ltr" title="${esc(H.ref)}">${esc(ref(N))}</span>${wflagAny(N.ids)}</div><div class="txt">${tokSpan(N.src,0,N.src.length,j=>nj.has(j)?'a-n':'')}</div></div>
+   <div><div class="colh"><h3>אופנהיימר 128</h3><span class="muted small">HTR · <button class="b" data-pg="-1" title="הוספת הקטע הקודם בכתב היד">+ קודם</button> <button class="b" data-pg="1" title="הוספת הקטע הבא בכתב היד">+ הבא</button>${qm('מוסיף לעמודת אופנהיימר את הקטע הקודם או הבא בכתב היד (באפור), כדי לראות מה בא לפני ואחרי. כל עמודה נגללת בנפרד.')}</span></div><div class="txt">${OPPX.prev?pagesAround(T,u.pid,-1,OPPX.prev)+' ':''}${tokSpan(toks,0,toks.length,oppCls)}${OPPX.next?' '+pagesAround(T,u.pid,1,OPPX.next):''}</div></div>
+   <div><div class="colh"><h3 class="v-direct">${esc(wO.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(O))}</span>${qm(H.ref)}${wflagAny(O.ids)}</div><div class="txt">${tokSpan(O.src,0,O.src.length,j=>[oj.has(j)?'a-o':'',om.has(j)?'om':''].filter(Boolean).join(' '))}</div></div>
+   <div><div class="colh"><h3 class="v-via">${esc(wN.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(N))}</span>${wflagAny(N.ids)}</div><div class="txt">${tokSpan(N.src,0,N.src.length,j=>nj.has(j)?'a-n':'')}</div></div>
   </div>`}
   <div class="card pad" style="margin-top:12px;background:var(--surface-2)">
-   <h3>ההכרעה שלי</h3>
+   <h3>ההכרעה שלי${qm('ההכרעה שלך, שנשמרת. ישיר / דרך החדש / לא מוכרע כמו אצל הכלי. לא ניתן לקבוע: אין מספיק טקסט. מקור משותף: אופנהיימר והעדים שאבו ממקור קדום משותף. ממקבילה של המקור: אופנהיימר הביא ממקבילה של המקור ולא מהמקור עצמו. המקשים 1–6 בוחרים.')}</h3>
    <div class="verd" id="vbtn">${MINE.map((k,n)=>`<button class="b" data-m="${k}" aria-pressed="${r.mine===k}"><span class="kbd">${n+1}</span> ${VER[k]}</button>`).join('')}</div>
    <textarea id="vnote" rows="2" style="width:100%;margin-top:8px" placeholder="הערה (למשל: ההבדל נובע מגבול סגמנט / HTR / קיצור של המדפיס)">${esc(r.note||'')}</textarea>
    <div class="verd" style="margin-top:6px"><button class="b" id="vprev">→ הקודם</button><button class="b" id="vnext">הבא ←</button><span class="stat" id="vst">${r.at?'נשמר '+new Date(r.at).toLocaleString('he-IL'):''}</span>
@@ -564,7 +687,7 @@ $('#qrun').addEventListener('click',async()=>{const tb=$('#qres');tb.innerHTML='
 // ---------- routing (#tab/item) ----------
 const enc=encodeURIComponent,dec=decodeURIComponent;
 function setHash(h){if(location.hash.slice(1)!==h)history.replaceState(null,'','#'+h)}
-const curPath=()=>location.hash.slice(1).split('?')[0]||'overview';
+const curPath=()=>location.hash.slice(1).split('?')[0]||'map';
 // The full screen state: path + filters, graph selection, table search/sort/page and scroll position.
 function viewState(){const path=curPath(),t=path.split('/')[0],q=new URLSearchParams();
  const v=id=>{const el=$(id);return el.type==='checkbox'?(el.checked?'1':'0'):el.value};
@@ -587,7 +710,7 @@ function applyState(t,q){const set=(id,k)=>{if(!q.has(k))return;const el=$(id);i
  if(t==='sparql'){set('#qex','qex');$('#qtext').value=q.has('q')?q.get('q'):(EX[+$('#qex').value]||EX[0])[1]}
  if(t==='comments'){['cfs','cft','cfq'].forEach(k=>set('#'+k,k))}}
 async function route(){const raw=location.hash.slice(1),qi=raw.indexOf('?');const q=new URLSearchParams(qi>=0?raw.slice(qi+1):'');
- const parts=(qi>=0?raw.slice(0,qi):raw).split('/').map(dec);const t=TABS.includes(parts[0])?parts[0]:'overview';
+ const parts=(qi>=0?raw.slice(0,qi):raw).split('/').map(dec);const t=TABS.includes(parts[0])?parts[0]:'map';
  applyState(t,q);tab(t,true);
  if(t==='overview'){if(parts[1]&&W[parts[1]]){selectWork(parts[1]);if(q.has('path')&&PATS[+q.get('path')]){SELP=+q.get('path');drawGraph();pathPanel()}}else if(SEL)selectWork(null)}
  if(t==='works'&&parts[1]&&W[parts[1]])showWork(parts[1]);
@@ -650,7 +773,7 @@ function cb(kind,item,label){const n=ccount(kind,item);return `<button class="cb
 function cbadge(kind,item){const n=ccount(kind,item);return n?` <span class="pill p-overlap">${n}</span>`:''}
 function refreshBadges(){document.querySelectorAll('.cb').forEach(b=>{const n=ccount(b.dataset.ck,b.dataset.ci);b.classList.toggle('has',n>0);b.querySelector('.cn').textContent=n||''});
  const open=CM.list.filter(c=>c.status==='פתוחה'||!c.status).length;$('#ncount').textContent=open?String(open):'';$('#ncount').classList.toggle('hidden',!open)}
-const TABNAME={overview:'סקירה',works:'חיבורים',passages:'קטעים',verify:'בדיקת השוואות',matches:'התאמות',tables:'טבלאות',sparql:'SPARQL',comments:'הערות'};
+const TABNAME={map:'מבט־על',catalog:'קטלוג כתיב',model:'המודל',act:'נתוני ACT',overview:'סקירה',works:'חיבורים',passages:'קטעים',verify:'בדיקת השוואות',matches:'התאמות',tables:'טבלאות',sparql:'SPARQL',comments:'הערות'};
 function viewLabel(){const p=curPath().split('/').map(dec);const t=TABNAME[p[0]]||'סקירה';
  if(p[0]==='works'&&W[p[1]])return `${t}: ${W[p[1]].name_he}`;
  if(p[0]==='passages'&&P[p[1]])return `${t}: ${P[p[1]].folio}`+(p[2]==='c'&&C[p[1]+'|'+p[3]]?` · ${C[p[1]+'|'+p[3]].work}`:'');
