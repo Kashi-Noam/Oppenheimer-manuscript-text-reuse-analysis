@@ -66,5 +66,40 @@ test('exports: TSV has a header and one line per row; HTML is a full document', 
   assert(tsv[0].includes('פסיקתא דרב כהנא (28 Ot 1 6)'));
   const html = S.standaloneHTML(A, { title: 't' }); assert(html.startsWith('<!doctype html>') && html.includes('class="syn"'));
 });
+// 3. all witnesses of a unit (N columns)
+test(`unit synopsis: integrity on all ${D.units.length} units`, () => {
+  let bad = [], maxCols = 0;
+  D.units.forEach(u => { const r = S.build(S.fromUnit(ctx, u.uid)); maxCols = Math.max(maxCols, r.witnesses.length); if (!S.check(r).ok) bad.push(u.uid); });
+  console.log(`     up to ${maxCols} columns`);
+  assert.deepStrictEqual(bad, []);
+});
+test('unit synopsis: columns ordered by dating, Oppenheim first', () => {
+  const r = S.build(S.fromUnit(ctx, 'fol_23v_1#u1')), yrs = r.witnesses.slice(1).map(w => ctx.W[w.key].date_from);
+  assert.strictEqual(r.witnesses[0].key, 'Oppenheim_128');
+  assert.deepStrictEqual(yrs, yrs.slice().sort((a, b) => a - b));
+});
+
+// 4. signals (docs/explorer/signals.js), checked on Moshe's own examples and on the 487 labelled pairs
+const G = require(path.join(E, 'signals.js'));
+const NZ = G.noise(D, T), RN = G.runs(D), RO = G.roles(D.works);
+test('noise: Moshe\'s two noise examples are flagged (df4708c8 fol 16r 1 c6, d3a5f31e fol 174v 2 c8)', () => {
+  assert(NZ['Oppenheimer_128_fol_16r_1|6'].flag && NZ['Oppenheimer_128_fol_174v_2|8'].flag);
+});
+test('noise: his meaningful short phrase is not flagged, and is found as the rarest run (b9c24a7e fol 14r 1 c1)', () => {
+  const n = NZ['Oppenheimer_128_fol_14r_1|1']; assert(!n.flag && n.rare.text.includes('בספר אוריתא דמשה'));
+});
+test('noise: on the labelled pairs it flags most "אין קשר" and almost no "אותו טקסט"', () => {
+  const lab = D.cands.filter(c => c.rel), none = lab.filter(c => c.rel === 'אין קשר'), same = lab.filter(c => /^אותו טקסט/.test(c.rel));
+  const fn = none.filter(c => NZ[c.id] && NZ[c.id].flag).length, fs_ = same.filter(c => NZ[c.id] && NZ[c.id].flag).length;
+  console.log(`     אין קשר flagged ${fn}/${none.length}; אותו טקסט flagged ${fs_}/${same.length}`);
+  assert(fn / none.length > 0.5 && fs_ / same.length < 0.05);
+});
+test('runs: inside the Pesikta run, a Midrash HaGadol match is marked as inside the run of PdRK (b86bc045)', () => {
+  const c = D.cands.find(x => x.k === 'Midrash_HaGadol' && RN[x.id].inRunOf === 'Pesikta_DRav_Kahanna'); assert(c);
+  assert(!D.cands.some(x => x.k === 'Pesikta_DRav_Kahanna' && RN[x.id].inRunOf === 'Pesikta_DRav_Kahanna'));
+});
+test('roles: Yalkut Shimoni = late yalkut, Otzar Midrashim = modern yalkut, PdRK = early (7a72b469)', () => {
+  assert.strictEqual(RO.Yalkut_Shimoni_on_Torah.key, 'lateyalkut'); assert.strictEqual(RO.Otzar_Midrashim.key, 'modern'); assert.strictEqual(RO.Pesikta_DRav_Kahanna.key, 'early');
+});
 console.log(fails ? `\n${fails} failed` : '\nall passed');
 process.exit(fails ? 1 : 0);

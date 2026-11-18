@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>כתב יד ms_01 — קטלוג מכתיב</title>
+<style>
+  :root {
+    --bg: #fafaf7; --fg: #1f2328; --muted: #6b7280; --line: #dcdcd4; --card: #ffffff;
+    --hi: #d7ecd0; --mid: #fbe9b0; --lo: #f4c3ab;
+    --hi-fg: #2f6b1f; --mid-fg: #7a5a00; --lo-fg: #9a3b12;
+    --accent: #2b5d8a; --mine: #eef3fb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17181a; --fg: #e6e6e1; --muted: #9aa0a6; --line: #34363a; --card: #212326;
+      --hi: #2c4a26; --mid: #5a4a14; --lo: #6a3320;
+      --hi-fg: #a8d89b; --mid-fg: #f0d37a; --lo-fg: #f2a98a;
+      --accent: #7fb2e0; --mine: #26303d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 "Segoe UI", Arial, sans-serif; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 17px; margin: 32px 0 10px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+
+  .counts { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .chip { border-radius: 999px; padding: 3px 12px; font-size: 13px; border: 1px solid var(--line); background: var(--card); }
+  .chip.c-hi { background: var(--hi); color: var(--hi-fg); border-color: transparent; }
+  .chip.c-mid { background: var(--mid); color: var(--mid-fg); border-color: transparent; }
+  .chip.c-lo { background: var(--lo); color: var(--lo-fg); border-color: transparent; }
+
+  /* מפת דפים */
+  .map { display: flex; direction: rtl; height: 46px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--card); }
+  .seg { min-width: 4px; border-inline-start: 1px solid var(--bg); cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 11px; padding: 0 2px; white-space: nowrap; }
+  .seg.c-hi { background: var(--hi); color: var(--hi-fg); }
+  .seg.c-mid { background: var(--mid); color: var(--mid-fg); }
+  .seg.c-lo { background: var(--lo); color: var(--lo-fg); }
+  .seg:hover { outline: 2px solid var(--accent); outline-offset: -2px; z-index: 1; }
+  .mapaxis { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; margin-top: 3px; }
+
+  /* פקדים */
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 22px 0 10px; }
+  .controls input[type=search] { flex: 1 1 240px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--fg); font: inherit; }
+  .btn { border: 1px solid var(--line); background: var(--card); color: var(--fg); border-radius: 6px; padding: 6px 12px; font: inherit; cursor: pointer; }
+  .btn[aria-pressed=true] { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* טבלה */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; min-width: 900px; }
+  th { position: sticky; top: 0; background: var(--card); text-align: right; font-size: 13px; color: var(--muted); padding: 9px 10px; border-bottom: 2px solid var(--line); }
+  td { padding: 10px; vertical-align: top; border-bottom: 1px solid var(--line); text-align: right; }
+  tr:last-child td { border-bottom: none; }
+  tr.level2 td:nth-child(2) { padding-inline-start: 28px; }
+  tr.level2 td:nth-child(2)::before { content: "↳ "; color: var(--muted); }
+  tr.flash td { animation: flash 1.6s ease-out; }
+  @keyframes flash { from { background: var(--mine); } to { background: transparent; } }
+  td.loc { white-space: nowrap; font-weight: 600; font-variant-numeric: tabular-nums; }
+  td.title { font-weight: 600; min-width: 200px; }
+  td.notes { color: var(--fg); min-width: 320px; }
+  .badge { display: inline-block; border-radius: 999px; padding: 1px 10px; font-size: 13px; font-weight: 600; }
+  .badge.c-hi { background: var(--hi); color: var(--hi-fg); }
+  .badge.c-mid { background: var(--mid); color: var(--mid-fg); }
+  .badge.c-lo { background: var(--lo); color: var(--lo-fg); }
+  tr.unid td:nth-child(2) { border-inline-start: 4px solid var(--lo-fg); }
+  tr.unplaced td { border-bottom-style: dashed; background: color-mix(in srgb, var(--lo) 18%, transparent); }
+  tr.unplaced td.loc { color: var(--muted); font-weight: 400; }
+  .mine { background: var(--mine); border-radius: 4px; padding: 0 4px; }
+  tr.hidden { display: none; }
+  .empty { padding: 18px; color: var(--muted); display: none; }
+
+  /* בדיקות */
+  .checks { list-style: none; padding: 0; margin: 0; }
+  .checks li { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .checks .k { flex: 0 0 190px; color: var(--muted); font-size: 13px; padding-top: 2px; }
+  .checks li.bad .k { color: var(--lo-fg); font-weight: 700; }
+  .gen { width: 100%; border-collapse: collapse; }
+  .gen td { padding: 6px 10px; border-bottom: 1px solid var(--line); }
+  .gen td:first-child { width: 190px; color: var(--muted); }
+  @media print { .controls, .map, .mapaxis { display: none; } body { background: #fff; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p style="margin:0 0 6px;font-size:13px"><a href="../explorer/">← לסייר אופנהיימר 128</a> · טיוטה של משה לביא מתוך רשומות כתיב (ms_01 = כתב היד הזה). המספור הוא של כתיב (א = recto, ב = verso).</p>
+  <h1>כתב יד ms_01 — קטלוג מכתיב</h1>
+  <p class="sub">טיוטה v0 · נוצר מקובץ ההכרעה · כל הנתונים זהים לגיליון "קטלוג" ב-xlsx</p>
+
+  <div class="counts"><span class="chip">23 יחידות</span><span class="chip c-hi">ודאות גבוהה: 8</span><span class="chip c-mid">ודאות בינונית: 9</span><span class="chip c-lo">ודאות נמוכה: 6</span></div>
+
+  <h2>מפת הדפים</h2>
+  <div class="map" id="map"><div class="seg c-hi" style="flex:14" data-row="r0" title="1א–7ב · ברייתא דר&#x27; אליעזר בן יוסי הגלילי · ודאות גבוהה">ברייתא דר&#x27; אליעזר בן …</div><div class="seg c-hi" style="flex:2" data-row="r1" title="8א–8ב · מסכת שמחות (פרק יב–יג) · ודאות גבוהה">מסכת שמחות</div><div class="seg c-mid" style="flex:5" data-row="r2" title="9א–11א · מסכת דרך ארץ זוטא (שיוך משוער) · ודאות בינונית">מסכת דרך ארץ זוטא</div><div class="seg c-hi" style="flex:5" data-row="r3" title="11ב–13ב · פרק שלום · ודאות גבוהה">פרק שלום</div><div class="seg c-hi" style="flex:18" data-row="r4" title="14א–22ב · מעשה טוביה (&quot;והוא כתוב במדרש רבה דרבה&quot;) · ודאות גבוהה">מעשה טוביה</div><div class="seg c-mid" style="flex:2" data-row="r5" title="23א–23ב · רמז לששה סדרי משנה בפסוק &quot;והיה אמונתך עתך&quot; (ישעיה לג:ו) · ודאות בינונית">רמז לששה סדרי משנה בפ…</div><div class="seg c-mid" style="flex:5" data-row="r6" title="24א–26א · פסיקתא דרב כהנא (קטע) – &quot;ביום השמיני&quot; · ודאות בינונית">פסיקתא דרב כהנא</div><div class="seg c-hi" style="flex:5" data-row="r7" title="26א–28ב · מדרש גאולה · ודאות גבוהה">מדרש גאולה</div><div class="seg c-lo" style="flex:17" data-row="r8" title="28ב–37א · [חיבור לא מזוהה] מדרשים על פרשות וישלח וישב · ודאות נמוכה">?? מדרשים על פרשות וי…</div><div class="seg c-mid" style="flex:25" data-row="r9" title="37ב–49ב · בראשית רבתי – &quot;מדרש רבה פרשת וישב יעקב בפסוק וישלכו אותו הבורה&quot; · ודאות בינונית">בראשית רבתי – &quot;מדרש ר…</div><div class="seg c-mid" style="flex:8" data-row="r10" title="50א–53ב · מסכת גרים · ודאות בינונית">מסכת גרים / מסכת כותיים</div><div class="seg c-lo" style="flex:1" data-row="r12" title="53ב–54א · [חיבור לא מזוהה] מדרש המתחיל &quot;כתוב ארור האיש אשר יעשה פסל ומסכה&quot; · ודאות נמוכה">?? מדרש המתחיל &quot;כתוב …</div><div class="seg c-mid" style="flex:31" data-row="r13" title="54ב–69ב · מסכת דרך ארץ רבה (שיוך משוער) · ודאות בינונית">מסכת דרך ארץ רבה</div><div class="seg c-hi" style="flex:210" data-row="r14" title="70א–174ב · פסיקתא דרב כהנא · ודאות גבוהה">פסיקתא דרב כהנא</div><div class="seg c-hi" style="flex:6" data-row="r16" title="174ב–177ב · איכה זוטא (כותר משנה: מדרש זוטא (איכה) (לקוטים)) · ודאות גבוהה">איכה זוטא</div><div class="seg c-hi" style="flex:18" data-row="r18" title="178א–186ב · לקוטים מהתלמוד והמדרש בענין תשעה באב · ודאות גבוהה">לקוטים מהתלמוד והמדרש…</div><div class="seg c-lo" style="flex:26" data-row="r19" title="187א–199ב · [אזור לא מזוהה] ללא תיאור בכתיב · ודאות נמוכה">[אזור לא מזוהה] ללא ת…</div><div class="seg c-mid" style="flex:8" data-row="r20" title="200א–203ב · מדרש לפרשות וארא–בשלח · ודאות בינונית">מדרש לפרשות וארא–בשלח</div><div class="seg c-lo" style="flex:4" data-row="r21" title="204א–205ב · [אזור לא מזוהה] ללא תיאור בכתיב · ודאות נמוכה">[אזור לא מזוהה] ללא ת…</div></div>
+  <div class="mapaxis"><span>1א</span><span>רוחב המקטע פרופורציונלי למספר העמודים · לחיצה קופצת לשורה</span><span>205ב</span></div>
+
+  <div class="controls">
+    <input type="search" id="q" placeholder="חיפוש בכל הטורים…" aria-label="חיפוש">
+    <button class="btn" data-cert="גבוהה" aria-pressed="false">ודאות גבוהה</button>
+    <button class="btn" data-cert="בינונית" aria-pressed="false">בינונית</button>
+    <button class="btn" data-cert="נמוכה" aria-pressed="false">נמוכה / לא מזוהה</button>
+    <button class="btn" id="reset">איפוס</button>
+  </div>
+
+  <div class="tablewrap">
+    <table id="t">
+      <thead><tr><th>מיקום בכתב היד</th><th>שם החיבור</th><th>פירוט</th><th>ודאות ההכרעה</th><th>הערות: אמביוולנטיות / אי-בהירות</th></tr></thead>
+      <tbody><tr id="r0" class="level1" data-cert="גבוהה"><td class="loc">1א–7ב</td><td class="title">ברייתא דר&#x27; אליעזר בן יוסי הגלילי</td><td>מתחילה במלים &quot;בראשית אל תקרא בראשית&quot;; &quot;עם הדוגמאות&quot;; הסוף חסר. נושא: מדרש. הלכה.</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">הטווח והשם ודאיים. השם ברשומה המפורטת: &quot;דר&#x27; יוסי הגלילי&quot; (בלי &quot;אליעזר בן&quot;) – כנראה קיצור/טעות העתקה; אימצתי את נוסח תוכן העניינים. &quot;עם הדוגמאות&quot; לא מפורט. &quot;הסוף חסר&quot; – לא נאמר מה חסר ואם החסרון ב-7ב עצמו. <span class="mine">[ידיעתי, לא כתיב:]</span> הפתיחה &quot;בראשית אל תקרא בראשית&quot; אינה הפתיחה הרגילה של הברייתא (&quot;בשלשים ושתים מדות…&quot;) – שווה לבדוק אם זה נוסח מיוחד.</td></tr>
+<tr id="r1" class="level1" data-cert="גבוהה"><td class="loc">8א–8ב</td><td class="title">מסכת שמחות (פרק יב–יג)</td><td>שימשה למהדורת מ&#x27; היגר (ניו יורק, תרצ&quot;א).</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">נאמר במפורש, גם בכותר המשנה וגם בפירוט.</td></tr>
+<tr id="r2" class="level1" data-cert="בינונית"><td class="loc">9א–11א</td><td class="title">מסכת דרך ארץ זוטא (שיוך משוער)</td><td>שימשה למהדורת מ&#x27; היגר (ניו יורק, תרצ&quot;ה); &quot;וראה תאור שם עמ&#x27; 40&quot;.</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">כתיב נותן שני טווחים משותפים לזוטא ולרבה (9א-11א, 54ב-69ב) ולא אומר איזה מהם איזה. שיוך זוטא ל-9א-11א הוא הסקה שלי: סדר ההזכרה (זוטא ראשון) והאורך (כ-2.5 דף מול כ-15.5). אפשרות נוגדת: שתי המסכתות משולבות בשני הטווחים. &quot;שם עמ&#x27; 40&quot; – לא ברור מהו &quot;שם&quot; (מבוא מהדורת היגר? אין ציון).</td></tr>
+<tr id="r3" class="level1" data-cert="גבוהה"><td class="loc">11ב–13ב</td><td class="title">פרק שלום</td><td>מתחיל במלים &quot;אמ&#x27; ר&#x27; יהושע בן לוי גדול הוא השלום&quot;; שימש למהדורת מ&#x27; היגר (ניו יורק, תרפ&quot;ט), עמ&#x27; 99–102.</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">זיהוי ברור (כותר משנה + טווח + פתיחה). לא נאמר אם בכ&quot;י הוא יחידה נפרדת או נספח לדרך ארץ זוטא שלפניו.</td></tr>
+<tr id="r4" class="level1" data-cert="גבוהה"><td class="loc">14א–22ב</td><td class="title">מעשה טוביה (&quot;והוא כתוב במדרש רבה דרבה&quot;)</td><td>שימש למהדורתו של א&#x27; נויבאואר, The Book of Tobit (אוקספורד, 1878). נושא (שיוך משוער): ספרות יפה.</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">הכותרת במרכאות היא ציטוט מהכ&quot;י כפי שכתיב מביא; לא ברור אם &quot;מדרש רבה דרבה&quot; שם כללי לאוסף. נושאי המשנה של כתיב (ספרות יפה, משיחיות, מקרא/ישעיה לג:ו, מדרש. אגדה) ניתנו לכל חלק 3 יחד – שיוכם ליחידות הוא הסקה שלי.</td></tr>
+<tr id="r5" class="level1" data-cert="בינונית"><td class="loc">23א–23ב</td><td class="title">רמז לששה סדרי משנה בפסוק &quot;והיה אמונתך עתך&quot; (ישעיה לג:ו)</td><td>קטע קצר ללא שם חיבור; מתואר רק לפי תוכנו. נושא: מקרא, פרשנות נביאים אחרונים, ישעיה לג:ו.</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">הטווח ודאי; מעמדו כיחידה עצמאית לא. אין שם חיבור ולא כותר משנה. לא ידוע אם הוא חלק ממעשה טוביה שלפניו, מהפסיקתא שאחריו, או יחידה בפני עצמה. הפסוק מצוטט &quot;אמונתך עתך&quot; (המסורה: &quot;אמונת עתיך&quot;) – ציטוט מהכ&quot;י או טעות כתיב/העתקה.</td></tr>
+<tr id="r6" class="level1" data-cert="בינונית"><td class="loc">24א–26א</td><td class="title">פסיקתא דרב כהנא (קטע) – &quot;ביום השמיני&quot;</td><td>דומה לנדפס אצל ילינק, בית המדרש ב, עמ&#x27; 137–139. נושא: מדרש. אגדה.</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">&quot;דומה&quot; ולא &quot;זהה&quot; – ייתכן נוסח מקביל/שונה. לא ברור אם &quot;ביום השמיני&quot; הוא כותר הפיסקא בכ&quot;י או ציטוט פתיחה של כתיב. הזיהוי כפסיקתא מגיע מכותר המשנה &quot;פסיקתא דר&#x27; כהנא (קטע)&quot;. עמוד 26א משותף עם תחילת מדרש גאולה.</td></tr>
+<tr id="r7" class="level1" data-cert="גבוהה"><td class="loc">26א–28ב</td><td class="title">מדרש גאולה</td><td>נדפס ע&quot;י א&quot;א אורבך, &quot;מדרש גאולה מימי מסעי הצלב האחרונים&quot;, ארץ ישראל 10 (תשל&quot;א), עמ&#x27; 59–63. נושא (שיוך משוער): משיחיות.</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">זיהוי מפורש (כותר משנה + מהדורה). עמודים 26א ו-28ב משותפים עם יחידות סמוכות.</td></tr>
+<tr id="r8" class="level1 unid" data-cert="נמוכה"><td class="loc">28ב–37א</td><td class="title">[חיבור לא מזוהה] מדרשים על פרשות וישלח וישב</td><td>לשון כתיב: &quot;מדרשים על פרשות וישלח וישב&quot;.</td><td><span class="badge c-lo">נמוכה</span></td><td class="notes">אזור ללא זיהוי בכתיב: אין שם חיבור, אין מהדורה, אין כותר משנה. הלשון ברבים – לא ברור אם יחידה אחת או כמה. לא ברור הקשר לבראשית רבתי שאחריו (אותה פרשה, וישב). עמוד 28ב משותף עם סוף מדרש גאולה.</td></tr>
+<tr id="r9" class="level1" data-cert="בינונית"><td class="loc">37ב–49ב</td><td class="title">בראשית רבתי – &quot;מדרש רבה פרשת וישב יעקב בפסוק וישלכו אותו הבורה&quot;</td><td>כותר המשנה: &quot;מדרש רבה (בראשית, קטע)&quot;. נושא: מדרש. אגדה.</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">מתח בין כותר המשנה (&quot;מדרש רבה (בראשית, קטע)&quot;) לבין הפירוט שמזהה &quot;בראשית רבתי&quot;. הטקסט במרכאות הוא כנראה כותרת/פתיחה בכ&quot;י. אימצתי &quot;בראשית רבתי&quot; כי זה הזיהוי היחיד שכתיב מנסח; כתיב לא מבהיר את היחס בין השמות.</td></tr>
+<tr id="r10" class="level1" data-cert="בינונית"><td class="loc">50א–53ב</td><td class="title">מסכת גרים</td><td>שימשה למהדורת מ&#x27; היגר (ניו יורק, תר&quot;צ); ההתחלה חסרה.</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">הגבול בין גרים לכותיים בתוך 50א-53ב לא צוין. סדר (גרים לפני כותיים) לפי סדר ההזכרה וכי ה&quot;התחלה חסרה&quot; של גרים מתיישבת עם תחילת הרצף ב-50א. &quot;ההתחלה חסרה&quot; נאמר על גרים בלבד.</td></tr>
+<tr id="r11" class="level1" data-cert="בינונית"><td class="loc">50א–53ב</td><td class="title">מסכת כותיים</td><td>שימשה למהדורת מ&#x27; היגר (ניו יורק, תר&quot;צ) – הציון מופיע פעם אחת לשתי המסכתות.</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">ראו מסכת גרים: גבול לא ידוע. לא ברור אם &quot;שימש&quot; בכתיב חל על שתיהן יחד.</td></tr>
+<tr id="r12" class="level1 unid" data-cert="נמוכה"><td class="loc">53ב–54א</td><td class="title">[חיבור לא מזוהה] מדרש המתחיל &quot;כתוב ארור האיש אשר יעשה פסל ומסכה&quot;</td><td>רק פתיחה מצוטטת (דברים כז:טו – זיהוי הפסוק שלי).</td><td><span class="badge c-lo">נמוכה</span></td><td class="notes">אזור ללא זיהוי בכתיב: אין שם, אין כותר משנה, אין מהדורה. לא ברור אם המשך כותיים שלפניו או יחידה עצמאית. עמוד 53ב משותף עם סוף הרצף של גרים/כותיים.</td></tr>
+<tr id="r13" class="level1" data-cert="בינונית"><td class="loc">54ב–69ב</td><td class="title">מסכת דרך ארץ רבה (שיוך משוער)</td><td>שימשה למהדורת מ&#x27; היגר (ניו יורק, תרצ&quot;ה).</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">ראו דרך ארץ זוטא: השיוך לטווח זה הסקה שלי (אורך + סדר הזכרה). ייתכן שהטווח כולל גם חלק מזוטא.</td></tr>
+<tr id="r14" class="level1" data-cert="גבוהה"><td class="loc">70א–174ב</td><td class="title">פסיקתא דרב כהנא</td><td>לא שלם. שימש למהדורתו של ד&#x27; מנדלבאום (תשכ&quot;ב): מבוא אנגלי עמ&#x27; XIII–XIV, מבוא עברי עמ&#x27; 12–13. נושא: מדרש. אגדה.</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">הזיהוי והטווח ודאיים. &quot;לא שלם&quot; – לא מפורט מה חסר. בכתיב אין פירוט פנימי (פיסקאות/פרשיות) ל-105 הדפים, פרט ל-172ב. ברשומה &quot;דרב כהנא&quot;, בתוכן העניינים &quot;דר&#x27; כהנא&quot; – הנחתי זהות. עמוד 174ב משותף עם תחילת איכה זוטא (לקוטי מדרשים). (בכתיב &quot;XIV-XIII&quot; – סדר הפוך, תיקנתי.)</td></tr>
+<tr id="r15" class="level2" data-cert="בינונית"><td class="loc">172ב</td><td class="title">&quot;עשר תעשר&quot; (בתוך הפסיקתא)</td><td>הקטע בדף 172ב המתחיל &quot;עשר תעשר&quot; נדפס מכ&quot;י זה בהוספות ד. (תשכ&quot;ב, עמ&#x27; 462).</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">&quot;ד.&quot; – הבנתי כ&quot;ד&#x27; מנדלבאום&quot; (נקודה במקום גרש); ההוספות הן כנראה של מהדורתו. לא ברור אם הקטע חלק מהפסיקתא עצמה או תוספת. הערה: &quot;172ב&quot; הוא עמוד אחד בלבד.</td></tr>
+<tr id="r16" class="level1" data-cert="גבוהה"><td class="loc">174ב–177ב</td><td class="title">איכה זוטא (כותר משנה: מדרש זוטא (איכה) (לקוטים))</td><td>נדפס על פיו (ברלין, 1894), עמ&#x27; 78–80. נושאי משנה של חלק 5: תשעה באב; מדרש. אגדה; תלמוד קבצי אגדות.</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">הטווח והזיהוי מפורשים. &quot;נדפס על פיו&quot; – הכ&quot;י שימש מקור למהדורה, אך כתיב לא נוקב בעורך <span class="mine">[ידיעתי, לא כתיב: ברלין 1894 = מהדורת בובר למדרש זוטא – לאמת]</span>. לא ברור אם עמ&#x27; 78–80 הם עמודי המהדורה או עמודי סיפור יהודית (ראו שורה הבאה). עמוד 174ב משותף עם סוף הפסיקתא.</td></tr>
+<tr id="r17" class="level2 unid unplaced" data-cert="נמוכה"><td class="loc">לא צוין</td><td class="title">מעשה יהודית</td><td>כותר משנה: &quot;מעשה יהודית&quot;. בתיאור: &quot;על ספור יהודית ראה מ&quot;ב לרנר, לקוטי מעשיות, קרית ספר סא (תשמ&quot;ו–תשמ&quot;ז), עמ&#x27; 868–869&quot;.</td><td><span class="badge c-lo">נמוכה</span></td><td class="notes">מופיע רק ככותר משנה והפניה ביבליוגרפית, בלי דפים. סביר שהוא בתוך איכה זוטא (174ב–177ב), כי הפניה אליו באה בסמוך לה – אבל כתיב לא אומר זאת. לא נכנס לחישוב הכיסוי.</td></tr>
+<tr id="r18" class="level1" data-cert="גבוהה"><td class="loc">178א–186ב</td><td class="title">לקוטים מהתלמוד והמדרש בענין תשעה באב</td><td>נושאי משנה: תשעה באב; מדרש. אגדה; תלמוד קבצי אגדות.</td><td><span class="badge c-hi">גבוהה</span></td><td class="notes">הטווח מפורש; השם הוא תיאור של כתיב ולא כותר חיבור, ואין לו כותר משנה. &quot;לקוטים&quot; – ליקוט ממקורות שלא פורטו.</td></tr>
+<tr id="r19" class="level1 unid" data-cert="נמוכה"><td class="loc">187א–199ב</td><td class="title">[אזור לא מזוהה] ללא תיאור בכתיב</td><td>אין תיאור.</td><td><span class="badge c-lo">נמוכה</span></td><td class="notes">נגזר: מה שנשאר בין 178א–186ב ל-200–203. 13 דפים (26 עמודים). ייתכן שכאן &quot;מדרש איכה רבתי (לקוטים)&quot; או &quot;לקוטים מאיכה זוטא ואיכה רבה על איכה א:ו&quot;, שכתיב לא נותן להם דפים – השערה בלבד, לא הכרעה.</td></tr>
+<tr id="r20" class="level1" data-cert="בינונית"><td class="loc">200א–203ב</td><td class="title">מדרש לפרשות וארא–בשלח</td><td>בכתיב: &quot;(200- 203)&quot; ללא ציון צד. כותר משנה: &quot;מדרש לפרשות וארא-בשלח&quot;.</td><td><span class="badge c-mid">בינונית</span></td><td class="notes">הצדדים לא צוינו. הנחתי 200א עד 203ב (דפים שלמים); ייתכן 200ב–203א, ולא ברור אם אלה דפים או עמודים (בכל שאר הרשומה דפים עם א/ב). קפיצה נושאית מתשעה באב ואיכה לספר שמות, לא מוסברת.</td></tr>
+<tr id="r21" class="level1 unid" data-cert="נמוכה"><td class="loc">204א–205ב</td><td class="title">[אזור לא מזוהה] ללא תיאור בכתיב</td><td>אין תיאור.</td><td><span class="badge c-lo">נמוכה</span></td><td class="notes">נגזר: סוף הכ&quot;י (205ב). 4 עמודים. לא ידוע אם ממשיך את המדרש לפרשות וארא-בשלח או יחידה אחרת (ובכלל תלוי בפירוש הטווח &#x27;200- 203&#x27;).</td></tr>
+<tr id="r22" class="level1 unid unplaced" data-cert="נמוכה"><td class="loc">לא צוין</td><td class="title">לקוטים מאיכה זוטא ואיכה רבה על איכה א:ו / מדרש איכה רבתי (לקוטים)</td><td>מופיע בתיאור כשורה נפרדת, בלי דפים. כותר משנה: &quot;מדרש איכה רבתי (לקוטים)&quot;.</td><td><span class="badge c-lo">נמוכה</span></td><td class="notes">לא ברור אם זה תיאור של איכה זוטא (174ב–177ב), יחידה נפרדת (אולי ב-187א–199ב), או חלק מ-178א–186ב. החלק האיכה-רבתי לא ממוקם בשום מקום בכתיב. לא נכנס לחישוב הכיסוי.</td></tr></tbody>
+    </table>
+    <div class="empty" id="empty">אין שורות שמתאימות לסינון.</div>
+  </div>
+
+  <h2>בדיקות ופערים</h2>
+  <ul class="checks"><li class=""><span class="k">כיסוי כללי</span><span>1א–205ב: אין פערים — כל עמוד מכוסה</span></li><li class=""><span class="k">עמוד משותף</span><span>26א: פסיקתא דרב כהנא (קטע) – &quot;ביום  / מדרש גאולה</span></li><li class=""><span class="k">עמוד משותף</span><span>28ב: מדרש גאולה / [חיבור לא מזוהה] מדרשים על פרש</span></li><li class=""><span class="k">עמוד משותף</span><span>53ב: מסכת גרים / מסכת כותיים / [חיבור לא מזוהה] מדרש המתחיל &quot;</span></li><li class=""><span class="k">עמוד משותף</span><span>174ב: פסיקתא דרב כהנא / איכה זוטא (כותר משנה: מדרש זוט</span></li><li class=""><span class="k">תוכן עניינים</span><span>חלק 1 (ברייתא דר&#x27; אליעזר בן יוסי הגלילי): הערכים מכסים בדיוק את 1א–7ב</span></li><li class=""><span class="k">תוכן עניינים</span><span>חלק 2 (מסכתות קטנות): הערכים מכסים בדיוק את 8א–13ב, 50א–69ב</span></li><li class=""><span class="k">תוכן עניינים</span><span>חלק 3 (מדרשים שונים): הערכים מכסים בדיוק את 14א–49ב</span></li><li class=""><span class="k">תוכן עניינים</span><span>חלק 4 (פסיקתא דר&#x27; כהנא): הערכים מכסים בדיוק את 70א–174ב</span></li><li class=""><span class="k">תוכן עניינים</span><span>חלק 5 (לקוטי מדרשים): הערכים מכסים בדיוק את 174ב–205ב</span></li><li class=""><span class="k">טווח ללא צד (א/ב)</span><span>(200- 203) — הופיע בלי א/ב; הנחתי דפים שלמים (א של הראשון עד ב של האחרון)</span></li><li class=""><span class="k">אזור ללא זיהוי (גלוי בקלט)</span><span>187א–199ב, 204א–205ב — בטווח &#x27;מספר דפים&#x27; של הרשומה, ולא בשום טווח שבפירוט [רשומה: לקוטי מדרשים (חלק 5) — הודבקה בסבב שני]</span></li><li class=""><span class="k">יחידה ללא מיקום</span><span>מעשה יהודית — מוזכרת בכתיב בלי דפים; לא נכנסה לכיסוי</span></li><li class=""><span class="k">יחידה ללא מיקום</span><span>לקוטים מאיכה זוטא ואיכה רבה על איכה א:ו / מדרש איכה רבתי (לקוטים) — מוזכרת בכתיב בלי דפים; לא נכנסה לכיסוי</span></li><li class=""><span class="k">עמוד יחיד</span><span>172ב (&quot;עשר תעשר&quot; (בתוך הפסיקתא)): מוזכר כעמוד בודד</span></li><li class=""><span class="k">טווח נגזר</span><span>187א-199ב ([אזור לא מזוהה] ללא תיאור בכתי) לא מופיע כך בכתיב</span></li><li class=""><span class="k">טווח נגזר</span><span>204א-205ב ([אזור לא מזוהה] ללא תיאור בכתי) לא מופיע כך בכתיב</span></li><li class=""><span class="k">אזור לא מזוהה / ודאות נמוכה</span><span>28ב-37א: [חיבור לא מזוהה] מדרשים על פרשות וישלח וישב</span></li><li class=""><span class="k">אזור לא מזוהה / ודאות נמוכה</span><span>53ב-54א: [חיבור לא מזוהה] מדרש המתחיל &quot;כתוב ארור האיש אשר יעשה פסל ומסכה&quot;</span></li><li class=""><span class="k">אזור לא מזוהה / ודאות נמוכה</span><span>לא צוין: מעשה יהודית</span></li><li class=""><span class="k">אזור לא מזוהה / ודאות נמוכה</span><span>187א-199ב: [אזור לא מזוהה] ללא תיאור בכתיב</span></li><li class=""><span class="k">אזור לא מזוהה / ודאות נמוכה</span><span>204א-205ב: [אזור לא מזוהה] ללא תיאור בכתיב</span></li><li class=""><span class="k">אזור לא מזוהה / ודאות נמוכה</span><span>לא צוין: לקוטים מאיכה זוטא ואיכה רבה על איכה א:ו / מדרש איכה רבתי (לקוטים)</span></li></ul>
+
+  <h2>הערות כלליות על כתב היד</h2>
+  <table class="gen"><tr><td>בעלים</td><td>ציון בעלים: &quot;הצעיר עזרא אלרולי ס&quot;ט&quot; (דף 1א, 18א ועוד). &quot;ועוד&quot; לא מפורט – לא ידוע באילו עוד דפים.</td></tr><tr><td>נושאי משנה (כתיב)</td><td>מקרא/פרשנות נביאים אחרונים/ישעיה לג:ו; משיחיות; ספרות יפה; מדרש. אגדה; מדרש. הלכה; תלמוד מסכתות קטנות – ניתנו ברמת הרשומה, לא ברמת היחידה.</td></tr><tr><td>חלק 5</td><td>רשומת הפירוט של &quot;לקוטי מדרשים&quot; הודבקה בסבב שני (קודם הייתה רק שורה בתוכן העניינים). היא כוללת את אותו ציון בעלים כמו חלק 3.</td></tr><tr><td>פרטי כ&quot;י</td><td>שם הספרייה, מספר המדף, כרך וחומר הכתיבה לא נכללו בחומר שהועבר.</td></tr></table>
+</div>
+
+<script>
+(function () {
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#t tbody tr'));
+  var q = document.getElementById('q');
+  var btns = Array.prototype.slice.call(document.querySelectorAll('[data-cert]'));
+  var empty = document.getElementById('empty');
+
+  function apply() {
+    var text = q.value.trim();
+    var active = btns.filter(function (b) { return b.getAttribute('aria-pressed') === 'true'; })
+                     .map(function (b) { return b.dataset.cert; });
+    var shown = 0;
+    rows.forEach(function (r) {
+      var ok = (!text || r.textContent.indexOf(text) !== -1) &&
+               (!active.length || active.indexOf(r.dataset.cert) !== -1);
+      r.classList.toggle('hidden', !ok);
+      if (ok) shown++;
+    });
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  q.addEventListener('input', apply);
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      apply();
+    });
+  });
+  document.getElementById('reset').addEventListener('click', function () {
+    q.value = '';
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+    apply();
+  });
+  document.getElementById('map').addEventListener('click', function (e) {
+    var seg = e.target.closest('.seg');
+    if (!seg) return;
+    var row = document.getElementById(seg.dataset.row);
+    if (!row) return;
+    row.classList.remove('hidden');
+    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    row.classList.remove('flash'); void row.offsetWidth; row.classList.add('flash');
+  });
+})();
+</script>
+</body>
+</html>

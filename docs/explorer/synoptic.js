@@ -335,7 +335,7 @@
       });
       if (s >= OPT.moveSim) { A.moved.push(Bq.n); Bq.moved.push(A.n); }
     }
-    return { witnesses: W.map(w => ({ key: w.key, name: w.name, ref: w.ref, lo: w.idx.length ? w.idx[0] : w.lo, hi: w.idx.length ? w.idx[w.idx.length - 1] + 1 : w.lo, total: w.tokens.length, idx: w.idx })), rows, spec: { witnesses: W } };
+    return { witnesses: W.map(w => ({ key: w.key, name: w.name, ref: w.ref, role: w.role, roleWhy: w.roleWhy, lo: w.idx.length ? w.idx[0] : w.lo, hi: w.idx.length ? w.idx[w.idx.length - 1] + 1 : w.lo, total: w.tokens.length, idx: w.idx })), rows, spec: { witnesses: W } };
   }
 
   // ---------- integrity check ----------
@@ -380,7 +380,7 @@
   function tableHTML(res, opt) {
     opt = opt || {};
     const esc = opt.esc || escH, W = res.spec.witnesses;
-    const head = res.witnesses.map(w => `<th>${esc(w.name)}${w.ref ? `<span class="syn-ref" dir="ltr">${esc(w.ref)}</span>` : ''}</th>`).join('');
+    const head = res.witnesses.map(w => `<th>${esc(w.name)}${w.role ? ` <span class="syn-role" title="${esc(w.roleWhy || '')}">${esc(w.role)}</span>` : ''}${w.ref ? `<span class="syn-ref" dir="ltr">${esc(w.ref)}</span>` : ''}</th>`).join('');
     const body = res.rows.map(r => {
       const tds = r.cells.map((xs, v) => {
         if (!xs.length) return '<td class="syn-empty" title="אין רצף מקביל בחלון המוצג"></td>';
@@ -419,6 +419,8 @@ table.syn{border-collapse:separate;border-spacing:0;table-layout:fixed;width:100
 .syn col.syn-cn{width:96px}
 .syn th{position:sticky;top:0;z-index:2;background:var(--surface-2);text-align:right;padding:9px 11px;border-bottom:2px solid var(--line);font-size:14px}
 .syn .syn-ref{display:block;font-weight:400;font-size:11px;color:var(--ink-3)}
+.syn .syn-role{font-weight:400;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:0 6px;color:var(--ink-3)}
+.syn .a-x{border-bottom:2px solid var(--accent)}
 .syn td{vertical-align:top;padding:9px 11px;border-bottom:1px solid var(--line);border-inline-start:1px solid var(--line);line-height:2;font-size:15px;overflow-wrap:anywhere}
 .syn td.syn-n{border-inline-start:0;font-size:12px;line-height:1.4;color:var(--ink-3)}
 .syn td.syn-n b{display:block;color:var(--ink);font-size:13px}
@@ -449,8 +451,32 @@ ${tableHTML(res, opt)}
 <p style="margin-top:12px">${esc(opt.footer || '')}</p></body></html>`;
   }
 
+  // all strong witnesses of one text unit (Moshe, fdcf7a9d: "להרחיב את הסינופסיס מקרה שיש יותר ממקבילה חזקה אחת"),
+  // ordered by dating as in the matryoshka path view (D8). Marks: a-x = aligned (Oppenheim: aligned to at least one witness).
+  function fromUnit(ctx, uid, roleOf) {
+    const u = ctx.U[uid], T = ctx.T;
+    const toks = (T.p[u.pid] || '').split(' ');
+    const merged = k => {
+      const w = u.wit.find(x => x.k === k); let src = [], am = {}, off = 0;
+      w.ids.forEach(id => { const t = T.c[id]; t.al.forEach(([a, j, x]) => { if (am[a] === undefined || (x && !am[a][1])) am[a] = [j + off, x]; }); const s2 = t.src.split(' '); src = src.concat(s2); off += s2.length; });
+      return { src, am, ids: w.ids };
+    };
+    const yr = k => (ctx.W[k] && ctx.W[k].date_from != null ? ctx.W[k].date_from : 9999);
+    const wits = u.wit.map(x => x.k).sort((a, b) => yr(a) - yr(b));
+    const Ms = wits.map(merged);
+    const anyAl = new Set(); Ms.forEach(M => Object.keys(M.am).forEach(a => anyAl.add(+a)));
+    const lo = Math.max(0, u.lo - 12), hi = Math.min(toks.length, u.hi + 13);
+    const win = M => { const js = Object.values(M.am).map(x => x[0]); return js.length ? [Math.max(0, Math.min(...js) - 15), Math.min(M.src.length, Math.max(...js) + 16)] : [0, Math.min(M.src.length, 60)]; };
+    const name = k => (ctx.W[k] && ctx.W[k].name_he) || k, ref = M => M.ids.map(id => (ctx.C[id] || {}).ref).join(' + ');
+    return { pivot: 0, witnesses: [{ key: 'Oppenheim_128', name: 'אופנהיימר 128', ref: 'HTR', tokens: toks, lo, hi, cls: a => (anyAl.has(a) ? 'a-x' : '') }]
+      .concat(wits.map((k, n) => {
+        const M = Ms[n], aj = new Set(Object.values(M.am).map(x => x[0])), [a0, a1] = win(M), r = roleOf ? roleOf(k) : null;
+        return { key: k, name: name(k), ref: ref(M), tokens: M.src, lo: a0, hi: a1, anchors: M.am, cls: j => (aj.has(j) ? 'a-x' : ''), role: r && r.he, roleWhy: r && r.why };
+      })) };
+  }
+
   // ---------- the explorer's comparison → spec (same windows and marks as the running view in showComp) ----------
-  function fromComparison(ctx, i) {
+  function fromComparison(ctx, i, roleOf) {
     const c = ctx.D.comps[i], u = ctx.U[c.uid], T = ctx.T;
     const toks = (T.p[u.pid] || '').split(' ');
     const merged = k => {
@@ -465,16 +491,17 @@ ${tableHTML(res, opt)}
     const oj = new Set(Object.values(O.am).map(x => x[0])), nj = new Set(Object.values(N.am).map(x => x[0]));
     const [o0, o1] = win(O), [n0, n1] = win(N);
     const name = k => (ctx.W[k] && ctx.W[k].name_he) || k, ref = M => M.ids.map(id => (ctx.C[id] || {}).ref).join(' + ');
+    const rl = k => { const r = roleOf ? roleOf(k) : null; return r ? { role: r.he, roleWhy: r.why } : {}; };
     return { pivot: 0, witnesses: [
       { key: 'Oppenheim_128', name: 'אופנהיימר 128', ref: 'HTR', tokens: toks, lo, hi,
         cls: a => [O.am[a] ? 'a-o' : '', N.am[a] ? 'a-n' : '', eo.has(a) ? 'e-o' : '', en.has(a) ? 'e-n' : ''].filter(Boolean).join(' ') },
-      { key: c.o, name: name(c.o), ref: ref(O), tokens: O.src, lo: o0, hi: o1, anchors: O.am,
-        cls: j => [oj.has(j) ? 'a-o' : '', om.has(j) ? 'om' : ''].filter(Boolean).join(' ') },
-      { key: c.n, name: name(c.n), ref: ref(N), tokens: N.src, lo: n0, hi: n1, anchors: N.am, cls: j => (nj.has(j) ? 'a-n' : '') }
+      Object.assign({ key: c.o, name: name(c.o), ref: ref(O), tokens: O.src, lo: o0, hi: o1, anchors: O.am,
+        cls: j => [oj.has(j) ? 'a-o' : '', om.has(j) ? 'om' : ''].filter(Boolean).join(' ') }, rl(c.o)),
+      Object.assign({ key: c.n, name: name(c.n), ref: ref(N), tokens: N.src, lo: n0, hi: n1, anchors: N.am, cls: j => (nj.has(j) ? 'a-n' : '') }, rl(c.n))
     ] };
   }
 
-  const api = { fromComparison, build, check, checkText, tableHTML, toTSV, standaloneHTML, rowLabel, rowNotes, cellText, TABLE_CSS, OPT, _norm: norm, _sim: sim };
+  const api = { fromComparison, fromUnit, build, check, checkText, tableHTML, toTSV, standaloneHTML, rowLabel, rowNotes, cellText, TABLE_CSS, OPT, _norm: norm, _sim: sim };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.Synoptic = api;
 })(typeof window !== 'undefined' ? window : this);
