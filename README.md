@@ -21,8 +21,8 @@ https://kashi-noam.github.io/Oppenheimer-manuscript-text-reuse-analysis/
 1. **תיוג.** 487 זוגות (T001–T487) מ־80 קטעים. התוויות נמצאות ב־`pipeline/labels.tsv` וב־`pipeline/r2/labels2.tsv`, וההנחיות ב־`pipeline/r2/GUIDE.md`.
 2. **ציון משוכלל.** רגרסיה לוגיסטית על מדדי ACT (`r2/data.py` → `r2/final.py` → `r2/diag.py` → `r2/feats2.py`). המקדמים נשמרים ב־`r2/model.json`. הרף הוא S ≥ 21.14 (p ≥ 0.8), עם דיוק 98.1% וכיסוי 85.8% באימות צולב לפי קטע.
 3. **החלה על כל כתב היד** (`r3/build_list.py`): 1,272 מתוך 2,650 מועמדים עוברים את הרף.
-4. **תיארוך.** 36 חיבורים, עם מקורות לכל תיארוך (`r3/datings_A.json`, `r3/datings_B.json`).
-5. **מטריושקה.** `r3/units.py` → `r3/run_tests.py` → `r3/aggregate.py` מייצרים 538 יחידות טקסט ו־1,226 השוואות בין עדים.
+4. **תיארוך.** 48 חיבורים, עם מקורות לכל תיארוך (`r3/datings_A.json`–`r3/datings_D.json`). 36 הראשונים הם החיבורים שעברו את הסף; 12 נוספו לגרסה הלא מסוננת, והתנ"ך מתוארך שם כגוש אחד.
+5. **מטריושקה.** `r3/units.py` → `r3/run_tests.py` → `r3/aggregate.py`. על ההתאמות שמעל הסף: 538 יחידות טקסט ו־1,226 השוואות בין עדים. עם `OPP_MODE=all` אותה ריצה נעשית על כל 2,650 המועמדים המיושרים, בלי סף: 772 יחידות ו־3,774 השוואות (קבצים עם הסיומת `_all`).
 6. **RDF והממשק.** `r3/build_rdf.py`, `r3/gui_data.py`, `r3/build_matches_rdf.py` (מריצים מתוך `r3/`).
 7. **דוח התיוג.** `build_report2.py`.
 8. **טבלאות לאתר ו־Excel המטריושקה.** `r3/build_matryoshka_xlsx.py`, `r3/build_tables.py`.
@@ -32,12 +32,16 @@ https://kashi-noam.github.io/Oppenheimer-manuscript-text-reuse-analysis/
 ```bash
 pip install -r requirements.txt
 cd pipeline/r3
-python3 units.py && python3 run_tests.py && python3 aggregate.py && python3 build_rdf.py && python3 gui_data.py && python3 build_matches_rdf.py
+python3 units.py && python3 run_tests.py && python3 aggregate.py && python3 build_rdf.py && python3 build_matryoshka_xlsx.py
+# the same run on every fully aligned candidate, with no threshold
+OPP_MODE=all python3 units.py && OPP_MODE=all python3 run_tests.py && OPP_MODE=all python3 aggregate.py && OPP_MODE=all python3 build_rdf.py && OPP_MODE=all python3 build_matryoshka_xlsx.py
+python3 gui_data.py && python3 build_matches_rdf.py && python3 build_tables.py
 ```
 
 - הסקריפטים מוצאים את הנתיבים לבד: `OPP_ROOT` = התיקייה `pipeline/`.
 - את דוח ACT הם קוראים מ־`data/raw`. אפשר להחליף אותו בעזרת `OPP_ACT_REPORT`.
 - קובצי הביניים (`*.pkl`) כלולים, כך שאפשר להריץ שלב בודד בלי לחזור על הקודמים.
+- `gui_data.py` כותב ל־`r3/gui/`; את `core.json`, `core_all.json` וקובצי ה־TTL מעתיקים ל־`docs/explorer/`.
 
 **הערה:** כמה תוצרים נבנו בפקודות חד־פעמיות שלא נשמרו כסקריפט. אלה קובצי ה־Excel (חוץ מקובץ המטריושקה), `docs/graph/graph.json` ו־`pipeline/r2/allc_scored.pkl` (החלת המודל על כל 2,650 המועמדים). התוצרים עצמם כלולים.
 
@@ -46,6 +50,10 @@ python3 units.py && python3 run_tests.py && python3 aggregate.py && python3 buil
 Settings → Pages → Build and deployment → Source: *Deploy from a branch* → Branch: `main`, תיקייה `/docs` → Save.
 
 בלשונית "בדיקת השוואות" ההכרעות הידניות נשמרות בדפדפן (localStorage). לגיבוי או לשיתוף משתמשים בכפתור "ייצוא הבדיקות (CSV)".
+
+## מעל הסף או כל הנתונים
+
+בראש הסייר יש מתג: **מעל הסף** (רק התאמות עם S ≥ 21.14) או **כל המיושרים** (כל 2,650 המועמדים ש־ACT יישר, בלי סינון הרגרסיה). המתג משנה את כל הניתוחים: הגרף והמסלולים, החיבורים, יחידות הטקסט, ההשוואות, הטבלאות ושאילתות ה־SPARQL. המצב נשמר בכתובת (`?data=all`), ולכן גם בהערות.
 
 ## הערות על האתר
 

@@ -1,5 +1,5 @@
 import os as _os; ROOT = _os.environ.get('OPP_ROOT', _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))  # = pipeline/
-"""Build text units (clusters of above-threshold witnesses aligned to the same Oppenheim tokens)."""
+"""Build text units (clusters of witnesses aligned to the same Oppenheim tokens). OPP_MODE=thr: above-threshold matches; OPP_MODE=all: every fully aligned candidate."""
 import json, re, sys, pickle, collections
 import pandas as pd
 sys.path.insert(0, ROOT + '/r2')
@@ -10,6 +10,7 @@ BAVLI = {'Sanhedrin', 'Gittin', 'Taanit', 'Menachot', 'Shabbat', 'Bava_Batra', '
          'Chagigah', 'Yoma', 'Pesachim', 'Ketubot', 'Makkot'}
 
 def date_key(w, loc):
+    if loc.startswith('Tanakh_'): return 'Tanakh'
     if w.startswith('Jerusalem_Talmud'): return 'Jerusalem_Talmud'
     if w in BAVLI or loc.startswith('Talmud_Bavli'): return 'Babylonian_Talmud'
     return DATE_KEY.get(w, w)
@@ -21,7 +22,8 @@ def ref_tuple(w, ref):
 
 def build():
     d = load()
-    L = pd.read_pickle(ROOT + '/r3/lists.pkl'); up = L['up']
+    from mode import MODE
+    L = pd.read_pickle(ROOT + '/r3/lists.pkl'); up = L['up'] if MODE == 'thr' else L['allc']
     units = []
     for pid, g in sorted(up.groupby('pid'), key=lambda x: x[1].fk.iloc[0]):
         pt = cands(d[pid])[0]['alignment_details']['passage_text'].split()
@@ -32,6 +34,7 @@ def build():
             for p in seq:
                 i, j = int(p[0]), int(p[1]); ex = len(p) > 3 and str(p[3]).endswith('exact_match')
                 if i not in amap or (ex and not amap[i][1]): amap[i] = (j, ex)
+            if not amap: continue  # a few fully aligned candidates have an empty alignment sequence
             items.append(dict(rank=r.rank, w=r.w, dk=date_key(r.w, r.loc), work=r.work, loc=r.loc, ref=r.ref, S=float(r.S), eid=r.eid,
                               src=ad['source_text'].split(), amap=amap, O=set(amap)))
         clusters = []
@@ -63,6 +66,7 @@ def build():
 
 if __name__ == '__main__':
     U = build()
-    pickle.dump(U, open(ROOT + '/r3/units.pkl', 'wb'))
+    from mode import SUF
+    pickle.dump(U, open(ROOT + f'/r3/units{SUF}.pkl', 'wb'))
     n = collections.Counter(min(len(u['wit']), 5) for u in U)
     print('units', len(U), sorted(n.items()))

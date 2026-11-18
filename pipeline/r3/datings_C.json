@@ -1,0 +1,192 @@
+[
+  {
+    "key": "Shemot_Rabbah",
+    "name_he": "שמות רבה",
+    "name_en": "Exodus Rabbah",
+    "type": "מדרש",
+    "date_from": 900,
+    "date_to": 1200,
+    "date_he": "חלק ב' – המאה ה-9; חלק א' – לא לפני המאה ה-10; צורפו במאה ה-11–ה-12",
+    "region": "לא ידוע",
+    "region_note": "חלק ב' (פרשות 15–52) מדרש מסוג תנחומא-ילמדנו, מתורגם מארמית גלילית ולפי המחזור התלת-שנתי הארץ-ישראלי; מקום עריכת חלק א' (פרשות 1–14) והצירוף לא נקבע",
+    "confidence": "medium",
+    "dispute": "A composite of two midrashim: Herr (EJ) puts Part II (sections 15–52, Tanhuma type) in the 9th century and Part I (sections 1–14) not before the 10th, joined by a copyist in the 11th–12th century; Zunz dated the whole work to the 11th or 12th century, and modern scholars range over the 10th–12th. It is quoted by Azriel of Gerona and Nahmanides, so it existed by the early 13th century; Sefaria simply gives c. 1200.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Exodus Rabbah' (M. D. Herr), on Encyclopedia.com",
+        "url": "https://encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/exodus-rabbah",
+        "says": "Part I (sections 1–14) was redacted 'not earlier than the tenth century'; Part II (15–52) was 'apparently compiled in the ninth century'; a copyist combined them in the 11th or 12th century."
+      },
+      {
+        "title": "Wikipedia (English), 'Exodus Rabbah' (Jewish Encyclopedia-based; cites Zunz and A. Raizel)",
+        "url": "https://en.wikipedia.org/wiki/Exodus_Rabbah",
+        "says": "Zunz assigns the whole work to the 11th or 12th century; quoted by Azriel of Gerona and Nahmanides, so no later than the early 13th century; modern scholars place it in the 10th–12th centuries."
+      },
+      {
+        "title": "Sefaria, 'Shemot Rabbah' – About This Text",
+        "url": "https://www.sefaria.org/Shemot_Rabbah?lang=he",
+        "says": "Composed c. 1200 CE; the two parts were probably joined around the 12th century, and the dating of each part is debated."
+      }
+    ]
+  },
+  {
+    "key": "Devarim_Rabbah",
+    "name_he": "דברים רבה",
+    "name_en": "Deuteronomy Rabbah",
+    "type": "מדרש",
+    "date_from": 800,
+    "date_to": 900,
+    "date_he": "המאה ה-9 (לא לפני 800; צונץ: סביב שנת 900)",
+    "region": "ארץ ישראל",
+    "region_note": "מדרש מסוג תנחומא-ילמדנו בעברית רבנית וארמית גלילית, לפי המחזור התלת-שנתי הארץ-ישראלי; מקום העריכה לא נקבע במפורש",
+    "confidence": "medium",
+    "dispute": "None of its sages is later than the 4th century, but Herr (EJ) dates the final redaction 'not earlier than 800' (anti-Karaite allusions) and the printed version to the 9th century; Zunz (via the Jewish Encyclopedia) suggests 'the epoch of the year 900'. Sefaria's header gives 900 while its description speaks of 5th–8th-century Palestine. The text survives in several versions (printed; Lieberman's Oxford MS; Buber's Munich MS), which complicates any single date.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Deuteronomy Rabbah' (M. D. Herr), on Encyclopedia.com",
+        "url": "https://encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/deuteronomy-rabbah",
+        "says": "No sage mentioned lived after the 4th century; anti-Karaite allusions put the final redaction 'not earlier than 800'; the printed version was 'apparently redacted in the ninth century'."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Debarim Rabbah'",
+        "url": "https://jewishencyclopedia.com/articles/5133-deuteronomy-rabbah",
+        "says": "Following Zunz, 'the epoch of the year 900' is perhaps nearest the date; unknown to the 'Arukh and Rashi; homilies follow the Palestinian triennial cycle."
+      },
+      {
+        "title": "Sefaria, 'Devarim Rabbah' – About This Text",
+        "url": "https://prod.sefaria.org.il/Devarim_Rabbah",
+        "says": "Header: composed c. 900 CE (Israel/Babylon); the description says it was assembled in the Land of Israel around the 5th–8th centuries."
+      }
+    ]
+  },
+  {
+    "key": "Tanna_debei_Eliyahu_Zuta",
+    "name_he": "תנא דבי אליהו זוטא (סדר אליהו זוטא)",
+    "name_en": "Tanna de-Vei Eliyahu Zuta (Seder Eliyahu Zuta)",
+    "type": "מדרש",
+    "date_from": 700,
+    "date_to": 1000,
+    "date_he": "המאה ה-8–ה-10 (כמו סדר אליהו רבה; פרקי דרך ארץ ופרקי דר\"א שבסופו – תוספות מאוחרות)",
+    "region": "לא ידוע",
+    "region_note": "חלק שני של תנא דבי אליהו, כנראה מאותו מחבר; מקום החיבור שנוי במחלוקת (בבל, ארץ ישראל, איטליה/רומי)",
+    "confidence": "low",
+    "dispute": "Dated together with Seder Eliyahu Rabbah (same author for its original chapters, per Elbaum in EJ), so it shares that work's range of proposals from the 3rd to the 10th century; the Jewish Encyclopedia reports agreement on the end of the 10th century (968–984), Albeck only a date before the 9th century. Its extent varies: the 'Arukh knew a 12-chapter 'small seder', Friedmann's edition has 15 chapters (ch. 15 a copyist's addition), and the appended Pirkei Derekh Eretz and Pirkei de-R. Eliezer chapters are later accretions.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Tanna de-Vei Eliyahu' (Jacob Elbaum), on Encyclopedia.com",
+        "url": "https://encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/tanna-de-vei-eliyahu",
+        "says": "The original parts of Zuta 'appear to be by the same author as the first'; ch. 15 is a later addition; the work is dated 'almost anywhere between the third and tenth centuries'."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Tanna debe Eliyahu'",
+        "url": "https://jewishencyclopedia.com/articles/14239-tanna-debe-eliyahu",
+        "says": "Scholars agree on the 'end of the tenth century' (internal reckoning: 968–984); Zuta is loosely tied to Rabbah; place disputed (Babylonia, Palestine, Italy, Rome)."
+      },
+      {
+        "title": "Sefaria, 'Tanna DeBei Eliyahu Zuta' – About This Text",
+        "url": "https://www.sefaria.org/Tanna_DeBei_Eliyahu_Zuta",
+        "says": "Composed c. 968–984 CE (Babylon/Italy/Israel), noting that some date the work as early as the 3rd century."
+      }
+    ]
+  },
+  {
+    "key": "Pirkei_DeRabbi_Eliezer",
+    "name_he": "פרקי דרבי אליעזר",
+    "name_en": "Pirkei de-Rabbi Eliezer",
+    "type": "מדרש",
+    "date_from": 700,
+    "date_to": 800,
+    "date_he": "המאה ה-8 (המחצית הראשונה, בשלהי השלטון האומיי)",
+    "region": "ארץ ישראל",
+    "region_note": "חובר בארץ ישראל או סביבתה תחת שלטון האסלאם (מנהגי ארץ ישראל, סמכות חכמי א\"י בעיבור); ה-JE הציע גם איטליה",
+    "confidence": "high",
+    "dispute": "The 8th-century date (Zunz; Herr in EJ: first half of the 8th century, before the fall of the Umayyads) is widely accepted: allusions to the Dome of the Rock, Muslim coinage and the names Aisha and Fatima give a terminus post quem at the end of the 7th century, and Pirqoi ben Baboi's quotation gives a terminus ante quem. The Jewish Encyclopedia instead put it in the early 9th century, 'in Italy shortly after 833', though by a Palestinian author.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Pirkei de-Rabbi Eliezer' (M. D. Herr), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/pirkei-de-rabbi-eliezer",
+        "says": "Composed in Erez Israel in the first half of the 8th century, 'just prior to the fall of the Omayyad dynasty'."
+      },
+      {
+        "title": "Wikipedia (English), 'Pirkei De-Rabbi Eliezer' (cites Zunz, Ginzberg, Margalioth)",
+        "url": "https://en.wikipedia.org/wiki/Pirkei_De-Rabbi_Eliezer",
+        "says": "Zunz's 8th-century date is 'the widely accepted opinion'; not before the end of the 7th century (Dome of the Rock) and not after the 9th (Pirqoi ben Baboi); probably composed in Muslim-ruled Bilad al-Sham."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Pirke de-Rabbi Eli'ezer'",
+        "url": "https://jewishencyclopedia.com/articles/12185-pirke-de-rabbi-eli-ezer",
+        "says": "'Composed in Italy shortly after 833', possibly early 9th century; the author 'seems to have been a Palestinian'."
+      },
+      {
+        "title": "Sefaria, 'Pirkei DeRabbi Eliezer' – About This Text",
+        "url": "https://www.sefaria.org/Pirkei_DeRabbi_Eliezer",
+        "says": "Composed c. 630–1030 CE; probably edited in the 8th or 9th century."
+      }
+    ]
+  },
+  {
+    "key": "Avot_DRabbi_Natan",
+    "name_he": "אבות דרבי נתן",
+    "name_en": "Avot de-Rabbi Natan",
+    "type": "מסכת קטנה",
+    "date_from": 600,
+    "date_to": 900,
+    "date_he": "המאות ה-7–ה-9 (תקופת הגאונים; גרעין קדום מהמאה ה-3)",
+    "region": "ארץ ישראל",
+    "region_note": "שני הנוסחים (א ו-ב) ביסודם ארץ-ישראליים; בנוסח א' צביון בבלי משני (קיסטר); נוסח ב' צוטט רק אצל חכמי ספרד",
+    "confidence": "medium",
+    "dispute": "Kister (EJ) traces the earliest form to not much after the first half of the 3rd century but dates both present versions after the Babylonian Talmud, with a terminus ante quem 'probably sometime in the 8th century'; the Jewish Encyclopedia puts both recensions in the geonic period (8th–9th century), and Saldarini argued for a date nearer the Mishnah. Proposed dates span some five centuries; Wikipedia and Sefaria give c. 650/700–900/950.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 2nd ed., 'Avot de-Rabbi Nathan' (Menahem Kister), on Encyclopedia.com",
+        "url": "https://encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/avot-de-rabbi-nathan",
+        "says": "The earliest form dates soon after the first half of the 3rd century, but both versions are post-talmudic, completed 'probably sometime in the 8th century'; basically Palestinian, Version A with Babylonian coloring."
+      },
+      {
+        "title": "Wikipedia (English), 'Avot de-Rabbi Natan' (cites Schechter, Goldin, Saldarini, Kister)",
+        "url": "https://en.wikipedia.org/wiki/Avot_de-Rabbi_Natan",
+        "says": "'Probably compiled in the Geonic era (c. 700–900 CE)'; proposals 'vary within a range of five centuries', Saldarini favouring a date near the Mishnah."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Abot de-Rabbi Natan'",
+        "url": "https://www.jewishencyclopedia.com/articles/355",
+        "says": "Both recensions 'belonged to the period of the Geonim, between the eighth and ninth centuries', by different unknown authors."
+      },
+      {
+        "title": "Posen Library of Jewish Culture and Civilization, 'What Is Avot de-Rabbi Natan?'",
+        "url": "https://www.posenlibrary.com/node/13940",
+        "says": "Dated to the 7th or 8th century; post-talmudic, 'completed sometime before the eighth century'; Version B manuscripts date to the 9th century."
+      }
+    ]
+  },
+  {
+    "key": "Sefer_HaYashar_midrash",
+    "name_he": "ספר הישר (אגדה)",
+    "name_en": "Sefer ha-Yashar (midrash; Venice 1625)",
+    "type": "מדרש",
+    "date_from": 1100,
+    "date_to": 1550,
+    "date_he": "בין המאה ה-12 (צונץ) לתחילת המאה ה-16 (דן); הדפוס הקדום ששרד: ונציה שפ\"ה (1625)",
+    "region": "איטליה",
+    "region_note": "יוסף דן: נאפולי בתחילת המאה ה-16; ה-JE: דרום איטליה (שמות מקומות איטלקיים ושמות ערביים); צונץ: ספרד",
+    "confidence": "low",
+    "dispute": "Proposed dates run from the 9th to the 16th century: Zunz placed it in 12th-century Spain, the Jewish Encyclopedia in southern Italy, and Joseph Dan's critical edition (1986) in Naples in the early 16th century. The claimed Naples 1552 first edition is untraced; Venice 1625 is the earliest extant print. It draws on the 10th-century Josippon and uses medieval names such as 'Franza' and 'Lumbardi'.",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Sefer haYashar (midrash)' (cites J. Dan 1986)",
+        "url": "https://en.wikipedia.org/wiki/Sefer_haYashar_(midrash)",
+        "says": "Scholars propose dates 'between the 9th and 16th century'; Dan concludes it was 'written in Naples in the early 16th century'; Venice 1625 is the earliest extant print."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Yashar, Sefer ha-'",
+        "url": "https://jewishencyclopedia.com/articles/15067-yashar-sefer-ha",
+        "says": "Zunz held it 'originated in Spain in the twelfth century'; the article prefers southern Italy, citing Italian place names and Arabic names."
+      },
+      {
+        "title": "Sefaria, 'Sefer HaYashar (midrash)' – About This Text",
+        "url": "https://www.sefaria.org/Sefer_HaYashar_(midrash)",
+        "says": "Composed c. 950–1550 CE; no place given."
+      }
+    ]
+  }
+]

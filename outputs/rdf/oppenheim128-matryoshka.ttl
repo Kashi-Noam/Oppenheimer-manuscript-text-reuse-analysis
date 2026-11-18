@@ -30440,11 +30440,11 @@ opp:confidence a owl:ObjectProperty ;
 
 opp:dataset a void:Dataset,
         dcat:Dataset ;
-    dcterms:created "2026-11-02"^^xsd:date ;
+    dcterms:created "2026-11-18"^^xsd:date ;
     dcterms:description "צמתים: חיבורים (bf:Work) עם טענות תיארוך (טווח OWL-Time, אזור, מקור, ודאות). קשתות: יחידות טקסט משותפות. לכל זוג עדים ליחידה יש צומת השוואה עם התמיכה בשני המסלולים: ישן←אופנהיימר, וישן←חדש←אופנהיימר. ההכרעה מבטאת קרבה טקסטואלית ולא הוכחת העתקה. חיבורים מאוחרים לאופנהיימר מסומנים ואינם נפסלים; האזור הוא מידע בלבד."@he ;
     dcterms:license "לא נקבע – להשלים לפני פרסום" ;
     dcterms:title "מטריושקה של ציטוטים באופנהיימר 128: חיבורים, תיארוכים ויחידות טקסט משותפות"@he ;
-    void:triples 46103 ;
+    void:triples 46107 ;
     skos:note "הסתייגות: הנתונים מבוססים רק על מועמדים שדוח ACT החזיר (עד 30 לכל קטע), שקיבלו יישור מלא, ושעברו את הסף המשוכלל S ≥ 21.14 (דיוק 98% וכיסוי 86% על 487 זוגות מתויגים). היעדר עד אינו ראיה להיעדר הטקסט. נוסח כל חיבור הוא המהדורה שבספריא; קיצורי \"וכו'\" עשויים להיות של המדפיס. התיארוכים נאספו ממקורות זמינים (בעיקר Encyclopaedia Judaica וויקיפדיה האנגלית), לא מ\"מבוא למדרשים\" של רייזל."@he ;
     prov:wasGeneratedBy opp:activity_matryoshka_2026_11 .
 
@@ -30489,6 +30489,11 @@ opp:evReadingOlder a owl:DatatypeProperty ;
 
 opp:evSharedOmission a owl:DatatypeProperty ;
     rdfs:label "מילים בישן שחסרות באופנהיימר ובחדש"@he .
+
+opp:genre_tanakh a skos:Concept ;
+    skos:inScheme opp:GenreScheme ;
+    skos:prefLabel "Hebrew Bible"@en,
+        "תנ\"ך"@he .
 
 opp:hasDating a owl:ObjectProperty ;
     rdfs:label "תיארוך"@he .
@@ -49959,9 +49964,6 @@ opp:unit_fol_9r_1_u1 a opp:TextUnit ;
     oa:hasSelector opp:unit_fol_9r_1_u1_selector ;
     oa:hasSource opp:passage_fol_9r_1 .
 
-opp:GenreScheme a skos:ConceptScheme ;
-    skos:prefLabel "סוג חיבור"@he .
-
 opp:genre_minor_tractate a skos:Concept ;
     skos:inScheme opp:GenreScheme ;
     skos:prefLabel "Minor tractate"@en,
@@ -49971,6 +49973,9 @@ opp:region_08 a skos:Concept ;
     skos:inScheme opp:RegionScheme ;
     skos:prefLabel "לא ידוע"@en,
         "לא ידוע"@he .
+
+opp:GenreScheme a skos:ConceptScheme ;
+    skos:prefLabel "סוג חיבור"@he .
 
 opp:unit_fol_103r_1_u1 a opp:TextUnit ;
     rdfs:label "fol_103r_1#u1" ;

@@ -43,26 +43,30 @@ for r in allc.sort_values(['fk', 'rank']).itertuples():
     if isinstance(r.tid, str): m.update(tid=r.tid, rel=r.rel, conf=r.conf, note=r.note, tier=r.tier)
     cand_meta.append(m)
 
-# units with ordered candidate ids per witness
-units = []
-for u in U:
-    wit = []
-    for k, w in u['wit'].items():
-        ids = [f"{u['pid']}|{c['rank']}" for c in w['cands']]
-        wit.append(dict(k=k, ids=ids, S=round(w['S'], 2)))
-    ju = next(x for x in J['units'] if x['uid'] == u['uid'])
-    units.append(dict(uid=u['uid'], pid=u['pid'], lo=u['lo'], hi=u['hi'], wit=wit, closest=ju['closest'], earliest=ju['earliest']))
-comps = []
-for t in T:
-    comps.append(dict(uid=t['uid'], o=t['older'], n=t['newer'], v=t['verdict'], sv=t['via'], sd=t['direct'],
-                      ev={k: int(v) for k, v in t['ev'].items()}, oc=bool(t['order_certain']), nl=bool(t['newer_late']),
-                      b={k: v for k, v in t['blocks'].items()}))
-works = []
-for w in J['works']:
-    works.append({k: w[k] for k in ['key', 'name_he', 'name_en', 'type', 'date_from', 'date_to', 'date_he', 'region', 'region_note', 'confidence', 'dispute', 'rel', 'n_units', 'n_only', 'n_closest', 'n_earliest', 'files', 'sources']})
-core = dict(model=dict(F=M['F'], b=M['b'], b0=M['b0'], thr_S=21.14), stats=J['stats'], works=works, edges=J['edges'], units=units, comps=comps,
+# units with ordered candidate ids per witness, comparisons and works, for one run of the matryoshka
+def pack(U, T, J):
+    Ju = {x['uid']: x for x in J['units']}
+    units = []
+    for u in U:
+        wit = [dict(k=k, ids=[f"{u['pid']}|{c['rank']}" for c in w['cands']], S=round(w['S'], 2)) for k, w in u['wit'].items()]
+        ju = Ju[u['uid']]
+        units.append(dict(uid=u['uid'], pid=u['pid'], lo=u['lo'], hi=u['hi'], wit=wit, closest=ju['closest'], earliest=ju['earliest']))
+    comps = [dict(uid=t['uid'], o=t['older'], n=t['newer'], v=t['verdict'], sv=t['via'], sd=t['direct'],
+                  ev={k: int(v) for k, v in t['ev'].items()}, oc=bool(t['order_certain']), nl=bool(t['newer_late']),
+                  b={k: v for k, v in t['blocks'].items()}) for t in T]
+    works = [{k: w[k] for k in ['key', 'name_he', 'name_en', 'type', 'date_from', 'date_to', 'date_he', 'region', 'region_note', 'confidence',
+                                'dispute', 'rel', 'n_units', 'n_only', 'n_closest', 'n_earliest', 'files', 'sources']} for w in J['works']]
+    return dict(stats=J['stats'], works=works, edges=J['edges'], units=units, comps=comps)
+
+P1 = pack(U, T, J); units, comps = P1['units'], P1['comps']
+core = dict(model=dict(F=M['F'], b=M['b'], b0=M['b0'], thr_S=21.14), stats=P1['stats'], works=P1['works'], edges=P1['edges'], units=units, comps=comps,
             passages=passages, cands=cand_meta, opp=J['opp'])
 json.dump(core, open(f'{OUT}/core.json', 'w'), ensure_ascii=False, separators=(',', ':'))
 json.dump(dict(p=ptext, c=ctext), open(f'{OUT}/texts.json', 'w'), ensure_ascii=False, separators=(',', ':'))
+# the same matryoshka run on every fully aligned candidate (OPP_MODE=all), if it was built
+if os.path.exists(ROOT + '/r3/units_all.pkl'):
+    PA = pack(pickle.load(open(ROOT + '/r3/units_all.pkl', 'rb')), pickle.load(open(ROOT + '/r3/triplets_all.pkl', 'rb')), json.load(open(ROOT + '/r3/matryoshka_all.json')))
+    json.dump(PA, open(f'{OUT}/core_all.json', 'w'), ensure_ascii=False, separators=(',', ':'))
+    print('core_all.json', round(os.path.getsize(f'{OUT}/core_all.json') / 1e6, 2), 'MB', len(PA['units']), 'units', len(PA['comps']), 'comps')
 for f in ['core.json', 'texts.json']: print(f, round(os.path.getsize(f'{OUT}/{f}') / 1e6, 2), 'MB')
 print(len(passages), 'passages', len(cand_meta), 'cands', len(units), 'units', len(comps), 'comps', sum(1 for c in cand_meta if 'tid' in c), 'labeled')

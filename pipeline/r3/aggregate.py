@@ -1,10 +1,12 @@
 import os as _os; ROOT = _os.environ.get('OPP_ROOT', _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))  # = pipeline/
 """Aggregate full-run results into one JSON used by the RDF builder and the graph page."""
-import json, pickle, collections, re
+import json, pickle, collections, re, sys
 from tests import ntext
-U = pickle.load(open(ROOT + '/r3/units.pkl', 'rb'))
-T = pickle.load(open(ROOT + '/r3/triplets.pkl', 'rb'))
-D = {x['key']: x for x in json.load(open(ROOT + '/r3/datings_A.json')) + json.load(open(ROOT + '/r3/datings_B.json'))}
+sys.path.insert(0, ROOT + '/r3')
+from mode import SUF, MODE, datings
+U = pickle.load(open(ROOT + f'/r3/units{SUF}.pkl', 'rb'))
+T = pickle.load(open(ROOT + f'/r3/triplets{SUF}.pkl', 'rb'))
+D = datings()
 OPP = dict(key='Oppenheim_128', name_he='אופנהיימר 128', name_en='Bodleian MS. Oppenheim Add. 4° 128', date_from=1372, date_to=1400,
            date_he='1372–1400 (לפי המשתמש)', type='כתב יד', region='', sources=[])
 
@@ -75,7 +77,8 @@ out = dict(opp=OPP, works=list(wk.values()), units=units, hypotheses=hyps, edges
            stats=dict(units=len(units), units_multi=sum(1 for u in units if u['n_wit'] > 1), units_3=sum(1 for u in units if u['n_wit'] > 2),
                       hyps=len(hyps), verdicts=dict(collections.Counter(h['verdict'] for h in hyps)), works=len(wk), edges=len(edges),
                       units_with_closest=sum(1 for u in units if u['n_wit'] > 1 and u['closest'])))
-json.dump(out, open(ROOT + '/r3/matryoshka.json', 'w'), ensure_ascii=False)
+out['mode'] = MODE
+json.dump(out, open(ROOT + f'/r3/matryoshka{SUF}.json', 'w'), ensure_ascii=False)
 print(out['stats'])
 for w in sorted(wk.values(), key=lambda x: -x['n_units'])[:15]:
     print(f"{w['name_he'][:24]:24s} units {w['n_units']:3d} only {w['n_only']:3d} closest {w['n_closest']:3d} sole {w['n_closest_sole']:3d} earliest {w['n_earliest']:3d} {w['rel']}")

@@ -30,10 +30,10 @@
 
   // ---------- run context ----------
   function runs(D, opt) {
-    opt = Object.assign({ win: 2, runMin: 3, close: 1.0 }, opt || {});
+    opt = Object.assign({ win: 2, runMin: 3, close: 1.0, all: false }, opt || {});  // all: count every fully aligned candidate, not only those above the threshold
     const order = {}; D.passages.forEach((p, i) => { order[p.pid] = i; });
     const aboveAt = D.passages.map(() => new Map());   // passage index → work → max S above the threshold
-    D.cands.forEach(c => { if (!c.above) return; const m = aboveAt[order[c.pid]]; if (m && (m.get(c.k) || 0) < c.S) m.set(c.k, c.S); });
+    D.cands.forEach(c => { if (!c.above && !opt.all) return; const m = aboveAt[order[c.pid]]; if (m && (m.get(c.k) || 0) < c.S) m.set(c.k, c.S); });
     // the dominant run at each passage: a work above the threshold in at least runMin of the 2·win+1 passages around it
     const run = D.passages.map((_, i) => {
       const cnt = new Map();
@@ -50,7 +50,7 @@
       const r = run[i];
       const rS = r ? aboveAt[i].get(r.k) : undefined;
       const inRunOf = r && r.k !== c.k && rS !== undefined && rS >= c.S - opt.close ? r.k : null;
-      out[c.id] = { nb: nb.length, adj, run: r ? r.k : null, inRunOf, rescue: !c.above && adj > 0 };
+      out[c.id] = { nb: nb.length, adj, run: r ? r.k : null, inRunOf, rescue: !opt.all && !c.above && adj > 0 };
     });
     return out;
   }

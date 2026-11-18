@@ -1,0 +1,197 @@
+[
+  {
+    "key": "Midrash_Lekach_Tov_on_Song_of_Songs",
+    "name_he": "לקח טוב לשיר השירים",
+    "name_en": "Midrash Lekach Tov on Song of Songs",
+    "type": "ילקוט / אוסף",
+    "date_from": 1097,
+    "date_to": 1115,
+    "date_he": "סוף המאה ה-11 – ראשית המאה ה-12 (חלק מלקח טוב; רומז לגזירות 1096)",
+    "region": "ביזנטיון",
+    "region_note": "חלק מחיבורו של ר' טוביה בן אליעזר, יליד קסטוריה שבבלקן (בובר); צונץ הציע מגנצא",
+    "confidence": "high",
+    "dispute": "Dated with the rest of Lekach Tov (written 1097, revised 1107/8; Sefaria gives c. 1105–1115); the Song of Songs section itself refers, at Song 1:3, to the martyrs of 1096. Jacobs (2015) suggests Rashi (d. 1105) may have heard of this commentary, which favors the earlier end. The author's home (Kastoria vs. Mainz) is disputed.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Midrash Lekaḥ Tov', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/midrash-leka-x1e25-tov",
+        "says": "A late 11th-century midrash by Tobias b. Eliezer, who lived in the Balkans (Buber); his comment on Song 1:3 refers to the martyrs of the 1096 Crusade; the Song of Songs part was edited by A. W. Greenup (1909)."
+      },
+      {
+        "title": "Wikipedia (English), 'Tobiah ben Eliezer' (incorporating the Jewish Encyclopedia)",
+        "url": "https://en.wikipedia.org/wiki/Tobiah_ben_Eliezer",
+        "says": "Dates in the work show he 'wrote it in 1097 and revised it in 1107 or 1108'; it covers the Pentateuch and the Five Megillot; Buber proved him a native of Kastoria, while Zunz had inferred Mainz."
+      },
+      {
+        "title": "Sefaria, 'Midrash Lekach Tov on Song of Songs' (About this text)",
+        "url": "https://www.sefaria.org/Midrash_Lekach_Tov_on_Song_of_Songs",
+        "says": "Author Tobiah ben Eliezer; composed c. 1105 – c. 1115 CE."
+      },
+      {
+        "title": "J. Jacobs, 'The Allegorical Exegesis of Song of Songs by R. Tuviah ben Eliʽezer – Lekaḥ Tov, and Its Relation to Rashi's Commentary', AJS Review 39 (2015) – abstract",
+        "url": "https://www.cambridge.org/core/journals/ajs-review/article/allegorical-exegesis-of-song-of-songs-by-r-tuviah-ben-eliezerlekah-tov-and-its-relation-to-rashis-commentary/A9A73C687068E588FA9CBDA6CE93D6CE",
+        "says": "Similarities support the possibility that Rashi was exposed to reports of R. Tuviah's Song of Songs commentary."
+      }
+    ]
+  },
+  {
+    "key": "Midrash_Yelamdenu_Selections_from_Yalkut_Talmud_Torah",
+    "name_he": "ילמדנו (ליקוטים מתוך ילקוט תלמוד תורה)",
+    "name_en": "Midrash Yelamdenu, Selections from Yalkut Talmud Torah",
+    "type": "מדרש",
+    "date_from": 600,
+    "date_to": 900,
+    "date_he": "המאות ה-7–ה-9 (ספרות תנחומא-ילמדנו; גאולה: סביב המאה ה-9)",
+    "region": "לא ידוע",
+    "region_note": "ספרות תנחומא-ילמדנו התגבשה בארץ ישראל הביזנטית; גאולה (בעקבות צונץ): הילמדנו האבוד נערך ביוון או בדרום איטליה; הילקוט עצמו נחתם בדמשק",
+    "confidence": "low",
+    "dispute": "The lost Yelamdenu survives only in quotations (Arukh, Yalkut Shimoni, Yalkut Talmud Torah). Bregman (EJ) places the crystallization of Tanhuma-Yelammedenu literature in late-Byzantine Palestine (5th–7th c.) with later Diaspora growth, while Geula, following Zunz, dates the lost Yelammedenu to c. 9th-century Greece or southern Italy; not all excerpts labelled 'Yelamdenu' need come from one work. The quoting anthology, Yalkut Talmud Torah by Jacob ben Hananel Sikili, was completed in Damascus in 1337 (Sefaria); the selections were edited by Jacob Mann (Cincinnati 1940).",
+    "sources": [
+      {
+        "title": "A. Geula, 'The Affinity between the Lost Midrash Yelammedenu and Midrash Vayekhulu' (Brill, 2022), chapter PDF (Herzog College)",
+        "url": "https://www.herzog.ac.il/wp-content/uploads/2021/12/Geula-Chapter-9-The-Affinity-between-the-Lost-Midrash-Yelammedenu-and-Midrash-Vayekhulu.pdf",
+        "says": "Assumes the lost Yelammedenu was edited 'either in Greece or in Southern Italy around the 9th century', close to Zunz; its Yalkut Talmud Torah excerpts were collected by Wertheimer and by Mann and Sonne."
+      },
+      {
+        "title": "Encyclopaedia Judaica, 2nd ed., 'Tanhuma Yelammedenu' (Marc Bregman), on Encyclopedia.com",
+        "url": "https://www.encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/tanhuma-yelammedenu",
+        "says": "The genre began to crystallize in late-Byzantine Palestine (5th–7th century) and kept developing in the Diaspora into the Middle Ages; medieval 'Yelammedenu' quotations show its diversity."
+      },
+      {
+        "title": "Sefaria, 'Midrash Yelamdenu, Selections from Yalkut Talmud Torah' (About this text)",
+        "url": "https://www.sefaria.org/Midrash_Yelamdenu,_Selections_from_Yalkut_Talmud_Torah",
+        "says": "The yalkut is by Jacob ben Hananel Sikili, who completed it in Damascus in 1337; it long remained in manuscript."
+      },
+      {
+        "title": "Wikipedia (English), 'Midrash Tanhuma'",
+        "url": "https://en.wikipedia.org/wiki/Midrash_Tanhuma",
+        "says": "The Yelammedenu version 'is lost and largely known through later quotations'; Rabbinowitz's study of Yannai suggests much Tanhuma material is pre-Islamic."
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Kallah_Rabbati",
+    "name_he": "מסכת כלה רבתי",
+    "name_en": "Tractate Kallah Rabbati",
+    "type": "מסכת קטנה",
+    "date_from": 400,
+    "date_to": 900,
+    "date_he": "פרקים א-ב: ראשית המאה ה-5 (ברודסקי); עריכה כוללת אולי עד המאות ה-8–ה-9",
+    "region": "בבל",
+    "region_note": "ערוכה כמשנה (ברייתות) וגמרא בארמית בבלית; פרידמן: מבית מדרשו של רבא במחוזא; אפטוביצר: רבא תלמידו של רב יהודאי גאון",
+    "confidence": "low",
+    "dispute": "Brodsky dates the gemara of chapters 1–2 (on Massekhet Kallah) to the mid-amoraic period, c. early 5th century, in Babylonia; Friedmann ascribed the work to the school of Rava of Mahoza, but Aptowitzer identified its 'Rava' as a disciple of Yehudai Gaon (8th c.), and Sefaria gives the 8th–9th century; the later chapters (on Derekh Eretz) are not covered by Brodsky's dating.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Kallah', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/kallah",
+        "says": "Kallah Rabbati consists of beraitot and Gemara; Friedmann held it 'emanated from the school of Rava in Mahoza', Aptowitzer that its author was Rava, a disciple of Yehudai Gaon."
+      },
+      {
+        "title": "Mohr Siebeck, D. Brodsky, A Bride without a Blessing (2006) – book description",
+        "url": "https://www.mohrsiebeck.com/en/book/a-bride-without-a-blessing-9783161490194?no_cache=1",
+        "says": "Dates Massekhet Kallah and the Kallah Rabbati gemara (chs. 1–2) to the mid-amoraic period, c. late 3rd and early 5th centuries respectively, redacted in Babylonia."
+      },
+      {
+        "title": "Sefaria, 'Tractate Kallah Rabbati' (About this text)",
+        "url": "https://prod.sefaria.org.il/Tractate_Kallah_Rabbati",
+        "says": "Composed: Talmudic Israel/Babylon, c. 100 BCE – c. 900 CE; date debated, likely the eighth or ninth century."
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Soferim",
+    "name_he": "מסכת סופרים",
+    "name_en": "Tractate Soferim",
+    "type": "מסכת קטנה",
+    "date_from": 650,
+    "date_to": 850,
+    "date_he": "עריכה סופית באמצע המאה ה-8 בערך (רכיבים קדומים יותר, הוספות מאוחרות)",
+    "region": "ארץ ישראל",
+    "region_note": "רוב החוקרים: ארץ-ישראלית (מקבילות לירושלמי, מנהגים מקומיים); פרקים ו-ט אולי ממסורני טבריה; I. H. Weiss חלק",
+    "confidence": "medium",
+    "dispute": "Most scholars date the final redaction to about the mid-8th century in the Land of Israel, but the work combines three components of different dates (chs. 1–5 parallel the older Massekhet Sefer Torah; the liturgical section xvi.2–xxi is latest and cites the Bavli), with later interpolations; Rajak places its attitudes in the 7th or 8th century, and I. H. Weiss dissented from the Palestinian origin.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica (2007), 'Soferim', on Jewish Virtual Library",
+        "url": "https://www.jewishvirtuallibrary.org/soferim-2",
+        "says": "Most scholars regard it as Palestinian, 'generally dated about the middle of the eighth century'; a compilation of three works of different dates with interpolations."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Soferim'",
+        "url": "https://www.jewishencyclopedia.com/articles/13834",
+        "says": "Probably 'finally redacted about the middle of the eighth century'; Palestinian; chs. 1–5 earliest, chs. 6–9 Masoretic (Tiberias), xvi.2–xxi latest and citing the Babylonian Talmud."
+      },
+      {
+        "title": "Wikipedia (English), 'Soferim (Talmud)'",
+        "url": "https://en.wikipedia.org/wiki/Soferim_(Talmud)",
+        "says": "Of 'late and uncertain date', probably redacted in the mid-8th century in the Land of Israel; Rajak puts its attitudes in the 7th or 8th century; Weiss dissented on Palestinian origin."
+      },
+      {
+        "title": "Sefaria, 'Tractate Soferim' (About this text)",
+        "url": "https://prod.sefaria.org.il/Tractate_Soferim",
+        "says": "Likely compiled in the eighth century in Israel, with some segments of earlier origin."
+      }
+    ]
+  },
+  {
+    "key": "Tractate_Tefillin",
+    "name_he": "מסכת תפילין",
+    "name_en": "Tractate Tefillin",
+    "type": "מסכת קטנה",
+    "date_from": 200,
+    "date_to": 900,
+    "date_he": "תקופת התלמוד או אחריה (לא ברור; מתנאית ועד תקופת הגאונים)",
+    "region": "ארץ ישראל",
+    "region_note": "לפי היגר רוב המסכתות הקטנות ארץ-ישראליות (עובדו מאוחר יותר בבבל); נכללה ב'שבע מסכתות קטנות ירושלמיות' (מהדורת קירכהיים, פרנקפורט)",
+    "confidence": "low",
+    "dispute": "No dating specific to Tefillin was found beyond the general debate on the seven minor tractates: EJ reports Higger's view of a Palestinian original possibly completed by c. 400 CE (some put them at the end of the Geonic period), while a 2014 AJS paper notes that, since Higger's editions, they are usually assigned to the post-Talmudic, chiefly Geonic period, and argues that Tefillin is quite likely tannaitic.",
+    "sources": [
+      {
+        "title": "Encyclopaedia Judaica, 'Minor Tractates' (A. Rothkoff), on Encyclopedia.com",
+        "url": "https://encyclopedia.com/religion/encyclopedias-almanacs-transcripts-and-maps/minor-tractates",
+        "says": "Tefillin is one chapter on writing and wearing tefillin; for the seven treatises, 'recent scholarship favors a much earlier date' than the Geonic period; Higger: mostly Palestinian, possibly completed by 400 CE."
+      },
+      {
+        "title": "AJS 2014 conference paper abstract on the Seven Minor Tractates (All Academic)",
+        "url": "https://convention2.allacademic.com/one/ajs/ajs14/online_program_direct_link/view_paper/749002/",
+        "says": "Higger's 1929 editions helped fix their dating to the 'post-Talmudic period, that is, primarily to the Gaonic period'; argues a 'high likelihood' that Tefillin is tannaitic."
+      },
+      {
+        "title": "Sefaria, 'Tractate Tefillin' (About this text)",
+        "url": "https://prod.sefaria.org.il/Tractate_Tefillin",
+        "says": "Composed: Talmudic Israel/Babylon, c. 100 BCE – c. 900 CE; dating and place are debated."
+      }
+    ]
+  },
+  {
+    "key": "Tanakh",
+    "name_he": "תנ\"ך",
+    "name_en": "Tanakh (Hebrew Bible)",
+    "type": "תנ\"ך",
+    "date_from": -1200,
+    "date_to": -164,
+    "date_he": "המאה ה-12 לפנה\"ס בערך (שירה קדומה) – 164 לפנה\"ס (ספר דניאל)",
+    "region": "ארץ ישראל / בבל",
+    "region_note": "רוב הספרים נכתבו ונערכו בארץ ישראל; חלקם (ובעיקר עריכת התורה וספרות הגלות) בבבל ובפרס",
+    "confidence": "medium",
+    "dispute": "The late end is firm: Daniel 7–12 is dated to the Maccabean crisis (168–164 BCE) and is probably the latest book. The early end is contested: archaic poems such as the Song of the Sea (late 13th c. BCE on some views) and the Song of Deborah (late 12th–late 11th c.) are sometimes redated to the monarchy, and much of the Bible may have been assembled only in the Persian period (5th c. BCE); the canon itself was closed later (Writings c. 1st–2nd c. CE).",
+    "sources": [
+      {
+        "title": "Wikipedia (English), 'Dating the Bible'",
+        "url": "https://en.wikipedia.org/wiki/Dating_the_Bible",
+        "says": "Its table runs from the Song of the Sea ('late 13th century' BCE) and Song of Deborah (late 12th–late 11th c.) to Daniel (168–164 BCE); much of the Bible may have been assembled in the 5th century BCE."
+      },
+      {
+        "title": "J. J. Collins, A Short Introduction to the Hebrew Bible (2018), ch. on Daniel and Maccabees (course PDF, St. Mary's University)",
+        "url": "https://palimpsest.stmarytx.edu/thanneken/th3310/Collins-2018-ShortIntroHebrewBible/Collins-DanielMaccabees.pdf",
+        "says": "Daniel is 'probably the latest composition in the Hebrew Bible'; its visions reflect Antiochus IV's persecution (168–164 BCE) and predate news of his death in 164."
+      },
+      {
+        "title": "Jewish Encyclopedia (1906), 'Bible Canon'",
+        "url": "https://www.jewishencyclopedia.com/articles/3259-bible-canon",
+        "says": "The Torah is the oldest part of the canon, extant by the mid-5th century BCE; Daniel belongs to the Maccabean era (c. 165 BCE); the whole canon possibly ratified c. 90–110 CE."
+      }
+    ]
+  }
+]

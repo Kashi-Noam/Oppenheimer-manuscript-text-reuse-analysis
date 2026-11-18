@@ -9,7 +9,7 @@
   --bg:#f7f6f2;--surface:#fff;--surface-2:#f0eee8;--ink:#1d1c1a;--ink-2:#55524c;--ink-3:#85817a;--line:#e2dfd7;
   --accent:#2f5d8a;--accent-soft:#e3ecf5;--ok:#2e7d4f;--ok-soft:#e1f1e7;--bad:#b23b3b;--bad-soft:#f6e1e1;
   --via:#2f6fb0;--via-soft:#dbe8f6;--dir:#b5651d;--dir-soft:#f6e3cf;--und:#9a968e;--om:#d9d4c8;
-  --g-midrash:#2e7d4f;--g-anth:#7b4fa0;--g-talmud:#a06a12;--g-minor:#5c7a8a;--opp:#b23b3b;
+  --g-midrash:#2e7d4f;--g-anth:#7b4fa0;--g-talmud:#a06a12;--g-minor:#5c7a8a;--g-tanakh:#8c5a2b;--opp:#b23b3b;
   --u1:#fde9b8;--u2:#d6ecd9;--u3:#dfe3f6;--u4:#f6dbe4;--u5:#e3f0f4;
   --r:10px;--shadow:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.04);
 }
@@ -17,13 +17,13 @@
   --bg:#161615;--surface:#1f1f1d;--surface-2:#272725;--ink:#ecebe7;--ink-2:#b9b6af;--ink-3:#8b8880;--line:#34332f;
   --accent:#86b2dd;--accent-soft:#1f3042;--ok:#6cc394;--ok-soft:#1c3326;--bad:#e07a7a;--bad-soft:#3b2222;
   --via:#79abe0;--via-soft:#1d2f44;--dir:#e0a060;--dir-soft:#3d2c19;--und:#7d7a73;--om:#3a3833;
-  --g-midrash:#6cc394;--g-anth:#b58ad8;--g-talmud:#e0aa55;--g-minor:#8fb3c4;--opp:#e07a7a;
+  --g-midrash:#6cc394;--g-anth:#b58ad8;--g-talmud:#e0aa55;--g-minor:#8fb3c4;--g-tanakh:#d39a6a;--opp:#e07a7a;
   --u1:#4a3d1c;--u2:#1f3a26;--u3:#262c4a;--u4:#47252f;--u5:#1f3a42;--shadow:none;}}
 :root[data-theme="dark"]{
   --bg:#161615;--surface:#1f1f1d;--surface-2:#272725;--ink:#ecebe7;--ink-2:#b9b6af;--ink-3:#8b8880;--line:#34332f;
   --accent:#86b2dd;--accent-soft:#1f3042;--ok:#6cc394;--ok-soft:#1c3326;--bad:#e07a7a;--bad-soft:#3b2222;
   --via:#79abe0;--via-soft:#1d2f44;--dir:#e0a060;--dir-soft:#3d2c19;--und:#7d7a73;--om:#3a3833;
-  --g-midrash:#6cc394;--g-anth:#b58ad8;--g-talmud:#e0aa55;--g-minor:#8fb3c4;--opp:#e07a7a;
+  --g-midrash:#6cc394;--g-anth:#b58ad8;--g-talmud:#e0aa55;--g-minor:#8fb3c4;--g-tanakh:#d39a6a;--opp:#e07a7a;
   --u1:#4a3d1c;--u2:#1f3a26;--u3:#262c4a;--u4:#47252f;--u5:#1f3a42;--shadow:none;}
 *{box-sizing:border-box}
 html{direction:rtl}
@@ -123,18 +123,22 @@ table.dt td{max-width:380px;vertical-align:top}table.dt th.srt{cursor:pointer;wh
 tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px solid var(--accent)}
 .reply{border-inline-start:3px solid var(--ok);padding-inline-start:8px}
 #ncount{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;background:var(--bad);color:#fff;font-size:11px;line-height:18px;text-align:center;margin-inline-start:4px}
+.mode{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin-inline-start:14px;flex:none}
+.mode button{border:0;background:transparent;padding:4px 10px;font:inherit;font-size:12.5px;cursor:pointer;color:var(--ink-2);white-space:nowrap}
+.mode button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
 </style>
 <script src="config.js"></script>
 <script src="synoptic.js"></script>
 <script src="signals.js"></script>
 </head>
 <body>
-<div class="top"><div class="topin"><div class="brand">סייר אופנהיימר 128</div>
+<div class="top"><div class="topin"><div class="brand">סייר אופנהיימר 128</div><div class="mode" role="group" aria-label="אילו נתונים להציג" title="מעל הסף: רק התאמות עם S ≥ 21.14. כל המיושרים: כל 2,650 המועמדים ש־ACT יישר, בלי סינון הרגרסיה."><button data-mode="thr" aria-pressed="true">מעל הסף</button><button data-mode="all" aria-pressed="false">כל המיושרים</button></div>
 <nav id="nav" role="tablist">
  <button data-t="map" aria-selected="true">מבט־על</button><button data-t="overview">סקירה</button><button data-t="works">חיבורים</button><button data-t="passages">קטעים</button><button data-t="catalog">קטלוג כתיב</button>
  <button data-t="verify">בדיקת השוואות</button><button data-t="matches">התאמות</button><button data-t="model">המודל</button><button data-t="act">נתוני ACT</button><button data-t="tables">טבלאות</button><button data-t="sparql">SPARQL</button><button data-t="comments">הערות<span id="ncount" class="hidden"></span></button>
 </nav></div></div>
 <main>
+<div id="modenote" class="callout small hidden" style="margin-top:0"><b>תצוגה לא מסוננת:</b> מוצגים כל 2,650 המועמדים ש־ACT יישר, בלי סף הרגרסיה (S ≥ 21.14). מבט־העל, היחידות, ההשוואות, הגרף, הרצפים והטבלאות חושבו מחדש על כל הנתונים. חלק מהעדים כאן הם ציטוטי פסוקים או חפיפות מקריות.</div>
 <section id="t-map">
  <p class="muted small" style="margin:0 0 8px">איפה בכתב היד מופיע כל חיבור: שורה לכל חיבור, עמודה לכל קטע של כתב היד לפי הסדר. לחיצה על תא פותחת את הקטע.<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="מבט־העל הוא אב־טיפוס של משה לביא (9.11.2026), משולב כאן כמות שהוא. הוא מציג רק התאמות מעל הסף (S ≥ 21.14). מצב 1: כל החיבורים; מצב 2: חיבור אחד, לפי סעיפיו. לכל פקד במפה יש סימן שאלה משלו.">?</span></p>
  <iframe id="mapframe" title="מבט־על: חיבורים × קטעים" style="width:100%;height:calc(100vh - 140px);min-height:520px;border:1px solid var(--line);border-radius:10px;background:var(--surface)"></iframe>
@@ -158,7 +162,7 @@ tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px
  <div class="filters small"><label><input type="checkbox" id="gOpp" checked> קשתות לאופנהיימר</label><label><input type="checkbox" id="gWW" checked> קשתות בין חיבורים</label>
   <label>מינימום יחידות<span class="qm" tabindex="0" role="button" aria-label="הסבר" data-tip="מציג רק קשתות של חיבורים שחולקים לפחות כמה יחידות טקסט, כדי שהגרף לא יהיה צפוף.">?</span> <input type="range" id="gMin" min="1" max="20" value="6"> <span id="gMinV" class="num">6</span></label></div>
  <div class="card pad"><div class="graphbox" id="gbox"></div>
-  <div class="legend"><span><i style="background:var(--g-midrash)"></i>מדרש</span><span><i style="background:var(--g-anth)"></i>ילקוט / אוסף</span><span><i style="background:var(--g-talmud)"></i>תלמוד</span><span><i style="background:var(--g-minor)"></i>מסכת קטנה</span>
+  <div class="legend"><span><i style="background:var(--g-midrash)"></i>מדרש</span><span><i style="background:var(--g-anth)"></i>ילקוט / אוסף</span><span><i style="background:var(--g-talmud)"></i>תלמוד</span><span><i style="background:var(--g-minor)"></i>מסכת קטנה</span><span><i style="background:var(--g-tanakh)"></i>תנ"ך</span>
    <span><i style="background:var(--dir)"></i>אופנהיימר קרוב יותר לישן</span><span><i style="background:var(--via)"></i>קרוב יותר לחדש</span><span><i style="background:var(--und)"></i>מעורב</span><span><i style="background:var(--bad);opacity:.4"></i>מאוחר לאופנהיימר (מקווקו)</span></div>
   <p class="muted small">מוקדם מימין, מאוחר משמאל; בציר יש קטיעה בין 1550 ל־1900. לחיצה על חיבור מדגישה את כל המסלולים שהוא חלק מהם, עד אופנהיימר; לחיצה נוספת או על רקע הגרף מנקה.</p></div>
  <div class="card pad hidden" id="gpath" style="margin-top:10px"></div>
@@ -243,7 +247,7 @@ const wn=k=>W[k]?.name_he||(D.cands.find(c=>c.k===k)?.work)||k;
 const REL={before:['קודם לאופנהיימר','p-before'],overlap:['חופף לתקופת אופנהיימר','p-overlap'],after:['מאוחר לאופנהיימר','p-after']};
 const VER={via:'דרך החדש',direct:'ישיר',undetermined:'לא מוכרע',unclear:'לא ניתן לקבוע',common:'מקור משותף',parallel:'ממקבילה של המקור'};
 const MINE=['direct','via','undetermined','unclear','common','parallel'];
-const ROLES=Signals.roles(D.works),roleOf=k=>{const r=ROLES[k];return r?{he:r.he,why:Signals.ROLE_RULE}:null},roleChip=k=>{const r=ROLES[k];return r?` <span class="role" tabindex="0" data-tip="${esc('תפקיד העד: '+Signals.ROLE_RULE)}">${r.he}</span>`:''};
+let ROLES=Signals.roles(D.works);const roleOf=k=>{const r=ROLES[k];return r?{he:r.he,why:Signals.ROLE_RULE}:null},roleChip=k=>{const r=ROLES[k];return r?` <span class="role" tabindex="0" data-tip="${esc('תפקיד העד: '+Signals.ROLE_RULE)}">${r.he}</span>`:''};
 const CONF={high:'גבוהה',medium:'בינונית',low:'נמוכה'};
 const unitsByPid={};D.units.forEach(u=>(unitsByPid[u.pid]=unitsByPid[u.pid]||[]).push(u));
 const candsByPid={};D.cands.forEach(c=>(candsByPid[c.pid]=candsByPid[c.pid]||[]).push(c));
@@ -261,7 +265,7 @@ const qm=t=>`<span class="qm" tabindex="0" role="button" aria-label="הסבר" d
  document.addEventListener('focusin',e=>{const q=e.target.closest('[data-tip]');if(q)show(q)});document.addEventListener('focusout',hide);
  document.addEventListener('scroll',hide,true);
  document.addEventListener('click',e=>{const q=e.target.closest('.qm');if(q){e.preventDefault();e.stopPropagation();on===q?hide():show(q)}},true)})();
-const RUNS=Signals.runs(D);let NOISE=null,WIN=null;
+let RUNS=Signals.runs(D);let NOISE=null,WIN=null;
 function needSignals(T){if(!NOISE)NOISE=Signals.noise(D,T);if(!WIN)WIN=Signals.windows(D,T)}
 // Q6: ACT's reference names the start of its source window; flag matches whose alignment starts late in it
 const wflag=id=>{const w=WIN&&WIN[id];return w&&w.late?` <span class="wflag" tabindex="0" data-tip="${esc(H.win+` (היישור מתחיל במילה ${w.j0+1} מתוך ${w.n})`)}">⚠ חלון</span>`:''};
@@ -275,7 +279,7 @@ const CERTCLS={'גבוהה':'k-hi','בינונית':'k-mid','נמוכה':'k-lo'}
 async function renderCatalog(flash){if(!KTIV){$('#ktable').innerHTML='<tr><td class="muted">טוען…</td></tr>';try{KTIV=await (await fetch('ktiv_catalog.json')).json()}catch(e){$('#ktable').innerHTML='<tr><td>טעינת הקטלוג נכשלה.</td></tr>';return}}
  const inR=(e,x)=>(e.ranges||[]).some(r=>{const a=kpos(r.from),b=kpos(r.to);return a!=null&&b!=null&&x>=a&&x<=b});
  const pas=e=>D.passages.filter(q=>{const x=pageOf(q.pid);return x!=null&&inR(e,x)});
- const act=e=>{const ps=new Set(pas(e).map(q=>q.pid)),cnt={};D.cands.forEach(c=>{if(c.above&&ps.has(c.pid)){(cnt[c.k]=cnt[c.k]||new Set()).add(c.pid)}});
+ const act=e=>{const ps=new Set(pas(e).map(q=>q.pid)),cnt={};D.cands.forEach(c=>{if((c.above||MODE==='all')&&ps.has(c.pid)){(cnt[c.k]=cnt[c.k]||new Set()).add(c.pid)}});
   return {n:ps.size,top:Object.entries(cnt).map(([k,v])=>[k,v.size]).sort((a,b)=>b[1]-a[1]).slice(0,3)}};
  const span=e=>(e.ranges||[]).reduce((n,r)=>n+(kpos(r.to)-kpos(r.from)+1),0);
  $('#kbar').innerHTML=`<div class="kbar">${KTIV.entries.map((e,i)=>e.level===2||e.unplaced||!span(e)?'':`<div class="kseg ${CERTCLS[e.cert]||''}" style="flex:${span(e)}" data-krow="${i}" data-tip="${esc(e.loc+' · '+e.title+' · ודאות '+e.cert)}">${esc(e.title.replace(/\s*\(.*$/,'').slice(0,24))}</div>`).join('')}</div>
@@ -352,20 +356,22 @@ const nf=n=>Number(n).toLocaleString();
 // ---------- tabs ----------
 const TABS=['map','overview','works','passages','catalog','verify','matches','model','act','tables','sparql','comments'];
 function tab(t,noHash){TABS.forEach(x=>{$('#t-'+x).classList.toggle('hidden',x!==t);document.querySelector(`nav button[data-t="${x}"]`).setAttribute('aria-selected',x===t)});
- if(t==='map'){const f=$('#mapframe');if(!f.getAttribute('src'))f.setAttribute('src','../map/?embed=1')}if(t==='catalog')renderCatalog();if(t==='model')renderModel();if(t==='act')renderAct();if(t==='overview')drawGraph();if(t==='matches')renderMatches();if(t==='sparql')initSparql();if(t==='verify')renderVList();if(t==='tables')renderTList();if(t==='comments'){renderComments();if(!CM.loaded)loadComments()}if(!noHash)setHash(t);scrollTo(0,0)}
+ if(t==='map'){const f=$('#mapframe'),src=mapSrc();if(f.getAttribute('src')!==src)f.setAttribute('src',src)}if(t==='catalog')renderCatalog();if(t==='model')renderModel();if(t==='act')renderAct();if(t==='overview')drawGraph();if(t==='matches')renderMatches();if(t==='sparql')initSparql();if(t==='verify')renderVList();if(t==='tables')renderTList();if(t==='comments'){renderComments();if(!CM.loaded)loadComments()}if(!noHash)setHash(t);scrollTo(0,0)}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('button');if(b)tab(b.dataset.t)});
 
 // ---------- overview ----------
 const KTIP={'קטעים':'קטעי כתב היד כפי ש־ACT חתך אותם (בערך 150–200 מילים). כל קטע נקרא על שם הדף שבו הוא מתחיל.','התאמות ביישור מלא':'מועמדים מבין 30 ש־ACT החזיר לכל קטע, שקיבלו יישור מלא, מילה מול מילה.','מעל הסף':'התאמות עם S ≥ 21.14 (p ≥ 0.8). על 487 זוגות מתויגים, כ־98% מהן הן אותו טקסט.','מתויגות ידנית':'זוגות שתויגו ביד לפי קטגוריות התיוג (D4). רבים תויגו בעזרת Claude, ולא כולם נבדקו.','חיבורים מתוארכים':'החיבורים שתוארכו לצורך המטריושקה. התיארוכים נעשו בעזרת Claude ממקורות פתוחים, וטרם נבדקו.','יחידות טקסט':'קטע רציף בכתב היד שיש לו התאמה מעל הסף לחיבור אחד או יותר. כל חיבור כזה הוא עד של היחידה.','השוואות בין עדים':'בכל יחידה עם שני עדים או יותר: זוג של עד ישן ועד חדש, והכרעה של הכלי אם אופנהיימר קרוב יותר לישן (ישיר) או לחדש (דרך החדש).'};
-const st=D.stats,vc=st.verdicts,nAbove=D.cands.filter(c=>c.above).length,nLab=D.cands.filter(c=>c.tid).length;
-$('#kpis').innerHTML=[[D.passages.length,'קטעים'],[D.cands.length,'התאמות ביישור מלא'],[nAbove,'מעל הסף'],[nLab,'מתויגות ידנית'],[D.works.length,'חיבורים מתוארכים'],[st.units,'יחידות טקסט'],[st.hyps,'השוואות בין עדים']]
- .map(([b,s])=>`<div class="kpi"><b class="num">${nf(b)}</b><span>${s}${qm(KTIP[s]||'')}</span></div>`).join('');
-const GCOL={'מדרש':'--g-midrash','ילקוט / אוסף':'--g-anth','תלמוד':'--g-talmud','מסכת קטנה':'--g-minor'};
+const nAbove=D.cands.filter(c=>c.above).length,nLab=D.cands.filter(c=>c.tid).length;
+function renderKPIs(){const st=D.stats;$('#kpis').innerHTML=[[D.passages.length,'קטעים'],[D.cands.length,'התאמות ביישור מלא'],[nAbove,'מעל הסף'],[nLab,'מתויגות ידנית'],[D.works.length,'חיבורים מתוארכים'],[st.units,'יחידות טקסט'],[st.hyps,'השוואות בין עדים']]
+ .map(([b,s])=>`<div class="kpi"><b class="num">${nf(b)}</b><span>${s}${qm(KTIP[s]||'')}</span></div>`).join('')}
+renderKPIs();
+const GCOL={'מדרש':'--g-midrash','ילקוט / אוסף':'--g-anth','תלמוד':'--g-talmud','מסכת קטנה':'--g-minor','תנ"ך':'--g-tanakh'};
 let GW=1100,LAY={},GH=0;
-function X(y){const L=24,R=GW-24,f=.86,span=R-L;let t;if(y<=1550)t=(y-200)/1350*f;else if(y<1900)t=f+.01;else t=f+.03+(y-1900)/50*(1-f-.03);return R-t*span}
+let OLD=false;
+function X(y){const L=24,R=GW-24,f=.86,span=R-L,a=OLD?.07:0;let t;if(y<200)t=Math.max(0,(y+1300)/1500)*a*.85;else if(y<=1550)t=a+(y-200)/1350*(f-a);else if(y<1900)t=f+.01;else t=f+.03+(y-1900)/50*(1-f-.03);return R-t*span}
 const yr=w=>w.date_from===w.date_to?`${w.date_from}`:`${w.date_from}–${w.date_to}`;
 const rad=w=>4+Math.sqrt(w.n_units)*1.5;
-function layout(){LAY={};let y=34;const B=[['תלמוד','מסכת קטנה'],['מדרש'],['ילקוט / אוסף']];
+function layout(){LAY={};OLD=D.works.some(w=>w.date_from<200);let y=34;const B=[['תנ"ך','תלמוד','מסכת קטנה'],['מדרש'],['ילקוט / אוסף']];
  B.forEach(types=>{const ws=D.works.filter(w=>types.includes(w.type)).sort((a,b)=>(a.date_from+a.date_to)-(b.date_from+b.date_to));const rows=[];
   ws.forEach(w=>{const xm=X((w.date_from+w.date_to)/2),r0=rad(w),lw=(w.name_he.length+(w.rel==='after'?8:0))*6.4,left=xm-r0-4-lw>=4;
    const xa=Math.min(X(w.date_to),left?xm-r0-4-lw:xm-r0),xb=Math.max(X(w.date_from),left?xm+r0+2:xm+r0+4+lw);
@@ -391,7 +397,7 @@ function drawGraph(){const box=$('#gbox');GW=Math.max(900,box.clientWidth);layou
   const my=Math.min(a.y,b.y)-18-Math.abs(a.x-b.x)*.12;return `M${a.x},${a.y} Q${(a.x+b.x)/2},${my} ${b.x},${b.y}`};
  const act=SEL?(SELP!==null?[PATS[SELP]]:PATS):[];const inv=new Set([SEL]);act.forEach(p=>[...p.early,...p.late].forEach(k=>inv.add(k)));
  let s=`<svg width="${GW}" height="${GH}" role="img" aria-label="ציר זמן של החיבורים">`;
- [200,400,600,800,1000,1200,1400,1950].forEach(t=>{const x=X(t);s+=`<line x1="${x}" x2="${x}" y1="16" y2="${GH-22}" stroke="${css('--line')}" stroke-dasharray="2 4"/><text x="${x}" y="${GH-6}" text-anchor="middle">${t}</text>`});
+ (OLD?[-600,200,400,600,800,1000,1200,1400,1950]:[200,400,600,800,1000,1200,1400,1950]).forEach(t=>{const x=X(t);s+=`<line x1="${x}" x2="${x}" y1="16" y2="${GH-22}" stroke="${css('--line')}" stroke-dasharray="2 4"/><text x="${x}" y="${GH-6}" text-anchor="middle">${t<0?'לפנה״ס':t}</text>`});
  s+=`<rect class="bg" x="0" y="0" width="${GW}" height="${GH}" fill="transparent"/><rect x="${X(1400)}" y="12" width="${X(1372)-X(1400)}" height="${GH-36}" fill="${css('--opp')}" opacity=".07"/>`;
  s+=`<g opacity="${SEL?.08:1}">`;
  if($('#gOpp').checked)D.works.forEach(w=>{if(w.n_units<mn)return;const a=LAY[w.key];s+=`<path class="edge" d="${curve(a,O)}" stroke="${w.rel==='after'?css('--bad'):css('--ink-3')}" stroke-width="${(.6+Math.sqrt(w.n_units)*.4).toFixed(1)}" stroke-opacity=".25" ${w.rel==='after'?'stroke-dasharray="5 4"':''}/>`});
@@ -473,7 +479,7 @@ async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await text
    <div class="small muted">${row(hl('ציון ACT',H.score),cand.score)}${row(hl('norm / align',H.norm+' '+H.align),`${cand.norm} / ${cand.align}`)}${row(hl('N / C / Cp',H.N+' '+H.C+' '+H.Cp),`${cand.N} / ${cand.C} / ${cand.Cp}`)}${sigLine(cand)}${modelBreak(cand)}<details class="rawd" data-rawc="${esc(cand.id)}"><summary>נתונים גולמיים מ־ACT</summary>${qm('השדות של המועמד הזה כפי שהם בדוח של ACT, בלי עיבוד.')}<div class="rawbody small muted">טוען…</div></details>${cand.tid?row('תיוג ידני',`${esc(cand.tid)} · <b>${esc(cand.rel)}</b> (${esc(cand.conf)}) · ${esc(cand.note)}`):''}<span dir="ltr" class="small">${esc(cand.loc)}</span></div></div>`}
  html+=`<div class="card pad tscroll" style="margin-top:10px"><h3>המועמדים ביישור מלא</h3><table><thead><tr><th>${hl('rank',H.rank)}</th><th>חיבור</th><th>${hl('מראה מקום',H.ref)}</th><th>${hl('S',H.S)}</th><th>${hl('p',H.p)}</th><th>${hl('תיוג ידני',H.tag)}</th><th>${hl('אותות',H.run+' '+H.inrun+' '+H.noise)}</th></tr></thead><tbody>
   ${cs.map(c=>`<tr class="click" data-cand="${esc(c.id)}" ${cand&&cand.id===c.id?'style="background:var(--accent-soft)"':''}><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}${wflag(c.id)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small">${sigShort(c)}</td></tr>`).join('')}</tbody></table></div>`;
- if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות${qm('לכל יחידה: העדים שלה (חיבורים עם התאמה מעל הסף), העד הקרוב ביותר, וההשוואות בין זוגות העדים עם הכרעת הכלי. לחיצה על השוואה פותחת אותה בלשונית בדיקת השוואות.')}</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>${cb('unit',u.uid,p.folio+' · יחידה '+u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
+ if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות${qm('לכל יחידה: העדים שלה (חיבורים עם התאמה מעל הסף), העד הקרוב ביותר, וההשוואות בין זוגות העדים עם הכרעת הכלי. לחיצה על השוואה פותחת אותה בלשונית בדיקת השוואות.')}</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>${cb('unit',mk(u.uid),p.folio+' · יחידה '+u.uid.split('#')[1]+mlab())}: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
   ${(compsByUnit[u.uid]||[]).map(c=>`<br><span class="lnk" data-comp="${c.i}">${esc(wn(c.o))} ← ${esc(wn(c.n))}</span>: <span class="v-${c.v}">${VER[c.v]}</span>`).join('')}</p>`).join('')}</div>`;
  if(us.length)html+=`<div class="card pad" style="margin-top:10px" id="psyncard"><h3>סינופסיס בטורים${qm('כל העדים החזקים של יחידה, זה לצד זה, מחולקים אוטומטית לשורות של רצפים מקבילים. העמודות לפי התיארוך. תא ריק = אין רצף מקביל בחלון המוצג. הנוסח לא שונה.')}</h3><p class="muted small">כל העדים החזקים של יחידת טקסט, זה לצד זה ומחולקים לשורות (לפי התיארוך).</p>
   <div class="verd">${us.map(u=>`<button class="b" data-psyn="${esc(u.uid)}" aria-pressed="${PSYN.uid===u.uid}">${esc(u.uid.split('#')[1])} · ${u.wit.length+1} עדים</button>`).join('')}${PSYN.uid?synDlButtons:''}</div>
@@ -486,7 +492,7 @@ function sigLine(c){const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id],Wn=WIN&&WIN[c.id
  return `<div class="sig">${Wn?hl(`חלון המקור: היישור במילים ${Wn.j0+1}–${Wn.j1+1} מתוך ${Wn.n}${Wn.late?' · <b>⚠ מתחיל מאוחר: מראה המקום אולי של מקטע קודם</b>':''}`,H.ref):''}${hl(`רצף: <b>${R.nb||0}/4</b> קטעים סמוכים עם החיבור מעל הסף`,H.run)}${R.rescue?`<span>↑ מתחת לסף, והחיבור מעל הסף בקטע סמוך</span>`:''}${R.inRunOf?hl(`בתוך רצף של <b>${esc(wn(R.inRunOf))}</b>: כנראה מקבילה`,H.inrun):''}${N?hl(`${N.flag?'⚠ <b>חשד לרעש</b>':'לא סומן כרעש'} · מילים נפוצות ${Math.round(N.common*100)}% · מגוון ${N.types}`,H.noise)+hl(`הרצף הנדיר: «${esc(N.rare.text)}» (${N.rare.len})`,H.rare):''}</div>`}
 function sigShort(c){const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id];return [WIN&&WIN[c.id]&&WIN[c.id].late?'⚠ חלון':'',R.nb?`רצף ${R.nb}/4`:'',R.rescue?'↑':'',R.inRunOf?'בתוך '+esc(wn(R.inRunOf)):'',N&&N.flag?'⚠ רעש':''].filter(Boolean).join(' · ')}
 // continuity against one work, passage by passage (Moshe 5be2a4dc, bad70b2e; summary §4)
-function contCard(pid,T,cand,cs){const i=PIDX[pid];let w=CONT.w||(cand?cand.k:(cs.find(c=>c.above)||cs[0]||{}).k)||'';if(!w)return '';
+function contCard(pid,T,cand,cs){const i=PIDX[pid];let w=CONT.w||(cand?cand.k:(cs.find(c=>c.above||MODE==='all')||cs[0]||{}).k)||'';if(!w)return '';
  const lo=Math.max(0,i-CONT.b),hi=Math.min(D.passages.length-1,i+CONT.a);
  const keys=new Set([w]);for(let k=Math.max(0,i-10);k<=Math.min(D.passages.length-1,i+10);k++)(candsByPid[D.passages[k].pid]||[]).forEach(c=>keys.add(c.k));
  const of=q=>(candsByPid[q]||[]).filter(c=>c.k===w).sort((a,b)=>b.S-a.S);
@@ -509,7 +515,8 @@ document.addEventListener('change',e=>{if(e.target.id==='contw'&&CUR.pid){CONT.w
 
 // ---------- verification ----------
 const workOpts=k=>D.works.slice().sort((a,b)=>a.date_from-b.date_from).map(w=>`<option value="${w.key}">${esc(w.name_he)}</option>`).join('');
-$('#vo').insertAdjacentHTML('beforeend',workOpts());$('#vn').insertAdjacentHTML('beforeend',workOpts());
+function fillWorkOpts(){[['#vo','כל העדים הישנים'],['#vn','כל העדים החדשים']].forEach(([sel,lab])=>{const v=$(sel).value;$(sel).innerHTML=`<option value="">${lab}</option>`+workOpts();$(sel).value=W[v]?v:''})}
+fillWorkOpts();
 let REV={},VL=[],CI=null,DB=null;const LSK='oppenheim128.comparisonReviews';
 const did=c=>`${c.uid}__${c.o}__${c.n}`.replace(/[^A-Za-z0-9_\-.~:@+]/g,'~');
 function status(c){const r=REV[did(c)];if(!r||!r.mine)return 'todo';return r.mine===c.v?'agree':'disagree'}
@@ -564,7 +571,7 @@ async function showComp(i){if(OPPX.i!==i)OPPX={i,prev:0,next:0};CI=i;setHash('ve
  const [o0,o1]=win(O),[n0,n1]=win(N);const r=REV[did(c)]||{};const wO=W[c.o],wN=W[c.n];const e=c.ev;
  const ref=M=>M.ids.map(id=>C[id].ref).join(' + ');
  $('#vdetail').innerHTML=`<div class="card pad">
-  <div class="colh"><h2 style="margin:0">${esc(P[u.pid].folio)} <span class="muted small">${esc(u.uid.split('#')[1])}</span> ${cb('comparison',String(i),P[u.pid].folio+' '+u.uid.split('#')[1]+' · '+wn(c.o)+' ← '+wn(c.n))}</h2><span class="small">הכרעת הכלי: <span class="v-${c.v}">${VER[c.v]}</span> <span class="muted num">(ישיר ${c.sd} · דרך החדש ${c.sv})</span>${qm('הכלי משווה את אופנהיימר לעד ישן ולעד חדש בכמה מבחנים (ראו הטבלה). ישיר = אופנהיימר קרוב יותר לישן, ולכן כנראה לא הגיע דרך החדש. דרך החדש = קרוב יותר לחדש. הכרעה ניתנת רק אם ציון אחד לפחות 4, לפחות כפול מהשני, ויש לו ראיה חיובית (D6). זו קרבה טקסטואלית, לא הוכחה של העתקה.')}</span></div>
+  <div class="colh"><h2 style="margin:0">${esc(P[u.pid].folio)} <span class="muted small">${esc(u.uid.split('#')[1])}</span> ${cb('comparison',mk(i),P[u.pid].folio+' '+u.uid.split('#')[1]+' · '+wn(c.o)+' ← '+wn(c.n)+mlab())}</h2><span class="small">הכרעת הכלי: <span class="v-${c.v}">${VER[c.v]}</span> <span class="muted num">(ישיר ${c.sd} · דרך החדש ${c.sv})</span>${qm('הכלי משווה את אופנהיימר לעד ישן ולעד חדש בכמה מבחנים (ראו הטבלה). ישיר = אופנהיימר קרוב יותר לישן, ולכן כנראה לא הגיע דרך החדש. דרך החדש = קרוב יותר לחדש. הכרעה ניתנת רק אם ציון אחד לפחות 4, לפחות כפול מהשני, ויש לו ראיה חיובית (D6). זו קרבה טקסטואלית, לא הוכחה של העתקה.')}</span></div>
   <p class="small">ישן: <b>${esc(wO.name_he)}</b>${roleChip(c.o)} <span class="num">${yr(wO)}</span> · חדש: <b>${esc(wN.name_he)}</b>${roleChip(c.n)} <span class="num">${yr(wN)}</span> · המשכיות מול: <span class="lnk" data-cont="${esc(c.o)}" data-pid="${esc(u.pid)}">הישן</span> / <span class="lnk" data-cont="${esc(c.n)}" data-pid="${esc(u.pid)}">החדש</span>${qm('פותח בלשונית קטעים את "המשכיות מול חיבור": הקטעים הסמוכים בכתב היד מול העד הזה, כולל מתחת לסף.')}${c.oc?'':' · <span class="pill p-overlap">טווחי תיארוך חופפים</span>'}${c.nl?' · <span class="pill p-after">החדש מאוחר לאופנהיימר</span>':''}</p>
   <table class="evt"><thead><tr><th>ראיה</th><th>תומך בישיר</th><th>תומך בדרך החדש</th></tr></thead><tbody>
    <tr><td>מילים באופנהיימר שיש רק בעד אחד${qm('מילים באופנהיימר שמופיעות רק בישן (תומך בישיר) או רק בחדש (תומך בדרך החדש). כל השמטה נבדקת שוב בהשוואה עמומה מול הטקסט המלא.')}</td><td class="num v-direct">${e.opp_O_notM||0}</td><td class="num v-via">${e.opp_M_notO||0}</td></tr>
@@ -671,9 +678,10 @@ $('#qex').innerHTML=EX.map((e,i)=>`<option value="${i}">${esc(e[0])}</option>`).
 $('#qex').addEventListener('change',()=>$('#qtext').value=EX[+$('#qex').value][1]);
 let OX=null,STORE=null;
 async function initSparql(){}
-async function engine(){if(STORE)return STORE;$('#qstat').textContent='טוען את המנוע ואת ה־RDF…';
- OX=await import('./oxigraph/web.js');await OX.default({module_or_path:new URL('oxigraph/web_bg.wasm',location.href)});
- STORE=new OX.Store();for(const f of ['oppenheim128-matryoshka.ttl','oppenheim128-matches.ttl']){const t=await (await fetch(f)).text();STORE.load(t,{format:'text/turtle',base_iri:'http://example.org/oppenheim128'})}
+const STORES={};
+async function engine(){const m=MODE;if(STORES[m])return STORES[m];$('#qstat').textContent='טוען את המנוע ואת ה־RDF…';
+ if(!OX){OX=await import('./oxigraph/web.js');await OX.default({module_or_path:new URL('oxigraph/web_bg.wasm',location.href)})}
+ const STORE=new OX.Store();STORES[m]=STORE;for(const f of [m==='all'?'oppenheim128-matryoshka_all.ttl':'oppenheim128-matryoshka.ttl','oppenheim128-matches.ttl']){const t=await (await fetch(f)).text();STORE.load(t,{format:'text/turtle',base_iri:'http://example.org/oppenheim128'})}
  $('#qstat').textContent=`נטענו ${nf(STORE.size)} טריפלים.`;return STORE}
 $('#qrun').addEventListener('click',async()=>{const tb=$('#qres');tb.innerHTML='';try{const s=await engine();const q=$('#qtext').value;const full=/^\s*PREFIX/i.test(q)?q:PFX+q;
  const t0=performance.now();const res=s.query(full,{results_format:'application/sparql-results+json'});const j=typeof res==='string'?JSON.parse(res):res;
@@ -684,12 +692,36 @@ $('#qrun').addEventListener('click',async()=>{const tb=$('#qres');tb.innerHTML='
  catch(e){$('#qstat').textContent='שגיאה: '+(e&&e.message||e)}});
 
 // ---------- db ----------
+
+// ---------- data mode: above threshold (thr) / every fully aligned candidate (all) ----------
+let MODE='thr';const DS={thr:{works:D.works,edges:D.edges,units:D.units,comps:D.comps,stats:D.stats}};
+const mk=x=>MODE==='all'?'all:'+x:String(x);const mlab=()=>MODE==='all'?' · כל המיושרים':'';
+const mapSrc=()=>'../map/?embed=1'+(MODE==='all'?'&data=all':'');
+function reindex(){for(const k in W)delete W[k];D.works.forEach(w=>W[w.key]=w);for(const k in U)delete U[k];D.units.forEach(u=>U[u.uid]=u);
+ for(const k in unitsByPid)delete unitsByPid[k];D.units.forEach(u=>(unitsByPid[u.pid]=unitsByPid[u.pid]||[]).push(u));
+ for(const k in compsByUnit)delete compsByUnit[k];D.comps.forEach((c,i)=>{c.i=i;(compsByUnit[c.uid]=compsByUnit[c.uid]||[]).push(c)})}
+async function setMode(m,quiet){if(m===MODE)return;
+ if(!DS[m]){toast('טוען את כל הנתונים המיושרים…');try{DS[m]=await (await fetch('core_all.json')).json()}catch(e){toast('הטעינה נכשלה.');return}}
+ MODE=m;const d=DS[m];Object.assign(D,{works:d.works,edges:d.edges,units:d.units,comps:d.comps,stats:d.stats});reindex();
+ ROLES=Signals.roles(D.works);RUNS=Signals.runs(D,{all:m==='all'});
+ SEL=null;SELP=null;PATS=[];CI=null;CUR.work=null;
+ if(TB&&TCUR){const g=TB.gById[TB.byId[TCUR].group];if(g.mode!=='both'&&g.mode!==m)TCUR=null}
+ fillWorkOpts();renderKPIs();renderWList();renderPList();refreshBadges();
+ const f=$('#mapframe');if(f.getAttribute('src'))f.setAttribute('src',mapSrc());
+ document.querySelectorAll('.mode button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===m)));$('#modenote').classList.toggle('hidden',m!=='all');
+ if(quiet)return;
+ let p=curPath();const [t,a]=p.split('/');
+ if(t==='verify'&&/^\d+$/.test(a||''))p='verify';if((t==='overview'||t==='works')&&a&&!W[dec(a)])p=t;
+ if(t==='tables'&&a&&TB&&TB.byId[a]){const g=TB.gById[TB.byId[a].group];if(g.mode!=='both'&&g.mode!==m)p='tables'}
+ setHash(p);route()}
+document.querySelector('.mode').addEventListener('click',e=>{const b=e.target.closest('[data-mode]');if(b)setMode(b.dataset.mode)});
+
 // ---------- routing (#tab/item) ----------
 const enc=encodeURIComponent,dec=decodeURIComponent;
-function setHash(h){if(location.hash.slice(1)!==h)history.replaceState(null,'','#'+h)}
+function setHash(h){const full=h+(MODE==='all'?(h.includes('?')?'&':'?')+'data=all':'');if(location.hash.slice(1)!==full)history.replaceState(null,'','#'+full)}
 const curPath=()=>location.hash.slice(1).split('?')[0]||'map';
 // The full screen state: path + filters, graph selection, table search/sort/page and scroll position.
-function viewState(){const path=curPath(),t=path.split('/')[0],q=new URLSearchParams();
+function viewState(){const path=curPath(),t=path.split('/')[0],q=new URLSearchParams();if(MODE==='all')q.set('data','all');
  const v=id=>{const el=$(id);return el.type==='checkbox'?(el.checked?'1':'0'):el.value};
  const put=(k,val,def)=>{if(val!==undefined&&val!==null&&String(val)!==String(def))q.set(k,val)};
  if(t==='overview'){put('opp',v('#gOpp'),'1');put('ww',v('#gWW'),'1');put('min',v('#gMin'),'6');if(SEL&&SELP!==null)put('path',SELP,'')}
@@ -711,6 +743,7 @@ function applyState(t,q){const set=(id,k)=>{if(!q.has(k))return;const el=$(id);i
  if(t==='comments'){['cfs','cft','cfq'].forEach(k=>set('#'+k,k))}}
 async function route(){const raw=location.hash.slice(1),qi=raw.indexOf('?');const q=new URLSearchParams(qi>=0?raw.slice(qi+1):'');
  const parts=(qi>=0?raw.slice(0,qi):raw).split('/').map(dec);const t=TABS.includes(parts[0])?parts[0]:'map';
+ const want=q.get('data')==='all'?'all':'thr';if(want!==MODE)await setMode(want,true);
  applyState(t,q);tab(t,true);
  if(t==='overview'){if(parts[1]&&W[parts[1]]){selectWork(parts[1]);if(q.has('path')&&PATS[+q.get('path')]){SELP=+q.get('path');drawGraph();pathPanel()}}else if(SEL)selectWork(null)}
  if(t==='works'&&parts[1]&&W[parts[1]])showWork(parts[1]);
@@ -733,8 +766,8 @@ function go(g){if(!g)return;const [k,a,b]=g;
 let TB=null,TCUR=null,TQ='',TSORT=null,TPAGE=0;const TPS=100;
 async function tablesData(){if(!TB){$('#tdetail').innerHTML='<div class="card pad"><p class="muted">טוען את הטבלאות…</p></div>';TB=await (await fetch('tables.json')).json();TB.byId=Object.fromEntries(TB.tables.map(t=>[t.id,t]));TB.gById=Object.fromEntries(TB.groups.map(g=>[g.id,g]))}return TB}
 async function renderTList(){const T=await tablesData();
- $('#tlist').innerHTML=T.groups.map(g=>`<div class="tg">${esc(g.title)}</div>`+g.tables.map(id=>{const t=T.byId[id];return `<div class="it ${TCUR===id?'on':''}" data-tid="${id}"><span>${esc(t.title)}</span><span class="muted num small">${nf(t.rows.length)}${cbadge('table',id)}</span></div>`}).join('')).join('');
- if(!TCUR)openTable('src_work',null)}
+ $('#tlist').innerHTML=T.groups.filter(g=>g.mode==='both'||g.mode===MODE).map(g=>`<div class="tg">${esc(g.title)}</div>`+g.tables.map(id=>{const t=T.byId[id];return `<div class="it ${TCUR===id?'on':''}" data-tid="${id}"><span>${esc(t.title)}</span><span class="muted num small">${nf(t.rows.length)}${cbadge('table',id)}</span></div>`}).join('')).join('');
+ if(!TCUR)openTable(MODE==='all'?'cand_work_all':'src_work',null)}
 async function openTable(id,row,st){const T=await tablesData();if(!T.byId[id])return;if(TCUR!==id||st){TCUR=id;TQ='';TSORT=null;TPAGE=0;$('#tq').value=''}
  if(st){TQ=st.q||'';$('#tq').value=TQ;TSORT=st.sort?st.sort.split(',').map(Number):null;TPAGE=st.page||0}
  if(row!==null&&row!==undefined){const idx=tOrder();const pos=idx.indexOf(row);if(pos>=0)TPAGE=Math.floor(pos/TPS)}
@@ -774,7 +807,8 @@ function cbadge(kind,item){const n=ccount(kind,item);return n?` <span class="pil
 function refreshBadges(){document.querySelectorAll('.cb').forEach(b=>{const n=ccount(b.dataset.ck,b.dataset.ci);b.classList.toggle('has',n>0);b.querySelector('.cn').textContent=n||''});
  const open=CM.list.filter(c=>c.status==='פתוחה'||!c.status).length;$('#ncount').textContent=open?String(open):'';$('#ncount').classList.toggle('hidden',!open)}
 const TABNAME={map:'מבט־על',catalog:'קטלוג כתיב',model:'המודל',act:'נתוני ACT',overview:'סקירה',works:'חיבורים',passages:'קטעים',verify:'בדיקת השוואות',matches:'התאמות',tables:'טבלאות',sparql:'SPARQL',comments:'הערות'};
-function viewLabel(){const p=curPath().split('/').map(dec);const t=TABNAME[p[0]]||'סקירה';
+function viewLabel(){return viewLabel0()+mlab()}
+function viewLabel0(){const p=curPath().split('/').map(dec);const t=TABNAME[p[0]]||'סקירה';
  if(p[0]==='works'&&W[p[1]])return `${t}: ${W[p[1]].name_he}`;
  if(p[0]==='passages'&&P[p[1]])return `${t}: ${P[p[1]].folio}`+(p[2]==='c'&&C[p[1]+'|'+p[3]]?` · ${C[p[1]+'|'+p[3]].work}`:'');
  if(p[0]==='verify'&&D.comps[+p[1]]){const c=D.comps[+p[1]];return `${t}: ${P[U[c.uid].pid].folio} · ${wn(c.o)} ← ${wn(c.n)}`}
@@ -807,11 +841,12 @@ async function loadComments(){const local=pending().map((c,i)=>Object.assign({id
  try{const key=ls.get('opp128.key')||'';const r=await fetch(CURL+(CURL.includes('?')?'&':'?')+'action=list'+(key?'&key='+enc(key):''));const j=await r.json();
   if(!j.ok)throw new Error(j.error);CM.list=j.comments.concat(local);CM.err=''}catch(e){CM.err=e.message==='key'?'צריך סיסמה כדי לראות את ההערות.':'טעינת ההערות נכשלה.';CM.list=local}
  CM.loaded=true;refreshBadges();if(!$('#t-comments').classList.contains('hidden'))renderComments()}
-function cGoHash(c){if(c.kind==='row'){const [t,i]=String(c.item).split(':');return `tables/${t}/${i}`}if(c.kind==='table')return `tables/${c.item}`;
+function cGoHash(c){const tq=t=>/_all$/.test(t)?'?data=all':'';if(c.kind==='row'){const [t,i]=String(c.item).split(':');return `tables/${t}/${i}${tq(t)}`}if(c.kind==='table')return `tables/${c.item}${tq(c.item)}`;
  if(c.kind==='work')return `works/${enc(c.item)}`;if(c.kind==='passage')return `passages/${enc(c.item)}`;
  if(c.kind==='match'){const [p,r]=String(c.item).split('|');return `passages/${enc(p)}/c/${r}`}
- if(c.kind==='unit'&&U[c.item])return `passages/${enc(U[c.item].pid)}/u/${enc(c.item)}`;
- if(c.kind==='comparison')return `verify/${c.item}`;if(c.kind==='view')return c.item;return ''}
+ const al=String(c.item).startsWith('all:'),it=al?String(c.item).slice(4):String(c.item),dq=al?'?data=all':'';
+ if(c.kind==='unit')return `passages/${enc('Oppenheimer_128_'+it.split('#')[0])}/u/${enc(it)}${dq}`;
+ if(c.kind==='comparison')return `verify/${it}${dq}`;if(c.kind==='view')return c.item;return ''}
 function renderComments(){const isAdmin=!!ls.get('opp128.admin');const fs=$('#cfs').value,ft=$('#cft').value,fq=$('#cfq').value.trim();
  let L=CM.list.slice().sort((a,b)=>String(b.created).localeCompare(String(a.created)));
  if(fs==='open')L=L.filter(c=>!c.status||c.status==='פתוחה'||c.status==='בטיפול');if(fs==='done')L=L.filter(c=>c.status==='טופלה'||c.status==='לא רלוונטי');

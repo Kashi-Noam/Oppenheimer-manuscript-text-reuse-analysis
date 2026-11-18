@@ -4,7 +4,9 @@ import json, re, hashlib, datetime
 from rdflib import Graph, Namespace, Literal, URIRef, BNode
 from rdflib.namespace import RDF, RDFS, XSD, SKOS, DCTERMS, OWL, PROV, DCAT, VOID, TIME
 
-J = json.load(open(ROOT + '/r3/matryoshka.json'))
+import sys; sys.path.insert(0, ROOT + '/r3')
+from mode import SUF, MODE
+J = json.load(open(ROOT + f'/r3/matryoshka{SUF}.json'))
 OPP = Namespace('http://example.org/oppenheim128#')
 MDR = Namespace('http://example.org/midrash#')
 BF = Namespace('http://id.loc.gov/ontologies/bibframe/')
@@ -69,13 +71,13 @@ def scheme(name, label, items):
     for k, (h, e) in items.items():
         c = OPP[k]; g.add((c, RDF.type, SKOS.Concept)); g.add((c, SKOS.inScheme, S)); g.add((c, SKOS.prefLabel, he(h))); g.add((c, SKOS.prefLabel, en(e)))
 scheme('GenreScheme', 'סוג חיבור', {'genre_midrash': ('מדרש', 'Midrash'), 'genre_anthology': ('ילקוט / אוסף', 'Anthology / compilation'),
-                                     'genre_talmud': ('תלמוד', 'Talmud'), 'genre_minor_tractate': ('מסכת קטנה', 'Minor tractate'), 'genre_manuscript': ('כתב יד', 'Manuscript')})
+                                     'genre_talmud': ('תלמוד', 'Talmud'), 'genre_minor_tractate': ('מסכת קטנה', 'Minor tractate'), 'genre_manuscript': ('כתב יד', 'Manuscript'), 'genre_tanakh': ('תנ"ך', 'Hebrew Bible')})
 scheme('ChronologyScheme', 'ביחס לאופנהיימר (1372–1400)', {'chron_before': ('קודם לאופנהיימר', 'Before Oppenheim 128'), 'chron_overlap': ('חופף לתקופת אופנהיימר', 'Overlapping'), 'chron_after': ('מאוחר לאופנהיימר', 'After Oppenheim 128 (implausible as a source)')})
 scheme('ConfidenceScheme', 'ודאות התיארוך', {'conf_high': ('גבוהה', 'high'), 'conf_medium': ('בינונית', 'medium'), 'conf_low': ('נמוכה', 'low')})
 scheme('VerdictScheme', 'הכרעת השוואת מסלולים', {'verdict_via': ('דרך החדש: אופנהיימר קרוב יותר לעד החדש', 'Via newer: Oppenheim closer to the newer witness'),
                                                  'verdict_direct': ('ישיר: אופנהיימר קרוב יותר לעד הישן', 'Direct: Oppenheim closer to the older witness'),
                                                  'verdict_undetermined': ('לא מוכרע', 'Undetermined')})
-GEN = {'מדרש': 'genre_midrash', 'ילקוט / אוסף': 'genre_anthology', 'תלמוד': 'genre_talmud', 'מסכת קטנה': 'genre_minor_tractate', 'כתב יד': 'genre_manuscript'}
+GEN = {'מדרש': 'genre_midrash', 'ילקוט / אוסף': 'genre_anthology', 'תלמוד': 'genre_talmud', 'מסכת קטנה': 'genre_minor_tractate', 'כתב יד': 'genre_manuscript', 'תנ"ך': 'genre_tanakh'}
 regions = sorted({w['region'] for w in J['works'] if w['region']})
 REG = {r: f'region_{i:02d}' for i, r in enumerate(regions, 1)}
 scheme('RegionScheme', 'אזור חיבור (מידע בלבד, לא פוסל קשרים)', {v: (k, k) for k, v in REG.items()})
@@ -174,8 +176,9 @@ g.add((DS, DCTERMS.description, he(
     'לכל זוג עדים ליחידה יש צומת השוואה עם התמיכה בשני המסלולים: ישן←אופנהיימר, וישן←חדש←אופנהיימר. '
     'ההכרעה מבטאת קרבה טקסטואלית ולא הוכחת העתקה. חיבורים מאוחרים לאופנהיימר מסומנים ואינם נפסלים; האזור הוא מידע בלבד.')))
 g.add((DS, SKOS.note, he(
-    'הסתייגות: הנתונים מבוססים רק על מועמדים שדוח ACT החזיר (עד 30 לכל קטע), שקיבלו יישור מלא, ושעברו את הסף המשוכלל S ≥ 21.14 '
-    '(דיוק 98% וכיסוי 86% על 487 זוגות מתויגים). היעדר עד אינו ראיה להיעדר הטקסט. נוסח כל חיבור הוא המהדורה שבספריא; '
+    ('הסתייגות: הנתונים מבוססים רק על מועמדים שדוח ACT החזיר (עד 30 לכל קטע), שקיבלו יישור מלא, ושעברו את הסף המשוכלל S ≥ 21.14 '
+    '(דיוק 98% וכיסוי 86% על 487 זוגות מתויגים). ' if MODE == 'thr' else 'הסתייגות: גרסה לא מסוננת. הנתונים כוללים את כל המועמדים שדוח ACT החזיר (עד 30 לכל קטע) וקיבלו יישור מלא, בלי סף הרגרסיה; חלק מהעדים הם חפיפות מקריות. ') + 
+    'היעדר עד אינו ראיה להיעדר הטקסט. נוסח כל חיבור הוא המהדורה שבספריא; '
     'קיצורי "וכו\'" עשויים להיות של המדפיס. התיארוכים נאספו ממקורות זמינים (בעיקר Encyclopaedia Judaica וויקיפדיה האנגלית), לא מ"מבוא למדרשים" של רייזל.')))
 g.add((DS, PROV.wasGeneratedBy, ACT)); g.add((ACT, RDF.type, PROV.Activity)); g.add((ACT, PROV.used, SRC))
 g.add((SRC, RDF.type, PROV.Entity)); g.add((SRC, RDFS.label, Literal('tr_report_288c1011-282d-4644-9959-2f1b093a6b33.json (ACT)')))
@@ -184,8 +187,8 @@ g.add((ACT, RDFS.comment, he('מבחנים: תוספות/השמטות, סדר י
 g.add((DS, VOID.triples, Literal(len(g) + 1)))
 g.add((DS, DCTERMS.license, Literal('לא נקבע – להשלים לפני פרסום')))
 
-g.serialize(ROOT + '/r3/oppenheim128-matryoshka.ttl', format='turtle')
-g.serialize(ROOT + '/r3/oppenheim128-matryoshka.jsonld', format='json-ld', indent=1)
+g.serialize(ROOT + f'/r3/oppenheim128-matryoshka{SUF}.ttl', format='turtle')
+g.serialize(ROOT + f'/r3/oppenheim128-matryoshka{SUF}.jsonld', format='json-ld', indent=1)
 print('triples', len(g))
 
 # ---------------- SHACL ----------------

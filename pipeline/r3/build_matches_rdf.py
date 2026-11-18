@@ -32,7 +32,9 @@ for c in C['cands']:
     if 'tid' in c:
         g.add((m,OPP.labelId,Literal(c['tid']))); g.add((m,OPP.manualRelation,OPP[REL[c['rel']]])); g.add((m,OPP.labelConfidence,he(c['conf']))); g.add((m,RDFS.comment,he(c['note'])))
 BF=Namespace('http://id.loc.gov/ontologies/bibframe/'); g.bind('bf',BF)
+import os
 works={w['key'] for w in C['works']}
+if os.path.exists('gui/core_all.json'): works|={w['key'] for w in json.load(open('gui/core_all.json'))['works']}  # dated in the unfiltered run
 g.add((OPP.genre_tanakh,RDF.type,SKOS.Concept)); g.add((OPP.genre_tanakh,SKOS.prefLabel,he('תנ"ך'))); g.add((OPP.genre_tanakh,SKOS.inScheme,OPP.GenreScheme))
 done=set()
 for c in C['cands']:
@@ -40,7 +42,7 @@ for c in C['cands']:
     done.add(c['k']); n=OPP['work_'+slug(c['k'])]
     g.add((n,RDF.type,BF.Work)); g.add((n,RDFS.label,he(c['work']))); g.add((n,RDFS.label,Literal(c['k'].replace('_',' '),lang='en')))
     if c['loc'].startswith('Tanakh'): g.add((n,BF.genreForm,OPP.genre_tanakh))
-    g.add((n,SKOS.note,he('חיבור שמופיע רק בהתאמות מתחת לסף או בתנ"ך; לא תוארך בשלב הזה.')))
+    g.add((n,SKOS.note,he('חיבור שלא תוארך בשלב הזה.')))
 g.serialize('gui/oppenheim128-matches.ttl',format='turtle'); print(len(g))
 # works not in matryoshka (dk used by below-threshold matches) -> check
 miss={c['k'] for c in C['cands']}-works; print('works without node',len(miss),sorted(miss)[:20])
