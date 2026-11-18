@@ -8,6 +8,9 @@
  *                     strongly (b86bc045)?
  *  noise(D, T)        noise signals per candidate: common words, repeated words, the rarest aligned phrase
  *                     (df4708c8, d3a5f31e, b9c24a7e).
+ *  windows(D, T)      where the alignment starts inside ACT's source window (e52f039b, Q6). ACT names each window of about
+ *                     190–200 words after its first segment. When the aligned words start late in the window, the
+ *                     reference may name an earlier segment, or even the previous tale or chapter.
  */
 (function (root) {
   'use strict';
@@ -88,6 +91,18 @@
     return out;
   }
 
+  // ---------- source windows (Q6) ----------
+  function windows(D, T, opt) {
+    opt = Object.assign({ late: 1 / 3 }, opt || {});
+    const out = {};
+    D.cands.forEach(c => {
+      const t = T.c[c.id]; if (!t || !t.al.length) return;
+      const n = t.src.split(' ').length, js = t.al.map(a => a[1]), j0 = Math.min(...js), j1 = Math.max(...js);
+      out[c.id] = { n, j0, j1, late: j0 / n > opt.late };
+    });
+    return out;
+  }
+
   const HELP = {
     rank: 'דירוג המועמד ברשימה של ACT לקטע הזה (0 = הראשון).',
     S: 'הציון המשוכלל: S = 1.975·ln(1+N) + 5.676·C + 3.248·Cp + 1.085·ln(1+score) + 6.459·align − 2.29·[תנ״ך]. הסף: S ≥ 21.14 (D5, D7).',
@@ -102,9 +117,11 @@
     run: 'רצף: בכמה מארבעת הקטעים הסמוכים (±2) יש לאותו חיבור התאמה מעל הסף. "↑ מתחת לסף, אבל..." = מתחת לסף, והחיבור מופיע מעל הסף בקטע הסמוך (הערה 6441b0ce).',
     inrun: 'בתוך רצף של חיבור אחר: החיבור הזה מופיע כאן בתוך רצף ארוך של חיבור אחר (מעל הסף ב־3 לפחות מ־5 הקטעים), וההתאמה של החיבור האחר כאן חזקה לפחות כמעט כמוה. לפי הערה b86bc045, זו כנראה מקבילה או עד נוסח משני, ולא הטקסט שהובא.',
     noise: 'חשד לרעש: היישור בנוי ממילים נפוצות ברצפים של עד 3 מילים, או ממילים שחוזרות (למשל שם חכם). רק סימון, לא שינוי של הציון (הערות df4708c8, d3a5f31e).',
+    ref: 'מראה המקום ש־ACT נותן הוא של המקטע שבו מתחיל חלון המקור (כ־194 מילים), ולא בהכרח של המקום שבו נמצא הטקסט המיושר. החלון עשוי לגלוש למקטעים הבאים, ואפילו לסיפור או לפרק הבא (Q6, הערה e52f039b).',
+    win: '⚠ חלון: היישור מתחיל אחרי השליש הראשון של חלון המקור. ייתכן שהטקסט המיושר נמצא במקטע מאוחר ממראה המקום, ואפילו בסיפור או בפרק הבא (Q6). לבדיקה: פתחו את המקור ובדקו איפה מתחילות המילים המיושרות.',
     rare: 'הרצף הנדיר ביותר: רצף המילים המיושרות הרציף בקטע עם סכום ה־IDF הגבוה ביותר (IDF מחושב על 505 הקטעים של אופנהיימר) (הערה b9c24a7e).'
   };
 
-  const api = { roles, role, ROLE_RULE, runs, noise, HELP, _norm: norm };
+  const api = { roles, role, ROLE_RULE, runs, noise, windows, HELP, _norm: norm };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.Signals = api;
 })(typeof window !== 'undefined' ? window : this);

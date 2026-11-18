@@ -101,5 +101,11 @@ test('runs: inside the Pesikta run, a Midrash HaGadol match is marked as inside 
 test('roles: Yalkut Shimoni = late yalkut, Otzar Midrashim = modern yalkut, PdRK = early (7a72b469)', () => {
   assert.strictEqual(RO.Yalkut_Shimoni_on_Torah.key, 'lateyalkut'); assert.strictEqual(RO.Otzar_Midrashim.key, 'modern'); assert.strictEqual(RO.Pesikta_DRav_Kahanna.key, 'early');
 });
+test('windows (Q6): fol 173r 1 c1 is flagged; its alignment starts at word 70 of 194, in the next tale (e52f039b)', () => {
+  const WN = G.windows(D, T), w = WN['Oppenheimer_128_fol_173r_1|1'];
+  assert(w.late && w.j0 === 69 && w.n === 194);
+  const late = D.cands.filter(c => WN[c.id] && WN[c.id].late);
+  console.log(`     flagged ${late.length} of ${Object.keys(WN).length}; ${late.filter(c => c.above).length} above the threshold`);
+});
 console.log(fails ? `\n${fails} failed` : '\nall passed');
 process.exit(fails ? 1 : 0);

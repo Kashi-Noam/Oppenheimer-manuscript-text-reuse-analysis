@@ -75,6 +75,7 @@ nav a.navlink{font-size:14px;color:var(--ink-2);padding:8px 12px;text-decoration
 .cont td{vertical-align:top}.cont .cx{max-height:150px;overflow:auto;font-size:14px;line-height:1.9;min-width:220px}
 .cont tr.here td{background:var(--accent-soft)}.cont .gap{color:var(--ink-3);font-size:12px}
 .ktiv{font-size:13px;margin:4px 0 0}
+.wflag{font-size:11px;color:var(--bad);border:1px solid var(--bad);border-radius:4px;padding:0 4px;margin-inline-start:4px;cursor:help;white-space:nowrap}
 .lnk{color:var(--accent);cursor:pointer}
 .txt{font-size:16px;line-height:2.05;text-align:justify}
 .txt span{border-radius:3px}
@@ -164,7 +165,7 @@ tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px
  <p class="muted small">כל 2,650 המועמדים שקיבלו יישור מלא ב־ACT, עם הציון המשוכלל, ההסתברות, ותיוג ידני אם קיים. לחיצה על שורה פותחת את היישור בלשונית "קטעים".</p>
  <div class="filters"><select id="mt"><option value="">מעל ומתחת לסף</option><option value="up">מעל הסף</option><option value="down">מתחת לסף</option></select>
   <select id="ml"><option value="">מתויגים ולא מתויגים</option><option value="lab">רק מתויגים</option><option value="miss">זהים מתחת לסף</option><option value="fp">מעל הסף ולא זהים</option></select>
-  <select id="mrel"><option value="">כל הקשרים</option></select><select id="msig" title="אותות לקריאה, לא שינוי של הציון"><option value="">כל האותות</option><option value="rescue">מתחת לסף, והחיבור בקטע סמוך</option><option value="inrun">בתוך רצף של חיבור אחר</option><option value="noise">חשד לרעש</option><option value="clean">בלי חשד לרעש</option></select><input type="search" id="mq" placeholder="חיבור או דף"><span class="muted small" id="mcount"></span></div>
+  <select id="mrel"><option value="">כל הקשרים</option></select><select id="msig" title="אותות לקריאה, לא שינוי של הציון"><option value="">כל האותות</option><option value="rescue">מתחת לסף, והחיבור בקטע סמוך</option><option value="inrun">בתוך רצף של חיבור אחר</option><option value="noise">חשד לרעש</option><option value="clean">בלי חשד לרעש</option><option value="window">מראה מקום של תחילת החלון (⚠ חלון)</option></select><input type="search" id="mq" placeholder="חיבור או דף"><span class="muted small" id="mcount"></span></div>
  <div class="card pad tscroll"><table id="mtable"></table></div><div class="filters" style="margin-top:8px" id="mpage"></div>
 </section>
 
@@ -214,7 +215,11 @@ D.comps.forEach((c,i)=>c.i=i);
 const compsByUnit={};D.comps.forEach(c=>(compsByUnit[c.uid]=compsByUnit[c.uid]||[]).push(c));
 const row=(a,b)=>`<div class="row"><span>${a}</span><span>${b}</span></div>`;
 const H=Signals.HELP,hl=(t,h)=>`<span class="hlp" title="${esc(h)}">${t}</span>`;
-const RUNS=Signals.runs(D);let NOISE=null;
+const RUNS=Signals.runs(D);let NOISE=null,WIN=null;
+function needSignals(T){if(!NOISE)NOISE=Signals.noise(D,T);if(!WIN)WIN=Signals.windows(D,T)}
+// Q6: ACT's reference names the start of its source window; flag matches whose alignment starts late in it
+const wflag=id=>{const w=WIN&&WIN[id];return w&&w.late?` <span class="wflag" title="${esc(H.win+` (היישור מתחיל במילה ${w.j0+1} מתוך ${w.n})`)}">⚠ חלון</span>`:''};
+const wflagAny=ids=>ids.some(id=>WIN&&WIN[id]&&WIN[id].late)?` <span class="wflag" title="${esc(H.win)}">⚠ חלון</span>`:'';
 const CONT={w:'',b:3,a:3},PSYN={uid:''};
 // Ktiv catalog (Moshe's draft, ms_01 = this manuscript): which catalogue unit covers a folio page
 let KTIV=null;fetch('ktiv_catalog.json').then(r=>r.ok?r.json():null).then(j=>{KTIV=j}).catch(()=>{});
@@ -328,7 +333,7 @@ function renderPList(){const q=$('#pq').value.trim(),f=$('#pf').value;
 ['#pq','#pf'].forEach(s=>$(s).addEventListener('input',renderPList));
 $('#plist').addEventListener('click',e=>{const it=e.target.closest('.it');if(it)showPassage(it.dataset.p,{})});
 function tokSpan(tokens,lo,hi,cls,tags){let h='';if(lo>0)h+='<span class="ell">… </span>';for(let i=lo;i<hi;i++){const c=cls(i);h+=(tags&&tags[i]?tags[i]:'')+(c?`<span class="${c}">${esc(tokens[i])}</span>`:esc(tokens[i]))+' '}if(hi<tokens.length)h+='<span class="ell">…</span>';return h}
-async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await texts();if(!NOISE)NOISE=Signals.noise(D,T);const p=P[pid];const toks=(T.p[pid]||'').split(' ');
+async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await texts();needSignals(T);const p=P[pid];const toks=(T.p[pid]||'').split(' ');
  const us=unitsByPid[pid]||[],cs=(candsByPid[pid]||[]).slice().sort((a,b)=>b.S-a.S);
  const ucls=new Array(toks.length).fill(''),tags={};us.forEach((u,k)=>{for(let i=u.lo;i<=u.hi;i++)if(!ucls[i])ucls[i]='u'+(k%5);tags[u.lo]=(tags[u.lo]||'')+`<span class="utag">${esc(u.uid.split('#')[1])}</span>`});
  let al=null,cand=opt.cand?C[opt.cand]:null;setHash(`passages/${enc(pid)}`+(cand?`/c/${cand.rank}`:opt.unit?`/u/${enc(opt.unit)}`:''));if(cand){al={};T.c[cand.id].al.forEach(([i,j,x])=>al[i]=[j,x])}
@@ -341,11 +346,11 @@ async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await text
   <div class="txt">${toks.length>1?tokSpan(toks,0,toks.length,cls,tags):'<span class="muted">אין טקסט לקטע הזה בדוח.</span>'}</div>
   <div class="legend">${us.map((u,k)=>`<span><i class="u${k%5}"></i>${esc(u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(', ')}</span>`).join('')}${cand?'<span><i style="border-bottom:2px solid var(--accent);height:8px"></i>מיושר למועמד הנבחר (מנוקד: התאמה לא מדויקת)</span>':''}</div></div>`;
  if(cand){const src=T.c[cand.id].src.split(' ');const sj={};T.c[cand.id].al.forEach(([i,j,x])=>sj[j]=x);const js=Object.keys(sj).map(Number);const s0=Math.max(0,Math.min(...js)-25),s1=Math.min(src.length,Math.max(...js)+26);
-  html+=`<div class="card pad" style="margin-top:10px"><div class="colh"><h3>${esc(cand.work)} <span class="muted small" dir="ltr">${esc(cand.ref)}</span> ${cb('match',cand.id,p.folio+' · '+cand.work+' '+cand.ref)}</h3><span class="pill ${cand.above?'p-up':'p-down'}" title="${esc(H.S+' '+H.p)}">S ${cand.S} · p ${cand.p}</span></div>
+  html+=`<div class="card pad" style="margin-top:10px"><div class="colh"><h3>${esc(cand.work)} <span class="muted small hlp" dir="ltr" title="${esc(H.ref)}">${esc(cand.ref)}</span>${wflag(cand.id)} ${cb('match',cand.id,p.folio+' · '+cand.work+' '+cand.ref)}</h3><span class="pill ${cand.above?'p-up':'p-down'}" title="${esc(H.S+' '+H.p)}">S ${cand.S} · p ${cand.p}</span></div>
    <div class="txt">${tokSpan(src,s0,s1,j=>sj[j]!==undefined?('a-x'+(sj[j]?'':' f')):'')}</div>
    <div class="small muted">${row(hl('ציון ACT',H.score),cand.score)}${row(hl('norm / align',H.norm+' '+H.align),`${cand.norm} / ${cand.align}`)}${row(hl('N / C / Cp',H.N+' '+H.C+' '+H.Cp),`${cand.N} / ${cand.C} / ${cand.Cp}`)}${sigLine(cand)}${cand.tid?row('תיוג ידני',`${esc(cand.tid)} · <b>${esc(cand.rel)}</b> (${esc(cand.conf)}) · ${esc(cand.note)}`):''}<span dir="ltr" class="small">${esc(cand.loc)}</span></div></div>`}
- html+=`<div class="card pad tscroll" style="margin-top:10px"><h3>המועמדים ביישור מלא</h3><table><thead><tr><th>${hl('rank',H.rank)}</th><th>חיבור</th><th>מראה מקום</th><th>${hl('S',H.S)}</th><th>${hl('p',H.p)}</th><th>${hl('תיוג ידני',H.tag)}</th><th>${hl('אותות',H.run+' '+H.inrun+' '+H.noise)}</th></tr></thead><tbody>
-  ${cs.map(c=>`<tr class="click" data-cand="${esc(c.id)}" ${cand&&cand.id===c.id?'style="background:var(--accent-soft)"':''}><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small">${sigShort(c)}</td></tr>`).join('')}</tbody></table></div>`;
+ html+=`<div class="card pad tscroll" style="margin-top:10px"><h3>המועמדים ביישור מלא</h3><table><thead><tr><th>${hl('rank',H.rank)}</th><th>חיבור</th><th>${hl('מראה מקום',H.ref)}</th><th>${hl('S',H.S)}</th><th>${hl('p',H.p)}</th><th>${hl('תיוג ידני',H.tag)}</th><th>${hl('אותות',H.run+' '+H.inrun+' '+H.noise)}</th></tr></thead><tbody>
+  ${cs.map(c=>`<tr class="click" data-cand="${esc(c.id)}" ${cand&&cand.id===c.id?'style="background:var(--accent-soft)"':''}><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}${wflag(c.id)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small">${sigShort(c)}</td></tr>`).join('')}</tbody></table></div>`;
  if(us.length)html+=`<div class="card pad" style="margin-top:10px"><h3>יחידות הטקסט והשוואות</h3>${us.map(u=>`<p class="small"><b>${esc(u.uid.split('#')[1])}</b>${cb('unit',u.uid,p.folio+' · יחידה '+u.uid.split('#')[1])}: ${u.wit.map(x=>esc(wn(x.k))).join(' · ')} ${u.closest.length?`· הקרוב ביותר: <b>${u.closest.map(x=>esc(wn(x))).join(', ')}</b>`:''}
   ${(compsByUnit[u.uid]||[]).map(c=>`<br><span class="lnk" data-comp="${c.i}">${esc(wn(c.o))} ← ${esc(wn(c.n))}</span>: <span class="v-${c.v}">${VER[c.v]}</span>`).join('')}</p>`).join('')}</div>`;
  if(us.length)html+=`<div class="card pad" style="margin-top:10px" id="psyncard"><h3>סינופסיס בטורים</h3><p class="muted small">כל העדים החזקים של יחידת טקסט, זה לצד זה ומחולקים לשורות (לפי התיארוך).</p>
@@ -354,9 +359,9 @@ async function showPassage(pid,opt){CUR.pid=pid;renderPList();const T=await text
  html+=contCard(pid,T,cand,cs);
  $('#pdetail').innerHTML=html;
  if(opt.unit){const el=document.querySelector('.utag');el&&el.scrollIntoView({block:'center'})}}
-function sigLine(c){const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id];
- return `<div class="sig">${hl(`רצף: <b>${R.nb||0}/4</b> קטעים סמוכים עם החיבור מעל הסף`,H.run)}${R.rescue?`<span>↑ מתחת לסף, והחיבור מעל הסף בקטע סמוך</span>`:''}${R.inRunOf?hl(`בתוך רצף של <b>${esc(wn(R.inRunOf))}</b>: כנראה מקבילה`,H.inrun):''}${N?hl(`${N.flag?'⚠ <b>חשד לרעש</b>':'לא סומן כרעש'} · מילים נפוצות ${Math.round(N.common*100)}% · מגוון ${N.types}`,H.noise)+hl(`הרצף הנדיר: «${esc(N.rare.text)}» (${N.rare.len})`,H.rare):''}</div>`}
-function sigShort(c){const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id];return [R.nb?`רצף ${R.nb}/4`:'',R.rescue?'↑':'',R.inRunOf?'בתוך '+esc(wn(R.inRunOf)):'',N&&N.flag?'⚠ רעש':''].filter(Boolean).join(' · ')}
+function sigLine(c){const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id],Wn=WIN&&WIN[c.id];
+ return `<div class="sig">${Wn?hl(`חלון המקור: היישור במילים ${Wn.j0+1}–${Wn.j1+1} מתוך ${Wn.n}${Wn.late?' · <b>⚠ מתחיל מאוחר: מראה המקום אולי של מקטע קודם</b>':''}`,H.ref):''}${hl(`רצף: <b>${R.nb||0}/4</b> קטעים סמוכים עם החיבור מעל הסף`,H.run)}${R.rescue?`<span>↑ מתחת לסף, והחיבור מעל הסף בקטע סמוך</span>`:''}${R.inRunOf?hl(`בתוך רצף של <b>${esc(wn(R.inRunOf))}</b>: כנראה מקבילה`,H.inrun):''}${N?hl(`${N.flag?'⚠ <b>חשד לרעש</b>':'לא סומן כרעש'} · מילים נפוצות ${Math.round(N.common*100)}% · מגוון ${N.types}`,H.noise)+hl(`הרצף הנדיר: «${esc(N.rare.text)}» (${N.rare.len})`,H.rare):''}</div>`}
+function sigShort(c){const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id];return [WIN&&WIN[c.id]&&WIN[c.id].late?'⚠ חלון':'',R.nb?`רצף ${R.nb}/4`:'',R.rescue?'↑':'',R.inRunOf?'בתוך '+esc(wn(R.inRunOf)):'',N&&N.flag?'⚠ רעש':''].filter(Boolean).join(' · ')}
 // continuity against one work, passage by passage (Moshe 5be2a4dc, bad70b2e; summary §4)
 function contCard(pid,T,cand,cs){const i=PIDX[pid];let w=CONT.w||(cand?cand.k:(cs.find(c=>c.above)||cs[0]||{}).k)||'';if(!w)return '';
  const lo=Math.max(0,i-CONT.b),hi=Math.min(D.passages.length-1,i+CONT.a);
@@ -367,7 +372,7 @@ function contCard(pid,T,cand,cs){const i=PIDX[pid];let w=CONT.w||(cand?cand.k:(c
   const oal={},sal={};if(b&&T.c[b.id])T.c[b.id].al.forEach(([a,j])=>{oal[a]=1;sal[j]=1});
   const src=b&&T.c[b.id]?T.c[b.id].src.split(' '):null;
   rows+=`<tr class="${k===i?'here':''}"><td><span class="lnk" data-ppid="${esc(q.pid)}">${esc(q.folio)}</span></td>
-   <td class="small">${m.length?m.map(c=>`<div><span class="pill ${c.above?'p-up':'p-down'} num">S ${c.S}</span> <span class="lnk" data-cand="${esc(c.id)}" dir="ltr">${esc(c.ref)}</span></div>`).join(''):'<span class="gap">אין מועמד מהחיבור הזה בין המועמדים של ACT</span>'}</td>
+   <td class="small">${m.length?m.map(c=>`<div><span class="pill ${c.above?'p-up':'p-down'} num">S ${c.S}</span> <span class="lnk" data-cand="${esc(c.id)}" dir="ltr">${esc(c.ref)}</span>${wflag(c.id)}</div>`).join(''):'<span class="gap">אין מועמד מהחיבור הזה בין המועמדים של ACT</span>'}</td>
    <td><div class="cx txt">${ot.length>1?tokSpan(ot,0,ot.length,a=>oal[a]?'a-x':''):''}</div></td>
    <td><div class="cx txt">${src?tokSpan(src,0,src.length,j=>sal[j]?'a-x':''):`<span class="gap">פער ברצף. לפני: ${near(k,-1)||'—'} · אחרי: ${near(k,1)||'—'}</span>`}</div></td></tr>`}
  return `<div class="card pad tscroll" style="margin-top:10px" id="contcard"><div class="colh"><h3>המשכיות מול חיבור</h3><select id="contw">${[...keys].sort((a,b)=>wn(a).localeCompare(wn(b),'he')).map(k=>`<option value="${esc(k)}" ${k===w?'selected':''}>${esc(wn(k))}</option>`).join('')}</select></div>
@@ -426,7 +431,7 @@ document.addEventListener('click',e=>{if(e.target.closest('#vsyn')&&CI!==null){S
  const dl=e.target.closest('[data-syndl]');if(dl)synDownload(dl.dataset.syndl);
  const ct=e.target.closest('[data-cont]');if(ct){CONT.w=ct.dataset.cont;CONT.b=3;CONT.a=3;tab('passages',true);showPassage(ct.dataset.pid,{});setTimeout(()=>{const el=$('#contcard');el&&el.scrollIntoView({block:'start'})},60)}
  const m=e.target.closest('a.syn-jump');if(m){e.preventDefault();const r=document.getElementById('syn-r'+m.dataset.r);if(r){r.scrollIntoView({block:'center',behavior:'smooth'});r.classList.add('syn-flash');setTimeout(()=>r.classList.remove('syn-flash'),1500)}}});
-async function showComp(i){if(OPPX.i!==i)OPPX={i,prev:0,next:0};CI=i;setHash('verify/'+i);const c=D.comps[i],u=U[c.uid],T=await texts();renderVList();
+async function showComp(i){if(OPPX.i!==i)OPPX={i,prev:0,next:0};CI=i;setHash('verify/'+i);const c=D.comps[i],u=U[c.uid],T=await texts();needSignals(T);renderVList();
  const toks=(T.p[u.pid]||'').split(' ');const O=merged(T,u,c.o),N=merged(T,u,c.n);
  const eo=new Set((c.b.opp_O_notM||[]).flat()),en=new Set((c.b.opp_M_notO||[]).flat()),om=new Set((c.b.shared_omission||[]).flat());
  const lo=Math.max(0,u.lo-12),hi=Math.min(toks.length,u.hi+13);
@@ -448,8 +453,8 @@ async function showComp(i){if(OPPX.i!==i)OPPX={i,prev:0,next:0};CI=i;setHash('ve
   <div class="verd syn-bar"><button class="b" id="vsyn" aria-pressed="${SYN}" title="חלוקה אוטומטית לשורות של רצפים מקבילים; הנוסח אינו משתנה">${SYN?'↩ תצוגה רציפה':'▤ תצוגה סינופטית בשורות'}</button>${SYN&&u.wit.length>2?`<button class="b" id="vsyna" aria-pressed="${SYNALL}" title="סינופסיס של כל העדים החזקים של היחידה, לפי התיארוך">${SYNALL?'רק הישן והחדש':`כל עדי היחידה (${u.wit.length})`}</button>`:''}${SYN?synDlButtons:''}</div>
   ${SYN?synBlock(i,T):`<div class="cols">
    <div><div class="colh"><h3>אופנהיימר 128</h3><span class="muted small">HTR · <button class="b" data-pg="-1" title="הוספת הקטע הקודם בכתב היד">+ קודם</button> <button class="b" data-pg="1" title="הוספת הקטע הבא בכתב היד">+ הבא</button></span></div><div class="txt">${OPPX.prev?pagesAround(T,u.pid,-1,OPPX.prev)+' ':''}${tokSpan(toks,0,toks.length,oppCls)}${OPPX.next?' '+pagesAround(T,u.pid,1,OPPX.next):''}</div></div>
-   <div><div class="colh"><h3 class="v-direct">${esc(wO.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(O))}</span></div><div class="txt">${tokSpan(O.src,0,O.src.length,j=>[oj.has(j)?'a-o':'',om.has(j)?'om':''].filter(Boolean).join(' '))}</div></div>
-   <div><div class="colh"><h3 class="v-via">${esc(wN.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(N))}</span></div><div class="txt">${tokSpan(N.src,0,N.src.length,j=>nj.has(j)?'a-n':'')}</div></div>
+   <div><div class="colh"><h3 class="v-direct">${esc(wO.name_he)}</h3><span class="muted small hlp" dir="ltr" title="${esc(H.ref)}">${esc(ref(O))}</span>${wflagAny(O.ids)}</div><div class="txt">${tokSpan(O.src,0,O.src.length,j=>[oj.has(j)?'a-o':'',om.has(j)?'om':''].filter(Boolean).join(' '))}</div></div>
+   <div><div class="colh"><h3 class="v-via">${esc(wN.name_he)}</h3><span class="muted small hlp" dir="ltr" title="${esc(H.ref)}">${esc(ref(N))}</span>${wflagAny(N.ids)}</div><div class="txt">${tokSpan(N.src,0,N.src.length,j=>nj.has(j)?'a-n':'')}</div></div>
   </div>`}
   <div class="card pad" style="margin-top:12px;background:var(--surface-2)">
    <h3>ההכרעה שלי</h3>
@@ -481,12 +486,12 @@ const RELS=['אותו טקסט','אותו טקסט · חלקי','נוסח מקב
 $('#mrel').insertAdjacentHTML('beforeend',RELS.map(r=>`<option>${r}</option>`).join(''));
 let MP=0;const MPS=100;
 function renderMatches(){const t=$('#mt').value,l=$('#ml').value,rl=$('#mrel').value,q=$('#mq').value.trim(),sg=$('#msig').value;const A=c=>c.tier==='A';
- if(!NOISE){texts().then(T=>{if(!NOISE){NOISE=Signals.noise(D,T);renderMatches()}});}
- const sig=c=>{const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id];return !sg||(sg==='rescue'&&R.rescue)||(sg==='inrun'&&R.inRunOf)||(sg==='noise'&&N&&N.flag)||(sg==='clean'&&N&&!N.flag)};
+ if(!NOISE||!WIN){texts().then(T=>{if(!NOISE||!WIN){needSignals(T);renderMatches()}});}
+ const sig=c=>{const R=RUNS[c.id]||{},N=NOISE&&NOISE[c.id];return !sg||(sg==='rescue'&&R.rescue)||(sg==='inrun'&&R.inRunOf)||(sg==='noise'&&N&&N.flag)||(sg==='clean'&&N&&!N.flag)||(sg==='window'&&WIN&&WIN[c.id]&&WIN[c.id].late)};
  const rows=D.cands.filter(c=>(!t||(t==='up'?c.above:!c.above))&&(!l||(l==='lab'&&c.tid)||(l==='miss'&&c.tid&&A(c)&&!c.above)||(l==='fp'&&c.tid&&!A(c)&&c.above))&&(!rl||c.rel===rl)&&sig(c)&&(!q||c.work.includes(q)||P[c.pid].folio.includes(q)||c.k.toLowerCase().includes(q.toLowerCase())));
  const pages=Math.ceil(rows.length/MPS);MP=Math.min(MP,Math.max(0,pages-1));$('#mcount').textContent=`${nf(rows.length)} התאמות`;
- $('#mtable').innerHTML=`<thead><tr><th></th><th>קטע</th><th>${hl('rank',H.rank)}</th><th>חיבור</th><th>מראה מקום</th><th>${hl('S',H.S)}</th><th>${hl('p',H.p)}</th><th>${hl('N',H.N)}</th><th>${hl('C',H.C)}</th><th>${hl('score',H.score)}</th><th>${hl('תיוג',H.tag)}</th><th>${hl('אותות',H.run+' '+H.inrun+' '+H.noise)}</th><th>הערה</th></tr></thead><tbody>`+
-  rows.slice(MP*MPS,(MP+1)*MPS).map(c=>`<tr class="click" data-cand="${esc(c.id)}"><td>${cb('match',c.id,P[c.pid].folio+' · '+c.work+' '+c.ref)}</td><td>${esc(P[c.pid].folio)}</td><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="num">${c.N}</td><td class="num">${c.C}</td><td class="num">${c.score}</td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small">${sigShort(c)}</td><td class="small muted">${c.tid?esc(c.note).slice(0,90):''}</td></tr>`).join('')+'</tbody>';
+ $('#mtable').innerHTML=`<thead><tr><th></th><th>קטע</th><th>${hl('rank',H.rank)}</th><th>חיבור</th><th>${hl('מראה מקום',H.ref)}</th><th>${hl('S',H.S)}</th><th>${hl('p',H.p)}</th><th>${hl('N',H.N)}</th><th>${hl('C',H.C)}</th><th>${hl('score',H.score)}</th><th>${hl('תיוג',H.tag)}</th><th>${hl('אותות',H.run+' '+H.inrun+' '+H.noise)}</th><th>הערה</th></tr></thead><tbody>`+
+  rows.slice(MP*MPS,(MP+1)*MPS).map(c=>`<tr class="click" data-cand="${esc(c.id)}"><td>${cb('match',c.id,P[c.pid].folio+' · '+c.work+' '+c.ref)}</td><td>${esc(P[c.pid].folio)}</td><td class="num">${c.rank}</td><td>${esc(c.work)}</td><td dir="ltr" class="small">${esc(c.ref)}${wflag(c.id)}</td><td class="num">${c.S}</td><td><span class="pill ${c.above?'p-up':'p-down'} num">${c.p}</span></td><td class="num">${c.N}</td><td class="num">${c.C}</td><td class="num">${c.score}</td><td class="small">${c.tid?esc(c.rel):''}</td><td class="small">${sigShort(c)}</td><td class="small muted">${c.tid?esc(c.note).slice(0,90):''}</td></tr>`).join('')+'</tbody>';
  $('#mpage').innerHTML=pages>1?`<button class="b" id="mprev" ${MP?'':'disabled'}>→ הקודם</button><span class="small num">${MP+1} / ${pages}</span><button class="b" id="mnext" ${MP<pages-1?'':'disabled'}>הבא ←</button>`:''}
 ['#mt','#ml','#mrel','#mq','#msig'].forEach(s=>$(s).addEventListener('input',()=>{MP=0;renderMatches()}));
 $('#mpage').addEventListener('click',e=>{if(e.target.id==='mprev'){MP--;renderMatches()}if(e.target.id==='mnext'){MP++;renderMatches()}});
