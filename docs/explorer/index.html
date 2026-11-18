@@ -103,6 +103,7 @@ tr.hl td{background:var(--accent-soft)}.cm{margin-bottom:10px}.cm.hl{outline:2px
 #ncount{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;background:var(--bad);color:#fff;font-size:11px;line-height:18px;text-align:center;margin-inline-start:4px}
 </style>
 <script src="config.js"></script>
+<script src="synoptic.js"></script>
 </head>
 <body>
 <div class="top"><div class="topin"><div class="brand">סייר אופנהיימר 128</div>
@@ -340,6 +341,24 @@ function renderVList(){const v=$('#vv').value,o=$('#vo').value,n=$('#vn').value,
 $('#vlist').addEventListener('click',e=>{const it=e.target.closest('.it');if(it)showComp(+it.dataset.c)});
 function merged(T,unit,k){const w=unit.wit.find(x=>x.k===k);let src=[],am={},off=0;
  w.ids.forEach(id=>{const t=T.c[id];t.al.forEach(([i,j,x])=>{if(am[i]===undefined||(x&&!am[i][1]))am[i]=[j+off,x]});const s=t.src.split(' ');src=src.concat(s);off+=s.length});return {src,am,ids:w.ids}}
+// ---------- synoptic rows (synoptic.js) ----------
+let SYN=false,SYNRES=null;
+document.head.insertAdjacentHTML('beforeend',`<style>${Synoptic.TABLE_CSS}
+.syn-bar{margin:12px 0 8px}.syn-info{margin:6px 0}.syn-bad{color:var(--bad)}</style>`);
+function synBlock(i,T){const res=Synoptic.build(Synoptic.fromComparison({D,T,C,W,U},i));SYNRES={i,res};const rep=Synoptic.check(res);
+ return `<p class="muted small syn-info">חלוקה אוטומטית לשורות מתוך נתוני היישור (ניסיונית). הנוסח לא שונה. תא ריק: אין רצף מקביל בחלון המוצג, ולא בהכרח היעדר מן המסורת. ↕: שורות דומות בלי עד משותף, ייתכן שינוי סדר; לחיצה קופצת לשורה. הסימונים בצבע זהים לתצוגה הרציפה.</p>
+ <p class="small syn-info ${rep.ok?'muted':'syn-bad'}">${esc(Synoptic.checkText(rep))}</p>${Synoptic.tableHTML(res,{esc})}`}
+function synDownload(kind){if(!SYNRES)return;const c=D.comps[SYNRES.i],u=U[c.uid],res=SYNRES.res;
+ const name=`oppenheim128_synoptic_${u.uid.replace(/[^\w]+/g,'_')}_${c.o}_${c.n}`;
+ const title=`אופנהיימר 128: השוואה סינופטית, ${P[u.pid].folio} ${u.uid.split('#')[1]}`;
+ const sub=`${wn(c.o)} (ישן) ← ${wn(c.n)} (חדש) · הכרעת הכלי: ${VER[c.v]}`;
+ const foot=`נוצר מסייר אופנהיימר 128, ${location.href.split('#')[0]}#verify/${SYNRES.i} · ${new Date().toLocaleString('he-IL')}`;
+ const body=kind==='html'?Synoptic.standaloneHTML(res,{title,subtitle:sub,footer:foot,legend:($('#vdetail .legend')||{}).innerHTML||''}):Synoptic.toTSV(res);
+ const blob=new Blob([body],{type:kind==='html'?'text/html;charset=utf-8':'text/tab-separated-values;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name+(kind==='html'?'.html':'.tsv');document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+document.addEventListener('click',e=>{if(e.target.closest('#vsyn')&&CI!==null){SYN=!SYN;showComp(CI)}
+ if(e.target.closest('#vsynh'))synDownload('html');if(e.target.closest('#vsynt'))synDownload('tsv');
+ const m=e.target.closest('a.syn-jump');if(m){e.preventDefault();const r=document.getElementById('syn-r'+m.dataset.r);if(r){r.scrollIntoView({block:'center',behavior:'smooth'});r.classList.add('syn-flash');setTimeout(()=>r.classList.remove('syn-flash'),1500)}}});
 async function showComp(i){CI=i;setHash('verify/'+i);const c=D.comps[i],u=U[c.uid],T=await texts();renderVList();
  const toks=(T.p[u.pid]||'').split(' ');const O=merged(T,u,c.o),N=merged(T,u,c.n);
  const eo=new Set((c.b.opp_O_notM||[]).flat()),en=new Set((c.b.opp_M_notO||[]).flat()),om=new Set((c.b.shared_omission||[]).flat());
@@ -359,11 +378,12 @@ async function showComp(i){CI=i;setHash('verify/'+i);const c=D.comps[i],u=U[c.ui
    <tr><td>סדר יחידות סמוכות</td><td class="num">${e.order_O||0}</td><td class="num">${e.order_M||0}</td></tr>
    <tr><td>גבולות</td><td class="num">${e.boundary_O||0}</td><td class="num">${e.boundary_M||0}</td></tr></tbody></table>
   <div class="legend"><span><i style="border-bottom:2px solid var(--dir);height:8px"></i>מיושר לישן</span><span><i style="border-bottom:2px solid var(--via);height:8px"></i>מיושר לחדש</span><span><i style="background:var(--dir-soft)"></i>באופנהיימר ובישן, חסר בחדש</span><span><i style="background:var(--via-soft)"></i>באופנהיימר ובחדש, חסר בישן</span><span><i style="background:var(--om)"></i>בישן בלבד (השמטה משותפת)</span></div>
-  <div class="cols">
+  <div class="verd syn-bar"><button class="b" id="vsyn" aria-pressed="${SYN}" title="חלוקה אוטומטית לשורות של רצפים מקבילים; הנוסח אינו משתנה">${SYN?'↩ תצוגה רציפה':'▤ תצוגה סינופטית בשורות'}</button>${SYN?'<button class="b" id="vsynh">הורדת HTML</button><button class="b" id="vsynt">הורדת TSV (Excel)</button>':''}</div>
+  ${SYN?synBlock(i,T):`<div class="cols">
    <div><div class="colh"><h3>אופנהיימר 128</h3><span class="muted small">HTR</span></div><div class="txt">${tokSpan(toks,lo,hi,oppCls)}</div></div>
    <div><div class="colh"><h3 class="v-direct">${esc(wO.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(O))}</span></div><div class="txt">${tokSpan(O.src,o0,o1,j=>[oj.has(j)?'a-o':'',om.has(j)?'om':''].filter(Boolean).join(' '))}</div></div>
    <div><div class="colh"><h3 class="v-via">${esc(wN.name_he)}</h3><span class="muted small" dir="ltr">${esc(ref(N))}</span></div><div class="txt">${tokSpan(N.src,n0,n1,j=>nj.has(j)?'a-n':'')}</div></div>
-  </div>
+  </div>`}
   <div class="card pad" style="margin-top:12px;background:var(--surface-2)">
    <h3>ההכרעה שלי</h3>
    <div class="verd" id="vbtn">${['direct','via','undetermined','unclear'].map((k,n)=>`<button class="b" data-m="${k}" aria-pressed="${r.mine===k}"><span class="kbd">${n+1}</span> ${VER[k]}</button>`).join('')}</div>
@@ -477,7 +497,7 @@ function viewState(){const path=curPath(),t=path.split('/')[0],q=new URLSearchPa
  if(t==='overview'){put('opp',v('#gOpp'),'1');put('ww',v('#gWW'),'1');put('min',v('#gMin'),'6');if(SEL&&SELP!==null)put('path',SELP,'')}
  if(t==='works'){put('wq',v('#wq'),'');put('wtype',v('#wtype'),'');put('wrel',v('#wrel'),'');put('wsort',v('#wsort'),'units')}
  if(t==='passages'){put('pq',v('#pq'),'');put('pf',v('#pf'),'')}
- if(t==='verify'){['vv','vo','vn','vs'].forEach(k=>put(k,v('#'+k),''));put('vc',v('#vc'),'0')}
+ if(t==='verify'){['vv','vo','vn','vs'].forEach(k=>put(k,v('#'+k),''));put('vc',v('#vc'),'0');put('syn',SYN?'1':'','')}
  if(t==='matches'){['mt','ml','mrel','mq'].forEach(k=>put(k,v('#'+k),''));put('mp',MP,0)}
  if(t==='tables'){put('tq',TQ,'');if(TSORT)q.set('ts',TSORT.join(','));put('tp',TPAGE,0)}
  if(t==='sparql'){put('qex',v('#qex'),'0');const ex=EX[+v('#qex')];if(!ex||$('#qtext').value!==ex[1])q.set('q',$('#qtext').value)}
@@ -487,7 +507,7 @@ function applyState(t,q){const set=(id,k)=>{if(!q.has(k))return;const el=$(id);i
  if(t==='overview'){set('#gOpp','opp');set('#gWW','ww');set('#gMin','min');$('#gMinV').textContent=$('#gMin').value}
  if(t==='works'){['wq','wtype','wrel','wsort'].forEach(k=>set('#'+k,k));renderWList()}
  if(t==='passages'){['pq','pf'].forEach(k=>set('#'+k,k));renderPList()}
- if(t==='verify'){['vv','vo','vn','vs','vc'].forEach(k=>set('#'+k,k))}
+ if(t==='verify'){['vv','vo','vn','vs','vc'].forEach(k=>set('#'+k,k));SYN=q.get('syn')==='1'}
  if(t==='matches'){['mt','ml','mrel','mq'].forEach(k=>set('#'+k,k));MP=+(q.get('mp')||0)}
  if(t==='sparql'){set('#qex','qex');$('#qtext').value=q.has('q')?q.get('q'):(EX[+$('#qex').value]||EX[0])[1]}
  if(t==='comments'){['cfs','cft','cfq'].forEach(k=>set('#'+k,k))}}
